@@ -1,0 +1,30 @@
+{
+  "root": "apps/ecommerce-single-product-funnel-e2e",
+  "sourceRoot": "apps/ecommerce-single-product-funnel-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/ecommerce-single-product-funnel-e2e/cypress.json",
+        "devServerTarget": "ecommerce-single-product-funnel:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "ecommerce-single-product-funnel:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/ecommerce-single-product-funnel-e2e/**/*.{js,ts}"
+        ]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["ecommerce-single-product-funnel"]
+}

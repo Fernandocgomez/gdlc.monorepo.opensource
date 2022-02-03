@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "ecommerce-single-product-funnel": "apps/ecommerce-single-product-funnel",
+    "ecommerce-single-product-funnel-e2e": "apps/ecommerce-single-product-funnel-e2e"
+  }
+}

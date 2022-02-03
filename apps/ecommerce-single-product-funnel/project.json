@@ -1,0 +1,94 @@
+{
+  "projectType": "application",
+  "root": "apps/ecommerce-single-product-funnel",
+  "sourceRoot": "apps/ecommerce-single-product-funnel/src",
+  "prefix": "multi-step-funnels",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ecommerce-single-product-funnel",
+        "index": "apps/ecommerce-single-product-funnel/src/index.html",
+        "main": "apps/ecommerce-single-product-funnel/src/main.ts",
+        "polyfills": "apps/ecommerce-single-product-funnel/src/polyfills.ts",
+        "tsConfig": "apps/ecommerce-single-product-funnel/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/ecommerce-single-product-funnel/src/favicon.ico",
+          "apps/ecommerce-single-product-funnel/src/assets"
+        ],
+        "styles": ["apps/ecommerce-single-product-funnel/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/ecommerce-single-product-funnel/src/environments/environment.ts",
+              "with": "apps/ecommerce-single-product-funnel/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "ecommerce-single-product-funnel:build:production"
+        },
+        "development": {
+          "browserTarget": "ecommerce-single-product-funnel:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "ecommerce-single-product-funnel:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/ecommerce-single-product-funnel/src/**/*.ts",
+          "apps/ecommerce-single-product-funnel/src/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/ecommerce-single-product-funnel"],
+      "options": {
+        "jestConfig": "apps/ecommerce-single-product-funnel/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
