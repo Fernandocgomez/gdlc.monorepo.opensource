@@ -1,0 +1,26 @@
+{
+	"projectType": "library",
+	"root": "libs/tracking/angular/google-analytics-4",
+	"sourceRoot": "libs/tracking/angular/google-analytics-4/src",
+	"prefix": "tracking",
+	"targets": {
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/tracking/angular/google-analytics-4"],
+			"options": {
+				"jestConfig": "libs/tracking/angular/google-analytics-4/jest.config.js",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/tracking/angular/google-analytics-4/src/**/*.ts",
+					"libs/tracking/angular/google-analytics-4/src/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
+}
