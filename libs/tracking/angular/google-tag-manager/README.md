@@ -7,7 +7,7 @@ An simple abstraction to integrate GTM into an Angular project.
 - After instalation, import the TrackingAngularGoogleTagManagerModule inside the AppModuel imports Array.
 - Provide the GTM id on the forRoot method.
 
-```
+```javascript
 imports: [
   ...
   TrackingAngularGoogleTagManagerModule.forRoot({
@@ -27,7 +27,7 @@ constructor(
 
 - To push events to GTM using the TrackingGoogleTagManagerService.
 
-```
+```javascript
 this.trackingGoogleTagManagerService.pushToDataLayer({
   'ecommerce': {
     'refund': {
