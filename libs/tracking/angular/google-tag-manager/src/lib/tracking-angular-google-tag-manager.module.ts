@@ -1,7 +1,20 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
-@NgModule({
-	imports: [CommonModule],
-})
-export class TrackingAngularGoogleTagManagerModule {}
+import { TrackingGoogleTagManagerConfig } from './tracking-google-tag-manger-config.model';
+
+@NgModule()
+export class TrackingAngularGoogleTagManagerModule {
+	public static forRoot(
+		config: TrackingGoogleTagManagerConfig,
+	): ModuleWithProviders<TrackingAngularGoogleTagManagerModule> {
+		return {
+			ngModule: TrackingAngularGoogleTagManagerModule,
+			providers: [
+				{
+					provide: 'TrackingGoogleTagManagerConfig',
+					useValue: config,
+				},
+			],
+		};
+	}
+}
