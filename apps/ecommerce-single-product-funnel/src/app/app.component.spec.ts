@@ -1,31 +1,24 @@
-// import { TestBed } from '@angular/core/testing';
-// import { AppComponent } from './app.component';
+import { TestBed } from '@angular/core/testing';
 
-// describe('AppComponent', () => {
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [AppComponent],
-//     }).compileComponents();
-//   });
+import { AppComponent } from './app.component';
 
-//   it('should create the app', () => {
-//     const fixture = TestBed.createComponent(AppComponent);
-//     const app = fixture.componentInstance;
-//     expect(app).toBeTruthy();
-//   });
+import { TrackingAngularGoogleTagManagerModule } from '@multi-step-funnels/tracking/angular/google-tag-manager';
 
-//   it(`should have as title 'ecommerce-single-product-funnel'`, () => {
-//     const fixture = TestBed.createComponent(AppComponent);
-//     const app = fixture.componentInstance;
-//     expect(app.title).toEqual('ecommerce-single-product-funnel');
-//   });
+describe('AppComponent', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      imports: [
+        TrackingAngularGoogleTagManagerModule.forRoot({
+            id: 'test_id',
+        }),
+      ],
+    }).compileComponents();
+  });
 
-//   it('should render title', () => {
-//     const fixture = TestBed.createComponent(AppComponent);
-//     fixture.detectChanges();
-//     const compiled = fixture.nativeElement as HTMLElement;
-//     expect(compiled.querySelector('h1')?.textContent).toContain(
-//       'Welcome ecommerce-single-product-funnel'
-//     );
-//   });
-// });
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app).toBeTruthy();
+  });
+});
