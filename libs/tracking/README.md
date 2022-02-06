@@ -18,10 +18,6 @@ This library abstracts the multiple ways to send events to Google Analytics 4. O
 
 #### universal-analytics:
 
-Similar to the Google Analytics 4 library, this library abstracts the multiple ways to send events to Universal Analytics. Out of the box, the library will hook into the angular router to start sending virtual page views. Note: further configuration might be needed on the GTM portal. The library is divided into three modules:
-
-- UniversalAnalyticsEcommerceEventsModule
-- UniversalAnalyticsVirtualPageViewsModule
-- UniversalAnalyticsCustomEventsModule
+Similar to the Google Analytics 4 library, this library abstracts the multiple ways to send events to Universal Analytics. Out of the box, the library will hook into the angular router to start sending virtual page views. Note: further configuration might be needed on the GTM portal.
 
 ## React Libraries
