@@ -18,7 +18,7 @@ imports: [
 
 - Inject the TrackingGoogleTagManagerService on the AppComponent.ts constructor.
 
-```
+```javascript
 constructor(
   ...
   private trackingGoogleTagManagerService: TrackingGoogleTagManagerService,
