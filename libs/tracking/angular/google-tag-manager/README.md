@@ -39,4 +39,4 @@ this.trackingGoogleTagManagerService.pushToDataLayer({
 
 # Running unit tests
 
-Run `nx test tracking-angular-google-tag-manager` to execute the unit tests.
+Run `nx test tracking-angular-google-tag-manager --colors` to execute the unit tests.

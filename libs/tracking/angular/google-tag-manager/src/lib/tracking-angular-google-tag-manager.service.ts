@@ -8,6 +8,12 @@ declare global {
 	}
 }
 
+interface GtmEvent {
+	event: string;
+
+	[key: string]: any;
+}
+
 @Injectable({
 	providedIn: 'root',
 })
@@ -70,7 +76,7 @@ export class TrackingGoogleTagManagerService {
 		return gtmScript;
 	}
 
-	public pushToDataLayer(obj: object): void {
+	public pushToDataLayer(obj: GtmEvent): void {
 		window.dataLayer.push(obj);
 	}
 }
