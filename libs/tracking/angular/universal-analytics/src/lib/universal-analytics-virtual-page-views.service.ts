@@ -12,7 +12,6 @@ import { filter } from 'rxjs/operators';
 export class UniversalAnalyticsVirtualPageViewsService {
 
   private navigationEndObservable?: Observable<NavigationEnd>;
-  private currentUrlAfterRedirects = '';
 
   constructor(
     private googleTagManagerService: TrackingGoogleTagManagerService,
@@ -40,19 +39,14 @@ export class UniversalAnalyticsVirtualPageViewsService {
 
   private listenForNewValuesOnObservable(): void {
     this.navigationEndObservable?.subscribe((event) => {
-      this.saveCurrentUrlAfterRedirectsValue(event.urlAfterRedirects);
-      this.triggerPageView();
+      this.triggerPageView(event.urlAfterRedirects);
     });
   }
 
-  private saveCurrentUrlAfterRedirectsValue(newUrlAfterRedirectsValue: string): void {
-    this.currentUrlAfterRedirects = newUrlAfterRedirectsValue;
-  }
-
-  private triggerPageView(): void {
+  private triggerPageView(url: string): void {
     const gtmPageViewEvent = {
       event: 'pageView',
-      url: this.currentUrlAfterRedirects
+      url
     };
 
     this.googleTagManagerService.pushToDataLayer(gtmPageViewEvent);

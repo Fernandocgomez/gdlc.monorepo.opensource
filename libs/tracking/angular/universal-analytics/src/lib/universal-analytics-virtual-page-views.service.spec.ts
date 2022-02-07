@@ -62,12 +62,6 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
     })
   });
 
-  describe('#currentUrlAfterRedirects', () => {
-    it('should be of type string', () => {
-      expect(typeof service['currentUrlAfterRedirects']).toBe('string');
-    });
-  });
-
   describe('#init', () => {
     it('should call #startTrackingPageViews', () => {
       const spyOnStartTrackingPageViews = jest.spyOn(
@@ -125,17 +119,6 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
   describe('#listenForNewValuesOnObservable', () => {
     
     describe('when navigating to /test route', () => {
-
-      it('should call #saveCurrentUrlAfterRedirectsValue once', async() => {
-        const spyOnSaveCurrentUrlAfterRedirectsValue = jest.spyOn(
-          service as any,
-          'saveCurrentUrlAfterRedirectsValue'
-        );
-
-        await router.navigate(['test']);
-
-        expect(spyOnSaveCurrentUrlAfterRedirectsValue).toBeCalledTimes(1);
-      });
       
       it('should call #triggerPageView once', async() => {
         const spyOnTriggerPageView = jest.spyOn(
@@ -152,19 +135,6 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
     });
 
   });
-
-  describe('#saveCurrentUrlAfterRedirectsValue', () => {
-    it('should update the current value of #currentUrlAfterRedirects for the new value emit by the Observable', async() => {
-      const oldUrlAfterRedirectsValue = service['currentUrlAfterRedirects'];
-
-      await router.navigate(['test']);
-
-      const newUrlAfterRedirectsValue = service['currentUrlAfterRedirects'];
-
-      expect(oldUrlAfterRedirectsValue).not.toBe(newUrlAfterRedirectsValue);
-      expect(newUrlAfterRedirectsValue).toBe('/test');
-    });
-  })
 
   describe('#triggerPageView', () => {
 
