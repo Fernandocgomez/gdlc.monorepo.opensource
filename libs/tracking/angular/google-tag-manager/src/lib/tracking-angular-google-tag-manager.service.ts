@@ -4,7 +4,7 @@ import { TrackingGoogleTagManagerConfig } from './tracking-google-tag-manger-con
 
 declare global {
 	interface Window {
-		dataLayer: Array<object>;
+		dataLayer: Array<GtmEvent>;
 	}
 }
 

@@ -3,8 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { TrackingGoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
 
-import { Observable, Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,6 @@ import { filter, map } from 'rxjs/operators';
 export class UniversalAnalyticsVirtualPageViewsService {
 
   private navigationEndObservable?: Observable<NavigationEnd>;
-  private subscription?: Subscription;
   private currentUrlAfterRedirects = '';
 
   constructor(
@@ -40,19 +39,23 @@ export class UniversalAnalyticsVirtualPageViewsService {
   }
 
   private listenForNewValuesOnObservable(): void {
-    this.subscription = this.navigationEndObservable?.subscribe((event) => {
+    this.navigationEndObservable?.subscribe((event) => {
       this.saveCurrentUrlAfterRedirectsValue(event.urlAfterRedirects);
       this.triggerPageView();
     });
   }
 
-  private saveCurrentUrlAfterRedirectsValue(url: string): void {
-    this.currentUrlAfterRedirects = url;
+  private saveCurrentUrlAfterRedirectsValue(newUrlAfterRedirectsValue: string): void {
+    this.currentUrlAfterRedirects = newUrlAfterRedirectsValue;
   }
 
   private triggerPageView(): void {
-    // 
-  };
+    const gtmPageViewEvent = {
+      event: 'pageView',
+      url: this.currentUrlAfterRedirects
+    };
 
+    this.googleTagManagerService.pushToDataLayer(gtmPageViewEvent);
+  };
 
 }

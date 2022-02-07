@@ -6,7 +6,7 @@ import { UniversalAnalyticsVirtualPageViewsService } from './universal-analytics
 import { RouterTestingModule } from '@angular/router/testing';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -62,9 +62,9 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
     })
   });
 
-  describe('#subscription', () => {
-    it('should be of type Subscription', () => {
-      expect(service['subscription']).toBeInstanceOf(Subscription);
+  describe('#currentUrlAfterRedirects', () => {
+    it('should be of type string', () => {
+      expect(typeof service['currentUrlAfterRedirects']).toBe('string');
     });
   });
 
@@ -109,7 +109,7 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
 
   describe('#createObservable', () => {
     it('should return an Observable of type NavigationEnd', (done) => {
-      const observable = service['createObservable']();
+      const observable: Observable<NavigationEnd> = service['createObservable']();
 
       expect(observable).toBeInstanceOf(Observable);
 
@@ -126,7 +126,7 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
     
     describe('when navigating to /test route', () => {
 
-      it('should call #saveCurrentUrlAfterRedirectsValue', async() => {
+      it('should call #saveCurrentUrlAfterRedirectsValue once', async() => {
         const spyOnSaveCurrentUrlAfterRedirectsValue = jest.spyOn(
           service as any,
           'saveCurrentUrlAfterRedirectsValue'
@@ -154,7 +154,7 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
   });
 
   describe('#saveCurrentUrlAfterRedirectsValue', () => {
-    it('should update the current value of #currentUrlAfterRedirects for the new value emit by the router', async() => {
+    it('should update the current value of #currentUrlAfterRedirects for the new value emit by the Observable', async() => {
       const oldUrlAfterRedirectsValue = service['currentUrlAfterRedirects'];
 
       await router.navigate(['test']);
@@ -169,17 +169,31 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
   describe('#triggerPageView', () => {
 
     describe('when navigating to /test route', () => {
+      
       it('should push a pageView event to the dataLayer', async() => {
         
-        // await router.navigate(['test']);
+        await router.navigate(['test']);
 
-        // const pageViewEvent = window.dataLayer.find((gtmObj) => {
-        //   if(gtmObj && gtmObj.event) {
-        //     return gtmObj.event === 'pageView';
-        //   }
-        // })
+        const pageViewEvent = window.dataLayer.find((gtmObj) => {
+          return gtmObj.event === 'pageView';
+        });
+
+        expect(pageViewEvent?.event).toBe('pageView');
       
       })
+
+      it('should push an GTM event with the property url equal to /test', async() => {
+        
+        await router.navigate(['test']);
+
+        const pageViewEvent = window.dataLayer.find((gtmObj) => {
+          return gtmObj.event === 'pageView';
+        });
+
+        expect(pageViewEvent?.['url']).toBe('/test');
+
+      });
+
     });
 
   })
