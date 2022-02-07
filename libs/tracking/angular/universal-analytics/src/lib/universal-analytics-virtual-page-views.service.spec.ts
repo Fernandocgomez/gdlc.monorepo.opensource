@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
 
 import { UniversalAnalyticsVirtualPageViewsService } from './universal-analytics-virtual-page-views.service';
 
@@ -8,17 +7,33 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
 
-@Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: '',
-  template: '<p>Mock Product Editor Component</p>'
-})
-class MockComponent {}
+import { MockComponent } from './utilities/mock.component'
+
+const routes = [
+  {
+    path: '',
+    component: MockComponent
+  },
+  {
+    path: 'test',
+    component: MockComponent
+  }
+]
+
+interface GtmEvent {
+	event: string;
+
+	[key: string]: any;
+}
 
 
 describe('UniversalAnalyticsVirtualPageViewsService', () => {
   let service: UniversalAnalyticsVirtualPageViewsService;
   let router: Router;
+
+  const navigateToTestRoute = () => {
+    router.navigate(['test']);
+  }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,16 +44,7 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
 				},
 			],
       imports: [
-				RouterTestingModule.withRoutes([
-          {
-            path: '',
-            component: MockComponent
-          },
-          {
-            path: 'test',
-            component: MockComponent
-          }
-        ])
+				RouterTestingModule.withRoutes(routes)
 			]
     });
 
@@ -53,12 +59,15 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
 
   describe('#navigationEndObservable', () => {
     it('should be an Observable of type NavigationEnd', (done) => {
+
+      expect(service['navigationEndObservable']).toBeInstanceOf(Observable);
+
       service['navigationEndObservable']?.subscribe((event) => {
         expect(event).toBeInstanceOf(NavigationEnd);
         done();
       });
 
-      router.navigate(['test']);
+      navigateToTestRoute();
     })
   });
 
@@ -76,26 +85,29 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
   });
 
   describe('#startTrackingPageViews', () => {
+    let spyOnCreateObservable: jest.SpyInstance<any, unknown[]>;
+    let spyOnListenForNewValuesOnObservable: jest.SpyInstance<any, unknown[]>;
 
-    it('should call #createObservable', () => {
-      const spyOnCreateObservable = jest.spyOn(
+    beforeEach(() => {
+      spyOnListenForNewValuesOnObservable = jest.spyOn(
+        service as any,
+        'listenForNewValuesOnObservable'
+      );
+
+      spyOnCreateObservable = jest.spyOn(
         service as any,
         'createObservable'
       );
 
       service['startTrackingPageViews']();
 
+    });
+
+    it('should call #createObservable', () => {
       expect(spyOnCreateObservable).toHaveBeenCalled();
     });
 
     it('should call #listenForNewValuesOnObservable', () => {
-      const spyOnListenForNewValuesOnObservable = jest.spyOn(
-        service as any,
-        'listenForNewValuesOnObservable'
-      );
-
-      service['startTrackingPageViews']();
-
       expect(spyOnListenForNewValuesOnObservable).toHaveBeenCalled();
     });
 
@@ -112,7 +124,7 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
         done();
       });
 
-      router.navigate(['test']);
+      navigateToTestRoute();
     });
   });
 
@@ -126,10 +138,9 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
           'triggerPageView'
         );
 
-        await router.navigate(['test']);
+        await navigateToTestRoute();
 
         expect(spyOnTriggerPageView).toBeCalledTimes(1);
-
       });
 
     });
@@ -139,29 +150,25 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
   describe('#triggerPageView', () => {
 
     describe('when navigating to /test route', () => {
-      
-      it('should push a pageView event to the dataLayer', async() => {
-        
-        await router.navigate(['test']);
+      let pageViewEvent: GtmEvent | undefined;
 
-        const pageViewEvent = window.dataLayer.find((gtmObj) => {
+      beforeEach(async() => {
+
+        await navigateToTestRoute();
+
+        pageViewEvent = window.dataLayer.find((gtmObj) => {
           return gtmObj.event === 'pageView';
         });
 
+      });
+      
+      it('should push a pageView event to the dataLayer', async() => {
         expect(pageViewEvent?.event).toBe('pageView');
       
       })
 
       it('should push an GTM event with the property url equal to /test', async() => {
-        
-        await router.navigate(['test']);
-
-        const pageViewEvent = window.dataLayer.find((gtmObj) => {
-          return gtmObj.event === 'pageView';
-        });
-
         expect(pageViewEvent?.['url']).toBe('/test');
-
       });
 
     });
