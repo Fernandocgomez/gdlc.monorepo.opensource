@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { TrackingGoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
+import { UniversalAnalyticsVirtualPageViewsService } from '@multi-step-funnels/tracking/angular/universal-analytics';
+
 
 @Component({
 	selector: 'multi-step-funnels-root',
@@ -8,5 +10,16 @@ import { TrackingGoogleTagManagerService } from '@multi-step-funnels/tracking/an
 	styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-	constructor(private tr: TrackingGoogleTagManagerService) {}
+	constructor(
+		private universalAnalyticsVirtualPageViewsService: UniversalAnalyticsVirtualPageViewsService,
+		private router: Router
+	) {}
+
+	navigate() {
+		if(this.router.url.includes('test')) {
+			this.router.navigate(['']);
+		} else {
+			this.router.navigate(['test']);
+		}
+	}
 }

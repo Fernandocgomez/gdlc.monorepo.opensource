@@ -78,5 +78,6 @@ export class TrackingGoogleTagManagerService {
 
 	public pushToDataLayer(obj: GtmEvent): void {
 		window.dataLayer.push(obj);
+		console.log(obj);
 	}
 }
