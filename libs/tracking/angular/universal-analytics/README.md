@@ -23,11 +23,6 @@ Note: This service has to be called on the app.component.ts
 | ---------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
 | trackPageViews();      |                     | Create a subscription to the Angular Router to start tracking pages views and send them to GTM dataLayer. Note: This method needs to be called on the constructor.        | [See Example](#trackPageViews)  |
 
-
-#### trackPageViews()
-Create a subscription to the Angular Router to start tracking pages views and send them to GTM dataLayer.
-Note: This method needs to be called on the constructor.
-
 <h1>Examples:</h1>
 
 <h3 id="trackPageViews">trackPageViews();</h3>
