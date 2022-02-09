@@ -18,7 +18,7 @@ imports: [
 
 # Services
 
-## TrackingGoogleTagManagerService
+- ## TrackingGoogleTagManagerService
 
 ### Methods
 
