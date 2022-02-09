@@ -16,7 +16,7 @@ imports: [
 ]
 ```
 
-</h1>Services:</h1>
+<h1>Services:</h1>
 
 <h2>TrackingGoogleTagManagerService:</h2>
 
