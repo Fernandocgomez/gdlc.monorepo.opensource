@@ -25,9 +25,9 @@ imports: [
 | pushToDataLayer(obj)   | obj<GtmEvent>       | Push GTM events to the dataLayer.        |
 
 
-### Examples
+## Examples
 
-#### pushToDataLayer(obj);
+### pushToDataLayer(obj);
 
 ```javascript
 constructor(
