@@ -25,7 +25,7 @@ imports: [
 | pushToDataLayer(obj)   | obj<GtmEvent>       | Push GTM events to the dataLayer.        | [See Example](#pushToDataLayer) |
 
 
-<h2>Examples:</h2>
+<h1>Examples:</h1>
 
 
 <h3 id="pushToDataLayer">pushToDataLayer(obj);</h3>
