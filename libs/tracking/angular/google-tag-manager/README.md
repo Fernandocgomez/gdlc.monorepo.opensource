@@ -2,7 +2,7 @@
 
 A simple abstraction to integrate GTM into an Angular project.
 
-# Getting Started
+# Getting Started:
 
 - After installation, import the TrackingAngularGoogleTagManagerModule inside the AppModule imports Array.
 - Provide the GTM id on the forRoot method.
@@ -16,7 +16,7 @@ imports: [
 ]
 ```
 
-# Services
+# Services:
 
 ## TrackingGoogleTagManagerService
 
@@ -25,7 +25,7 @@ imports: [
 | pushToDataLayer(obj)   | obj<GtmEvent>       | Push GTM events to the dataLayer.        |
 
 
-## Examples
+## Examples:
 
 ### pushToDataLayer(obj);
 
@@ -46,7 +46,7 @@ this.trackingGoogleTagManagerService.pushToDataLayer({
 });
 ```
 
-# Development
+# Development:
 
 # Running unit tests
 
