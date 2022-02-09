@@ -3,6 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { TrackingGoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
 
+import { GtmEvent } from '@multi-step-funnels/tracking/tracking-models';
+
 import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -16,15 +18,10 @@ export class UniversalAnalyticsVirtualPageViewsService {
   constructor(
     private googleTagManagerService: TrackingGoogleTagManagerService,
     private router: Router
-  ) {
-    this.init();
-  }
+  ) {}
 
-  private init(): void {
-    this.startTrackingPageViews();
-  }
 
-  private startTrackingPageViews(): void {
+  public trackPageViews(): void {
     this.navigationEndObservable = this.createObservable();
     this.listenForNewValuesOnObservable();
   }
@@ -44,7 +41,7 @@ export class UniversalAnalyticsVirtualPageViewsService {
   }
 
   private triggerPageView(url: string): void {
-    const gtmPageViewEvent = {
+    const gtmPageViewEvent: GtmEvent = {
       event: 'pageView',
       url
     };

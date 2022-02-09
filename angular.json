@@ -5,6 +5,7 @@
 		"ecommerce-single-product-funnel-e2e": "apps/ecommerce-single-product-funnel-e2e",
 		"tracking-angular-google-analytics": "libs/tracking/angular/google-analytics-4",
 		"tracking-angular-google-tag-manager": "libs/tracking/angular/google-tag-manager",
-		"tracking-angular-universal-analytics": "libs/tracking/angular/universal-analytics"
+		"tracking-angular-universal-analytics": "libs/tracking/angular/universal-analytics",
+		"tracking-tracking-models": "libs/tracking/tracking-models"
 	}
 }

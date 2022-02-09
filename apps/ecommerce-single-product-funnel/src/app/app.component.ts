@@ -13,7 +13,9 @@ export class AppComponent {
 	constructor(
 		private universalAnalyticsVirtualPageViewsService: UniversalAnalyticsVirtualPageViewsService,
 		private router: Router
-	) {}
+	) {
+		this.universalAnalyticsVirtualPageViewsService.trackPageViews();
+	}
 
 	navigate() {
 		if(this.router.url.includes('test')) {

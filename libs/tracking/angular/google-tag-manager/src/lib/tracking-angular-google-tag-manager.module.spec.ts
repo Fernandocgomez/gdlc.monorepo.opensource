@@ -1,15 +1,15 @@
 import { inject, TestBed } from '@angular/core/testing';
 
-import {
-	TrackingAngularGoogleTagManagerModule,
-	TrackingGoogleTagManagerService,
-} from '@multi-step-funnels/tracking/angular/google-tag-manager';
+import { TrackingAngularGoogleTagManagerModule } from './tracking-angular-google-tag-manager.module';
+
+import { TrackingGoogleTagManagerService } from './tracking-angular-google-tag-manager.service';
+
 
 describe('TrackingGoogleTagManagerService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [
-				TrackingAngularGoogleTagManagerModule.forRoot({
+	TrackingAngularGoogleTagManagerModule.forRoot({
 					id: 'test_id',
 				}),
 			],

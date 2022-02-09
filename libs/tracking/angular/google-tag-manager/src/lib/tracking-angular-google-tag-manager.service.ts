@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 
-import { TrackingGoogleTagManagerConfig } from './tracking-google-tag-manger-config.model';
+import { GtmEvent, TrackingGoogleTagManagerConfig } from '@multi-step-funnels/tracking/tracking-models';
 
 declare global {
 	interface Window {
@@ -8,11 +8,6 @@ declare global {
 	}
 }
 
-interface GtmEvent {
-	event: string;
-
-	[key: string]: any;
-}
 
 @Injectable({
 	providedIn: 'root',
@@ -32,7 +27,7 @@ export class TrackingGoogleTagManagerService {
 		this.addGtmToDomWhenTagDoNotExist();
 	}
 
-	private throwErrorWhenMissingId() {
+	private throwErrorWhenMissingId(): void {
 		if (!this.config.id) {
 			throw new Error('Google tag manager ID not provided.');
 		}
@@ -78,6 +73,5 @@ export class TrackingGoogleTagManagerService {
 
 	public pushToDataLayer(obj: GtmEvent): void {
 		window.dataLayer.push(obj);
-		console.log(obj);
 	}
 }

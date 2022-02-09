@@ -20,4 +20,11 @@ This library abstracts the multiple ways to send events to Google Analytics 4. O
 
 Similar to the Google Analytics 4 library, this library abstracts the multiple ways to send events to Universal Analytics. Out of the box, the library will hook into the angular router to start sending virtual page views. Note: further configuration might be needed on the GTM portal.
 
+
+#### tracking-models
+
+Shared interfaces and classes across the tracking libraries and apps. 
+
 ## React Libraries
+
+Coming soon...

@@ -23,6 +23,9 @@
 			],
 			"@multi-step-funnels/tracking/angular/universal-analytics": [
 				"libs/tracking/angular/universal-analytics/src/index.ts"
+			],
+			"@multi-step-funnels/tracking/tracking-models": [
+				"libs/tracking/tracking-models/src/index.ts"
 			]
 		}
 	},

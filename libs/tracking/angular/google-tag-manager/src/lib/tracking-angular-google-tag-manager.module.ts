@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { TrackingGoogleTagManagerConfig } from './tracking-google-tag-manger-config.model';
+import { TrackingGoogleTagManagerConfig } from '@multi-step-funnels/tracking/tracking-models';
 
 @NgModule()
 export class TrackingAngularGoogleTagManagerModule {

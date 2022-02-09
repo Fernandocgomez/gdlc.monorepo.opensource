@@ -50,6 +50,8 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
 
     service = TestBed.inject(UniversalAnalyticsVirtualPageViewsService);
     router = TestBed.inject(Router);
+
+    service.trackPageViews();
   });
 
   it('should be created', () => {
@@ -71,20 +73,7 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
     })
   });
 
-  describe('#init', () => {
-    it('should call #startTrackingPageViews', () => {
-      const spyOnStartTrackingPageViews = jest.spyOn(
-        service as any,
-        'startTrackingPageViews'
-      );
-      
-      service['init']();
-
-      expect(spyOnStartTrackingPageViews).toHaveBeenCalled();
-    });
-  });
-
-  describe('#startTrackingPageViews', () => {
+  describe('#trackPageViews', () => {
     let spyOnCreateObservable: jest.SpyInstance<any, unknown[]>;
     let spyOnListenForNewValuesOnObservable: jest.SpyInstance<any, unknown[]>;
 
@@ -99,7 +88,7 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
         'createObservable'
       );
 
-      service['startTrackingPageViews']();
+      service.trackPageViews();
 
     });
 
@@ -133,6 +122,7 @@ describe('UniversalAnalyticsVirtualPageViewsService', () => {
     describe('when navigating to /test route', () => {
       
       it('should call #triggerPageView once', async() => {
+
         const spyOnTriggerPageView = jest.spyOn(
           service as any,
           'triggerPageView'

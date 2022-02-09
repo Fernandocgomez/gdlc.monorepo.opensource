@@ -1,10 +1,10 @@
 # tracking-angular-google-tag-manager
 
-An simple abstraction to integrate GTM into an Angular project.
+A simple abstraction to integrate GTM into an Angular project.
 
 # Getting Started
 
-- After instalation, import the TrackingAngularGoogleTagManagerModule inside the AppModuel imports Array.
+- After installation, import the TrackingAngularGoogleTagManagerModule inside the AppModule imports Array.
 - Provide the GTM id on the forRoot method.
 
 ```javascript
@@ -16,7 +16,18 @@ imports: [
 ]
 ```
 
-- Inject the TrackingGoogleTagManagerService on the AppComponent.ts constructor.
+# Services
+
+## TrackingGoogleTagManagerService
+
+### Methods
+
+#### pushToDataLayer(obj)
+Push GTM events to the dataLayer.
+
+- obj<GtmEvent> 
+
+##### Example
 
 ```javascript
 constructor(
@@ -24,8 +35,6 @@ constructor(
   private trackingGoogleTagManagerService: TrackingGoogleTagManagerService,
 ) { }
 ```
-
-- To push events to GTM using the TrackingGoogleTagManagerService.
 
 ```javascript
 this.trackingGoogleTagManagerService.pushToDataLayer({
@@ -37,6 +46,8 @@ this.trackingGoogleTagManagerService.pushToDataLayer({
 });
 ```
 
+# Development
+
 # Running unit tests
 
-Run `nx test tracking-angular-google-tag-manager --colors` to execute the unit tests.
+Run `nx affected:test tracking-angular-google-tag-manager --parallel --maxParallel 10 --watch --colors` to execute the unit tests.
