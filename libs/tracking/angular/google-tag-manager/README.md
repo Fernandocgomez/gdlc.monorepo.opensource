@@ -21,7 +21,7 @@ imports: [
 ## TrackingGoogleTagManagerService
 
 | Methods                | Arguments           | Description                              |
-| ---------------------- |:-------------------:| ----------------------------------------:|
+| ---------------------- |:-------------------:| :---------------------------------------:|
 | pushToDataLayer(obj)   | obj<GtmEvent>       | Push GTM events to the dataLayer.        |
 
 
