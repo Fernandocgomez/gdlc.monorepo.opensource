@@ -47,7 +47,7 @@ constructor(
 }
 
 ```
-<h3 id="trackPageViews">trackPageViews();</h3>
+<h3 id="triggerCustomEvent">triggerCustomEvent();</h3>
 
 ```html
   <a (click)="redirectToFacebookPage()">Facebook</a>
