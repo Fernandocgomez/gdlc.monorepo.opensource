@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-
-import { UniversalAnalyticsVirtualPageViewsService } from './universal-analytics-virtual-page-views.service';
-
 import { RouterTestingModule } from '@angular/router/testing';
 import { NavigationEnd, Router } from '@angular/router';
 
+import { UniversalAnalyticsVirtualPageViewsService } from './universal-analytics-virtual-page-views.service';
+
 import { Observable } from 'rxjs';
 
-import { MockComponent } from './utilities/mock.component'
+import { MockComponent } from './utilities/mock.component';
 
 const routes = [
   {
