@@ -18,16 +18,16 @@ imports: [
 
 # Services
 
-- ## TrackingGoogleTagManagerService
+## TrackingGoogleTagManagerService
 
-### Methods
+| Methods                | Arguments           | Description                              |
+| ---------------------- |:-------------------:| ----------------------------------------:|
+| pushToDataLayer(obj)   | obj<GtmEvent>       | Push GTM events to the dataLayer.        |
 
-#### pushToDataLayer(obj)
-Push GTM events to the dataLayer.
 
-- obj<GtmEvent> 
+### Examples
 
-##### Example
+#### pushToDataLayer(obj);
 
 ```javascript
 constructor(
