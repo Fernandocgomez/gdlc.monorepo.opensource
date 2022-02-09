@@ -20,14 +20,14 @@ imports: [
 
 ## TrackingGoogleTagManagerService
 
-| Methods                | Arguments           | Description                              |
-| ---------------------- | ------------------- | ---------------------------------------- |
-| pushToDataLayer(obj)   | obj<GtmEvent>       | Push GTM events to the dataLayer.        |
+| Methods                | Arguments           | Description                              | Example                         |
+| ---------------------- | ------------------- | ---------------------------------------- | ------------------------------- |
+| pushToDataLayer(obj)   | obj<GtmEvent>       | Push GTM events to the dataLayer.        | [See Example](#pushToDataLayer) |
 
 
 ## Examples:
 
-### pushToDataLayer(obj);
+<h2 id="pushToDataLayer">pushToDataLayer(obj);</h2>
 
 ```javascript
 constructor(
