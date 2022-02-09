@@ -49,6 +49,6 @@ this.trackingGoogleTagManagerService.pushToDataLayer({
 
 <h1>Development:</h1>
 
-<h1>Running unit tests:</h1>
+<h2>Running unit tests:</h2>
 
 Run `nx affected:test tracking-angular-google-tag-manager --parallel --maxParallel 10 --watch --colors` to execute the unit tests.
