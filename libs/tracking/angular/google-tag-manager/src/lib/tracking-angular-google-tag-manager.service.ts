@@ -74,4 +74,13 @@ export class TrackingGoogleTagManagerService {
 	public pushToDataLayer(obj: GtmEvent): void {
 		window.dataLayer.push(obj);
 	}
+
+	public clearEcommerceObject(): void {
+		const ecommerceNull: GtmEvent = {
+			event: '',
+			ecommerce: null
+		};
+
+		this.pushToDataLayer(ecommerceNull);
+	}
 }

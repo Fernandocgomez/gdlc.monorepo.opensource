@@ -2,6 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { TrackingGoogleTagManagerService } from './tracking-angular-google-tag-manager.service';
 
+import { GtmEvent } from '@multi-step-funnels/tracking/tracking-models';
+
 import {
 	getDataLayer,
 	getGtmScriptTagFromDom,
@@ -28,7 +30,7 @@ describe('TrackingGoogleTagManagerService', () => {
 		expect(service).toBeTruthy();
 	});
 
-	describe('init()', () => {
+	describe('#init', () => {
 		let spyOnThrowErrorWhenMissingId: jest.SpyInstance<any, unknown[]>;
 		let spyOnCreateDataLayer: jest.SpyInstance<any, unknown[]>;
 		let spyOnAddGtmToDomWhenTagDoNotExist: jest.SpyInstance<any, unknown[]>;
@@ -60,7 +62,7 @@ describe('TrackingGoogleTagManagerService', () => {
 		});
 	});
 
-	describe('throwErrorWhenMissingId()', () => {
+	describe('#throwErrorWhenMissingId', () => {
 		it('should throw an error when the config id is a null value', () => {
 			service['config'] = { id: null };
 
@@ -84,7 +86,7 @@ describe('TrackingGoogleTagManagerService', () => {
 		});
 	});
 
-	describe('createDataLayer()', () => {
+	describe('#createDataLayer', () => {
 		it('should create dataLayer as an empty Array', () => {
 			destroyDataLayer();
 
@@ -94,7 +96,7 @@ describe('TrackingGoogleTagManagerService', () => {
 		});
 	});
 
-	describe('addGtmToDomWhenTagDoNotExist()', () => {
+	describe('#addGtmToDomWhenTagDoNotExist', () => {
 		it('should create the GTM script tag on the DOM when it does not exist', () => {
 			removeGtmScriptTagFromDom();
 
@@ -106,7 +108,7 @@ describe('TrackingGoogleTagManagerService', () => {
 		});
 	});
 
-	describe('gtmScriptTagExistOnDom()', () => {
+	describe('#gtmScriptTagExistOnDom', () => {
 		it('should return false when the GTM script tag does not exist on the DOM', () => {
 			removeGtmScriptTagFromDom();
 
@@ -118,7 +120,7 @@ describe('TrackingGoogleTagManagerService', () => {
 		});
 	});
 
-	describe('addGtmToDom()', () => {
+	describe('#addGtmToDom', () => {
 		it('should append the GTM script tag to the head of the page', () => {
 			removeGtmScriptTagFromDom();
 
@@ -128,7 +130,7 @@ describe('TrackingGoogleTagManagerService', () => {
 		});
 	});
 
-	describe('pushStartEventToDataLayer()', () => {
+	describe('#pushStartEventToDataLayer', () => {
 		it('should push gtm.js start event', () => {
 			destroyDataLayer();
 
@@ -139,7 +141,7 @@ describe('TrackingGoogleTagManagerService', () => {
 		});
 	});
 
-	describe('createGtmScript()', () => {
+	describe('#createGtmScript', () => {
 		let gtmScriptTag: HTMLScriptElement;
 
 		beforeEach(() => {
@@ -165,11 +167,11 @@ describe('TrackingGoogleTagManagerService', () => {
 		});
 	});
 
-	describe('pushToDataLayer()', () => {
+	describe('#pushToDataLayer', () => {
 		it('should push an object into the dataLayer', () => {
 			destroyDataLayer();
 
-			const gtmObject = {
+			const gtmObject: GtmEvent = {
 				event: 'page_view',
 				url: 'https://www.google.com',
 			};
@@ -178,6 +180,39 @@ describe('TrackingGoogleTagManagerService', () => {
 			service['pushToDataLayer'](gtmObject);
 
 			expect(getDataLayer()[0]).toEqual(gtmObject);
+		});
+	});
+
+	describe('#clearEcommerceObject', () => {
+		it('should clear the ecommerce object on the last dataLayer element', () => {
+			destroyDataLayer();
+
+			const gtmEcommerceEvent: GtmEvent = {
+				'event': 'removeFromCart',
+				'ecommerce': {
+					'remove': {
+						'products': [{
+							'name': 'Triblend Android T-Shirt',
+							'id': '12345',
+							'price': '15.25',
+							'brand': 'Google',
+							'category': 'Apparel',
+							'variant': 'Gray',
+							'quantity': 1
+						}]
+					}
+				}
+			};
+
+			service['createDataLayer']();
+			service.pushToDataLayer(gtmEcommerceEvent);
+			service.clearEcommerceObject();
+
+			const dataLayer: GtmEvent[] = getDataLayer()
+			const lastElementOnDataLayer: GtmEvent = dataLayer[dataLayer.length -1];
+
+			expect(lastElementOnDataLayer['ecommerce']).toBe(null);
+
 		});
 	});
 });
