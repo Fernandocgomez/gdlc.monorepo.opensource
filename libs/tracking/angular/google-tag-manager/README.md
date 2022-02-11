@@ -9,24 +9,21 @@ A simple abstraction to integrate GTM into an Angular project.
 
 ```javascript
 imports: [
-  ...
-  TrackingAngularGoogleTagManagerModule.forRoot({
-    id: YOUR_GTM_ID,
-  })
-]
+	...TrackingAngularGoogleTagManagerModule.forRoot({
+		id: YOUR_GTM_ID,
+	}),
+];
 ```
 
 <h1>Services:</h1>
 
 <h2>TrackingGoogleTagManagerService:</h2>
 
-| Methods                | Arguments           | Description                              | Example                         |
-| ---------------------- | ------------------- | ---------------------------------------- | ------------------------------- |
-| pushToDataLayer(obj)   | obj<GtmEvent>       | Push GTM events to the dataLayer.        | [See Example](#pushToDataLayer) |
-
+| Methods              | Arguments     | Description                       | Example                         |
+| -------------------- | ------------- | --------------------------------- | ------------------------------- |
+| pushToDataLayer(obj) | obj<GtmEvent> | Push GTM events to the dataLayer. | [See Example](#pushToDataLayer) |
 
 <h1>Examples:</h1>
-
 
 <h3 id="pushToDataLayer">pushToDataLayer(obj);</h3>
 
@@ -39,11 +36,11 @@ constructor(
 
 ```javascript
 this.trackingGoogleTagManagerService.pushToDataLayer({
-  'ecommerce': {
-    'refund': {
-      'actionField': {'id': 'T12345'}
-    }
-  }
+	ecommerce: {
+		refund: {
+			actionField: { id: 'T12345' },
+		},
+	},
 });
 ```
 

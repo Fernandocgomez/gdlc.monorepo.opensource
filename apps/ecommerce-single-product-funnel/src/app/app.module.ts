@@ -13,8 +13,8 @@ import { TrackingAngularGoogleTagManagerModule } from '@multi-step-funnels/track
 		BrowserModule,
 		AppRoutingModule,
 		TrackingAngularGoogleTagManagerModule.forRoot({
-			id: 'GTM-TH4Z92G'
-		})
+			id: 'GTM-TH4Z92G',
+		}),
 	],
 	bootstrap: [AppComponent],
 })

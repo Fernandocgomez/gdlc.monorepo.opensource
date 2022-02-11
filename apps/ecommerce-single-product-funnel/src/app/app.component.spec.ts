@@ -13,7 +13,7 @@ describe('AppComponent', () => {
 				TrackingAngularGoogleTagManagerModule.forRoot({
 					id: 'test_id',
 				}),
-				RouterTestingModule
+				RouterTestingModule,
 			],
 		}).compileComponents();
 	});

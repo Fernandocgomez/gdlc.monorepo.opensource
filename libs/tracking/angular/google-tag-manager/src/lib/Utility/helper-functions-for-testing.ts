@@ -1,4 +1,4 @@
-import { GtmEvent } from "@multi-step-funnels/tracking/tracking-models";
+import { GtmEvent } from '@multi-step-funnels/tracking/tracking-models';
 
 export const getDataLayer = (): GtmEvent[] => {
 	return window.dataLayer;

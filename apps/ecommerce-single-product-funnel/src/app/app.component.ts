@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { UniversalAnalyticsVirtualPageViewsService } from '@multi-step-funnels/tracking/angular/universal-analytics';
 
-
 @Component({
 	selector: 'multi-step-funnels-root',
 	templateUrl: './app.component.html',
@@ -12,13 +11,13 @@ import { UniversalAnalyticsVirtualPageViewsService } from '@multi-step-funnels/t
 export class AppComponent {
 	constructor(
 		private universalAnalyticsVirtualPageViewsService: UniversalAnalyticsVirtualPageViewsService,
-		private router: Router
+		private router: Router,
 	) {
 		this.universalAnalyticsVirtualPageViewsService.trackPageViews();
 	}
 
 	navigate() {
-		if(this.router.url.includes('test')) {
+		if (this.router.url.includes('test')) {
 			this.router.navigate(['']);
 		} else {
 			this.router.navigate(['test']);

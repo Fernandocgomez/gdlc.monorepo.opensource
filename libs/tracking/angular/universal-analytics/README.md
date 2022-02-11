@@ -10,12 +10,11 @@ Note: Further configuration will be needed on the Google Tag Manager.
 
 ```javascript
 imports: [
-  ...
-  TrackingAngularGoogleTagManagerModule.forRoot({
-    id: YOUR_GTM_ID,
-  }),
-  TrackingAngularUniversalAnalyticsModule
-]
+	...TrackingAngularGoogleTagManagerModule.forRoot({
+		id: YOUR_GTM_ID,
+	}),
+	TrackingAngularUniversalAnalyticsModule,
+];
 ```
 
 <h1>Services:</h1>
@@ -24,15 +23,15 @@ imports: [
 
 Note: This service has to be called on the app.component.ts
 
-| Methods                | Arguments           | Description                                                                                                                                                               | Example                         |
-| ---------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
-| trackPageViews();      |                     | Create a subscription to the Angular Router to start tracking pages views and send them to GTM dataLayer. Note: This method needs to be called on the constructor.        | [See Example](#trackPageViews)  |
+| Methods           | Arguments | Description                                                                                                                                                        | Example                        |
+| ----------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------ |
+| trackPageViews(); |           | Create a subscription to the Angular Router to start tracking pages views and send them to GTM dataLayer. Note: This method needs to be called on the constructor. | [See Example](#trackPageViews) |
 
 <h2>TrackingGoogleTagManagerService:</h2>
 
-| Methods                    | Arguments                                    | Description                                                         | Example                             |
-| -------------------------- | -------------------------------------------- | ------------------------------------------------------------------- | ----------------------------------- |
-| triggerCustomEvent();      |  gtmObj<GtmUniversalAnalyticsCustomEvent>    | Send a Universal Analytics custom event using the GTM dataLayer.    | [See Example](#triggerCustomEvent)  |
+| Methods               | Arguments                                | Description                                                      | Example                            |
+| --------------------- | ---------------------------------------- | ---------------------------------------------------------------- | ---------------------------------- |
+| triggerCustomEvent(); | gtmObj<GtmUniversalAnalyticsCustomEvent> | Send a Universal Analytics custom event using the GTM dataLayer. | [See Example](#triggerCustomEvent) |
 
 <h1>Examples:</h1>
 
@@ -47,16 +46,17 @@ constructor(
 }
 
 ```
+
 <h3 id="triggerCustomEvent">triggerCustomEvent();</h3>
 
 ```html
-  <a (click)="redirectToFacebookPage()">Facebook</a>
+<a (click)="redirectToFacebookPage()">Facebook</a>
 ```
 
 ```javascript
 
 public redirectToFacebookPage(): void {
-  
+
   const gtmCustomEventPayload = {
     event: 'customEvent',
     category: 'social media',

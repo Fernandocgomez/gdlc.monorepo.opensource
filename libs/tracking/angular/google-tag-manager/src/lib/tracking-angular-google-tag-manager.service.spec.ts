@@ -188,31 +188,32 @@ describe('TrackingGoogleTagManagerService', () => {
 			destroyDataLayer();
 
 			const gtmEcommerceEvent: GtmEvent = {
-				'event': 'removeFromCart',
-				'ecommerce': {
-					'remove': {
-						'products': [{
-							'name': 'Triblend Android T-Shirt',
-							'id': '12345',
-							'price': '15.25',
-							'brand': 'Google',
-							'category': 'Apparel',
-							'variant': 'Gray',
-							'quantity': 1
-						}]
-					}
-				}
+				event: 'removeFromCart',
+				ecommerce: {
+					remove: {
+						products: [
+							{
+								name: 'Triblend Android T-Shirt',
+								id: '12345',
+								price: '15.25',
+								brand: 'Google',
+								category: 'Apparel',
+								variant: 'Gray',
+								quantity: 1,
+							},
+						],
+					},
+				},
 			};
 
 			service['createDataLayer']();
 			service.pushToDataLayer(gtmEcommerceEvent);
 			service.clearEcommerceObject();
 
-			const dataLayer: GtmEvent[] = getDataLayer()
-			const lastElementOnDataLayer: GtmEvent = dataLayer[dataLayer.length -1];
+			const dataLayer: GtmEvent[] = getDataLayer();
+			const lastElementOnDataLayer: GtmEvent = dataLayer[dataLayer.length - 1];
 
 			expect(lastElementOnDataLayer['ecommerce']).toBe(null);
-
 		});
 	});
 });

@@ -9,15 +9,15 @@ import { Observable } from 'rxjs';
 import { MockComponent } from './utilities/mock.component';
 
 const routes = [
-  {
-    path: '',
-    component: MockComponent
-  },
-  {
-    path: 'test',
-    component: MockComponent
-  }
-]
+	{
+		path: '',
+		component: MockComponent,
+	},
+	{
+		path: 'test',
+		component: MockComponent,
+	},
+];
 
 interface GtmEvent {
 	event: string;
@@ -25,143 +25,122 @@ interface GtmEvent {
 	[key: string]: any;
 }
 
-
 describe('UniversalAnalyticsVirtualPageViewsService', () => {
-  let service: UniversalAnalyticsVirtualPageViewsService;
-  let router: Router;
+	let service: UniversalAnalyticsVirtualPageViewsService;
+	let router: Router;
 
-  const navigateToTestRoute = () => {
-    router.navigate(['test']);
-  }
+	const navigateToTestRoute = () => {
+		router.navigate(['test']);
+	};
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			providers: [
 				{
 					provide: 'TrackingGoogleTagManagerConfig',
 					useValue: { id: 'test_id' },
 				},
 			],
-      imports: [
-				RouterTestingModule.withRoutes(routes)
-			]
-    });
+			imports: [RouterTestingModule.withRoutes(routes)],
+		});
 
-    service = TestBed.inject(UniversalAnalyticsVirtualPageViewsService);
-    router = TestBed.inject(Router);
+		service = TestBed.inject(UniversalAnalyticsVirtualPageViewsService);
+		router = TestBed.inject(Router);
 
-    service.trackPageViews();
-  });
+		service.trackPageViews();
+	});
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it('should be created', () => {
+		expect(service).toBeTruthy();
+	});
 
+	describe('#navigationEndObservable', () => {
+		it('should be an Observable of type NavigationEnd', (done) => {
+			expect(service['navigationEndObservable']).toBeInstanceOf(Observable);
 
-  describe('#navigationEndObservable', () => {
-    it('should be an Observable of type NavigationEnd', (done) => {
+			service['navigationEndObservable']?.subscribe((event) => {
+				expect(event).toBeInstanceOf(NavigationEnd);
+				done();
+			});
 
-      expect(service['navigationEndObservable']).toBeInstanceOf(Observable);
+			navigateToTestRoute();
+		});
+	});
 
-      service['navigationEndObservable']?.subscribe((event) => {
-        expect(event).toBeInstanceOf(NavigationEnd);
-        done();
-      });
+	describe('#trackPageViews', () => {
+		let spyOnCreateObservable: jest.SpyInstance<any, unknown[]>;
+		let spyOnListenForNewValuesOnObservable: jest.SpyInstance<any, unknown[]>;
 
-      navigateToTestRoute();
-    })
-  });
+		beforeEach(() => {
+			spyOnListenForNewValuesOnObservable = jest.spyOn(
+				service as any,
+				'listenForNewValuesOnObservable',
+			);
 
-  describe('#trackPageViews', () => {
-    let spyOnCreateObservable: jest.SpyInstance<any, unknown[]>;
-    let spyOnListenForNewValuesOnObservable: jest.SpyInstance<any, unknown[]>;
+			spyOnCreateObservable = jest.spyOn(service as any, 'createObservable');
 
-    beforeEach(() => {
-      spyOnListenForNewValuesOnObservable = jest.spyOn(
-        service as any,
-        'listenForNewValuesOnObservable'
-      );
+			service.trackPageViews();
+		});
 
-      spyOnCreateObservable = jest.spyOn(
-        service as any,
-        'createObservable'
-      );
+		it('should call #createObservable', () => {
+			expect(spyOnCreateObservable).toHaveBeenCalled();
+		});
 
-      service.trackPageViews();
+		it('should call #listenForNewValuesOnObservable', () => {
+			expect(spyOnListenForNewValuesOnObservable).toHaveBeenCalled();
+		});
+	});
 
-    });
+	describe('#createObservable', () => {
+		it('should return an Observable of type NavigationEnd', (done) => {
+			const observable: Observable<NavigationEnd> =
+				service['createObservable']();
 
-    it('should call #createObservable', () => {
-      expect(spyOnCreateObservable).toHaveBeenCalled();
-    });
+			expect(observable).toBeInstanceOf(Observable);
 
-    it('should call #listenForNewValuesOnObservable', () => {
-      expect(spyOnListenForNewValuesOnObservable).toHaveBeenCalled();
-    });
+			observable.subscribe((event) => {
+				expect(event).toBeInstanceOf(NavigationEnd);
+				done();
+			});
 
-  });
+			navigateToTestRoute();
+		});
+	});
 
-  describe('#createObservable', () => {
-    it('should return an Observable of type NavigationEnd', (done) => {
-      const observable: Observable<NavigationEnd> = service['createObservable']();
+	describe('#listenForNewValuesOnObservable', () => {
+		describe('when navigating to /test route', () => {
+			it('should call #triggerPageView once', async () => {
+				const spyOnTriggerPageView = jest.spyOn(
+					service as any,
+					'triggerPageView',
+				);
 
-      expect(observable).toBeInstanceOf(Observable);
+				await navigateToTestRoute();
 
-      observable.subscribe((event) => {
-        expect(event).toBeInstanceOf(NavigationEnd);
-        done();
-      });
+				expect(spyOnTriggerPageView).toBeCalledTimes(1);
+			});
+		});
+	});
 
-      navigateToTestRoute();
-    });
-  });
+	describe('#triggerPageView', () => {
+		describe('when navigating to /test route', () => {
+			let pageViewEvent: GtmEvent | undefined;
 
-  describe('#listenForNewValuesOnObservable', () => {
-    
-    describe('when navigating to /test route', () => {
-      
-      it('should call #triggerPageView once', async() => {
+			beforeEach(async () => {
+				await navigateToTestRoute();
 
-        const spyOnTriggerPageView = jest.spyOn(
-          service as any,
-          'triggerPageView'
-        );
+				pageViewEvent = window.dataLayer.find((gtmObj) => {
+					return gtmObj.event === 'pageView';
+				});
+			});
 
-        await navigateToTestRoute();
+			it('should push a pageView event to the dataLayer', async () => {
+				expect(pageViewEvent?.event).toBe('pageView');
+			});
 
-        expect(spyOnTriggerPageView).toBeCalledTimes(1);
-      });
-
-    });
-
-  });
-
-  describe('#triggerPageView', () => {
-
-    describe('when navigating to /test route', () => {
-      let pageViewEvent: GtmEvent | undefined;
-
-      beforeEach(async() => {
-
-        await navigateToTestRoute();
-
-        pageViewEvent = window.dataLayer.find((gtmObj) => {
-          return gtmObj.event === 'pageView';
-        });
-
-      });
-      
-      it('should push a pageView event to the dataLayer', async() => {
-        expect(pageViewEvent?.event).toBe('pageView');
-      
-      })
-
-      it('should push an GTM event with the property url equal to /test', async() => {
-        expect(pageViewEvent?.['url']).toBe('/test');
-      });
-
-    });
-
-  })
-
+			it('should push an GTM event with the property url equal to /test', async () => {
+				expect(pageViewEvent?.['url']).toBe('/test');
+			});
+		});
+	});
 });

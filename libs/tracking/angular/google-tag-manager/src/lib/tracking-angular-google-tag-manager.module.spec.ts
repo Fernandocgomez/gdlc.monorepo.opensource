@@ -4,12 +4,11 @@ import { TrackingAngularGoogleTagManagerModule } from './tracking-angular-google
 
 import { TrackingGoogleTagManagerService } from './tracking-angular-google-tag-manager.service';
 
-
 describe('TrackingGoogleTagManagerService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [
-	TrackingAngularGoogleTagManagerModule.forRoot({
+				TrackingAngularGoogleTagManagerModule.forRoot({
 					id: 'test_id',
 				}),
 			],

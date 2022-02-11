@@ -1,13 +1,15 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 
-import { GtmEvent, TrackingGoogleTagManagerConfig } from '@multi-step-funnels/tracking/tracking-models';
+import {
+	GtmEvent,
+	TrackingGoogleTagManagerConfig,
+} from '@multi-step-funnels/tracking/tracking-models';
 
 declare global {
 	interface Window {
 		dataLayer: Array<GtmEvent>;
 	}
 }
-
 
 @Injectable({
 	providedIn: 'root',
@@ -78,7 +80,7 @@ export class TrackingGoogleTagManagerService {
 	public clearEcommerceObject(): void {
 		const ecommerceNull: GtmEvent = {
 			event: '',
-			ecommerce: null
+			ecommerce: null,
 		};
 
 		this.pushToDataLayer(ecommerceNull);
