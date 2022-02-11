@@ -8,6 +8,7 @@
 		"start": "nx serve",
 		"build": "nx build",
 		"test": "nx affected:test --all --parallel --maxParallel 10 --color",
+		"lint": "nx affected:lint",
 		"format": "npx prettier --write .",
 		"pre-commit": "pretty-quick --staged",
 		"prepare": "husky install"
