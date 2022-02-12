@@ -92,8 +92,46 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 	});
 
 	describe('#transformProductImpressionEventToGtmEvent', () => {
-		it('', () => {
-			//
+		it('should return a GtmEvent', () => {
+			const returnValue = service['transformProductImpressionEventToGtmEvent'](
+				productImpressionEvent,
+			);
+
+			const isGtmEventType = (value: any) => {
+				return (value as GtmEvent).event !== undefined;
+			};
+
+			expect(isGtmEventType(returnValue)).toBe(true);
+			expect(returnValue.event).toBe('angularProductImpressions');
+		});
+
+		it('should take an argument of type UniversalAnalyticsEcommerceProductImpressionsEvent', () => {
+			const spyOnTransformProductImpressionEventToGtmEvent = jest.spyOn(
+				service as any,
+				'transformProductImpressionEventToGtmEvent',
+			);
+
+			service['transformProductImpressionEventToGtmEvent'](
+				productImpressionEvent,
+			);
+
+			const isUniversalAnalyticsEcommerceProductImpressionsEventType = (
+				value: any,
+			) => {
+				return (
+					(value as UniversalAnalyticsEcommerceProductImpressionsEvent)
+						.ecommerce !== undefined
+				);
+			};
+
+			expect(spyOnTransformProductImpressionEventToGtmEvent).toBeCalledWith(
+				productImpressionEvent,
+			);
+			expect(
+				isUniversalAnalyticsEcommerceProductImpressionsEventType(
+					productImpressionEvent,
+				),
+			).toBe(true);
 		});
 	});
 
