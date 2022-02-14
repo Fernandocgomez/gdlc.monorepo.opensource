@@ -20,22 +20,10 @@ imports: [
 <h1>Services:</h1>
 
 <h2>TrackingGoogleTagManagerService:</h2>
-
-Note: This service has to be called on the app.component.ts
-
-| Methods           | Arguments | Description                                                                                                                                                        | Example                        |
-| ----------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------ |
-| trackPageViews(); |           | Create a subscription to the Angular Router to start tracking pages views and send them to GTM dataLayer. Note: This method needs to be called on the constructor. | [See Example](#trackPageViews) |
-
-<h2>TrackingGoogleTagManagerService:</h2>
-
-| Methods               | Arguments                                | Description                                                      | Example                            |
-| --------------------- | ---------------------------------------- | ---------------------------------------------------------------- | ---------------------------------- |
-| triggerCustomEvent(); | gtmObj<GtmUniversalAnalyticsCustomEvent> | Send a Universal Analytics custom event using the GTM dataLayer. | [See Example](#triggerCustomEvent) |
-
-<h1>Examples:</h1>
+<p>Note: This service has to be called on the app.component.ts</p>
 
 <h3 id="trackPageViews">trackPageViews();</h3>
+<p>Create a subscription to the Angular Router to start tracking pages views and send them to GTM dataLayer. Note: This method needs to be called on the constructor.</p>
 
 ```javascript
 constructor(
@@ -48,6 +36,8 @@ constructor(
 ```
 
 <h3 id="triggerCustomEvent">triggerCustomEvent();</h3>
+<p>Send a Universal Analytics custom event using the GTM dataLayer.</p>
+<p>Argument: gtmObj<GtmUniversalAnalyticsCustomEvent></p>
 
 ```html
 <a (click)="redirectToFacebookPage()">Facebook</a>
