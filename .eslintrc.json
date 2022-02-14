@@ -32,7 +32,7 @@
 			"rules": {}
 		},
 		{
-			"files": ["*spec.ts", "*utility.ts"],
+			"files": ["*spec.ts", "*utility.ts", "*interface.ts"],
 			"rules": {
 				"@typescript-eslint/no-explicit-any": "off"
 			}
