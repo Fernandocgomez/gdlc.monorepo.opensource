@@ -1,12 +1,12 @@
 <h1>tracking-angular-universal-analytics</h1>
 
-A collection of services and modules to easily integrate the virtual page views, custom events and E-commerce universal analytics functionality.
+<p>A collection of services and modules to easily integrate the virtual page views, custom events and E-commerce universal analytics functionality.</P>
 
-Note: Further configuration will be needed on the Google Tag Manager.
+<p>Note: Further configuration will be needed on the Google Tag Manager.</P>
 
 <h1>Getting Started:</h1>
 
-- After installation, import the TrackingAngularGoogleTagManagerModule and TrackingAngularUniversalAnalyticsModule inside the AppModule imports Array.
+<p>After installation, import the TrackingAngularGoogleTagManagerModule and TrackingAngularUniversalAnalyticsModule inside the AppModule imports Array.</p>
 
 ```javascript
 imports: [
@@ -66,4 +66,4 @@ public redirectToFacebookPage(): void {
 
 <h2>Running unit tests:</h2>
 
-Run `nx affected:test tracking-angular-universal-analytics --parallel --maxParallel 10 --watch --colors` to execute the unit tests.
+<P>Run `nx affected:test tracking-angular-universal-analytics --parallel --maxParallel 10 --watch --colors` to execute the unit tests.</P>
