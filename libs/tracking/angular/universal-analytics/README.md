@@ -22,7 +22,7 @@ imports: [
 
 <p>Note: This service has to be called on the app.component.ts</p>
 
-<h3 id="trackPageViews">trackPageViews();</h3>
+<h3>trackPageViews();</h3>
 
 <p>Create a subscription to the Angular Router to start tracking pages views and send them to GTM dataLayer.</p>
 <p>Note: This method needs to be called on the constructor.</p>
@@ -39,7 +39,7 @@ constructor(
 
 <h2>UniversalAnalyticsCustomEventsService:</h2>
 
-<h3 id="triggerCustomEvent">triggerCustomEvent();</h3>
+<h3>triggerCustomEvent();</h3>
 
 <p>Send a Universal Analytics custom event using the GTM dataLayer.</p>
 <p>Argument: gtmObj<GtmUniversalAnalyticsCustomEvent></p>
@@ -65,6 +65,78 @@ public redirectToFacebookPage(): void {
   location.href = 'https://facebook.com/xyz-company';
 }
 ```
+
+<h2>UniversalAnalyticsEcommerceEventsService</h2>
+
+<h3>triggerProductImpressionsEvent();</h3>
+<p>Send a product-impressions-ecommerce event to Universal Analytics via the dataLayer.</p>
+<p>When call this method make sure, you have access to your products displayed details.</p>
+<p>Arguments: productImpressionsEvent<UniversalAnalyticsEcommerceProductImpressionsEvent></p>
+<p>UniversalAnalyticsEcommerceProductImpressionsEvent Interface</p>
+
+```javascript
+interface UniversalAnalyticsEcommerceItem {
+	name: string;
+	id: string;
+	price?: string;
+	brand?: string;
+	category?: string;
+	variant?: string;
+	list?: string;
+	position?: number;
+	quantity?: number;
+	coupon?: string;
+}
+
+interface UniversalAnalyticsEcommerceProductImpressionsEvent {
+	ecommerce: {
+		currencyCode?: string,
+		impressions: UniversalAnalyticsEcommerceItem[],
+	};
+}
+```
+
+<h3>triggerProductClickEvent();</h3>
+<p>Measure clicks on product by sending a measuring-product-clicks event to Universal Analytics via the dataLayer, along with the product details to represent the clicked product</p>
+<p>The product details should be available at the moment this method is called</p>
+<p>Arguments: productClickEvent: <UniversalAnalyticsEcommerceProductClickEvent></p>
+<p>UniversalAnalyticsEcommerceProductClickEvent Interface</p>
+
+```javascript
+interface UniversalAnalyticsEcommerceItem {
+	name: string;
+	id: string;
+	price?: string;
+	brand?: string;
+	category?: string;
+	variant?: string;
+	list?: string;
+	position?: number;
+	quantity?: number;
+	coupon?: string;
+}
+
+interface UniversalAnalyticsEcommerceProductClickEvent {
+	ecommerce: {
+		click: {
+			actionField?: {
+				list?: string,
+			},
+			products?: UniversalAnalyticsEcommerceItem[],
+		},
+	};
+}
+```
+
+<h3>triggerViewProductDetailsEvent();</h3>
+<h3>triggerAddToCartEvent();</h3>
+<h3>triggerRemoveFromCartEvent();</h3>
+<h3>triggerPromotionViewEvent();</h3>
+<h3>triggerPromotionClickEvent();</h3>
+<h3>triggerCheckoutStepEvent();</h3>
+<h3>triggerCheckoutOptionEvent();</h3>
+<h3>triggerPurchaseEvent();</h3>
+<h3>triggerRefundEvent();</h3>
 
 <h1>Development:</h1>
 
