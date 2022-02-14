@@ -4,6 +4,7 @@ import { TrackingGoogleTagManagerService } from '@multi-step-funnels/tracking/an
 
 import {
 	GtmEvent,
+	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
@@ -21,6 +22,12 @@ export class UniversalAnalyticsEcommerceEventsService {
 		return { ...productImpressionEvent, event: 'angularProductImpressions' };
 	}
 
+	private transformProductClickEventToGtmEvent(
+		productClickEvent: UniversalAnalyticsEcommerceProductClickEvent,
+	) {
+		return { ...productClickEvent, event: 'angularProductClick' };
+	}
+
 	public triggerProductImpressionsEvent(
 		productImpressionsEvent: UniversalAnalyticsEcommerceProductImpressionsEvent,
 	): void {
@@ -30,8 +37,12 @@ export class UniversalAnalyticsEcommerceEventsService {
 		this.trackingGoogleTagManagerService.pushToDataLayer(gtmEvent);
 	}
 
-	public triggerProductClickEvent(): void {
-		//
+	public triggerProductClickEvent(
+		productClickEvent: UniversalAnalyticsEcommerceProductClickEvent,
+	): void {
+		const gtmEvent =
+			this.transformProductClickEventToGtmEvent(productClickEvent);
+		this.trackingGoogleTagManagerService.pushToDataLayer(gtmEvent);
 	}
 
 	public triggerViewProductDetailsEvent(): void {

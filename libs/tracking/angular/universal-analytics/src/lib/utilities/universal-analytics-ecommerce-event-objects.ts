@@ -1,4 +1,7 @@
-import { UniversalAnalyticsEcommerceProductImpressionsEvent } from '@multi-step-funnels/tracking/tracking-models';
+import {
+	UniversalAnalyticsEcommerceProductClickEvent,
+	UniversalAnalyticsEcommerceProductImpressionsEvent,
+} from '@multi-step-funnels/tracking/tracking-models';
 
 export const productImpressionEvent: UniversalAnalyticsEcommerceProductImpressionsEvent =
 	{
@@ -28,3 +31,23 @@ export const productImpressionEvent: UniversalAnalyticsEcommerceProductImpressio
 			],
 		},
 	};
+
+export const productClickEvent: UniversalAnalyticsEcommerceProductClickEvent = {
+	ecommerce: {
+		click: {
+			actionField: { list: 'Search Results' },
+			products: [
+				{
+					name: 'Triblend Android T-Shirt',
+					id: '12345',
+					price: '15.25',
+					brand: 'Google',
+					category: 'Apparel',
+					variant: 'Gray',
+					list: 'Search Results',
+					position: 1,
+				},
+			],
+		},
+	},
+};

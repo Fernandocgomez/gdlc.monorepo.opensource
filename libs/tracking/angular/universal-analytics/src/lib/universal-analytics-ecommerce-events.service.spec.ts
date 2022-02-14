@@ -2,18 +2,30 @@ import { TestBed } from '@angular/core/testing';
 
 import {
 	GtmEvent,
+	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 import { UniversalAnalyticsEcommerceEventsService } from './universal-analytics-ecommerce-events.service';
 import { TrackingGoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
 
-import { productImpressionEvent } from './utilities/universal-analytics-ecommerce-event-objects';
+import {
+	productImpressionEvent,
+	productClickEvent,
+} from './utilities/universal-analytics-ecommerce-event-objects';
+import {
+	isOfTypeGtmEvent,
+	isOfTypeUniversalAnalyticsEcommerceProductClickEvent,
+	isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent,
+} from './utilities/helper-functions.utility';
 
 describe('UniversalAnalyticsEcommerceEventsService', () => {
 	let service: UniversalAnalyticsEcommerceEventsService;
 	let trackingGoogleTagManagerService: TrackingGoogleTagManagerService;
+
 	let dataLayer: GtmEvent[];
+
+	let spyOnPushToDataLayer: jest.SpyInstance<void, [obj: GtmEvent]>;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -32,6 +44,10 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 		dataLayer = window.dataLayer || [];
 	});
 
+	afterEach(() => {
+		window.dataLayer = [];
+	});
+
 	it('should be created', () => {
 		expect(service).toBeTruthy();
 	});
@@ -47,7 +63,6 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			any,
 			unknown[]
 		>;
-		let spyOnPushToDataLayer: jest.SpyInstance<void, [obj: GtmEvent]>;
 
 		beforeEach(() => {
 			spyOnTriggerProductImpressionsEvent = jest.spyOn(
@@ -64,10 +79,6 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			);
 
 			service.triggerProductImpressionsEvent(productImpressionEvent);
-		});
-
-		afterEach(() => {
-			window.dataLayer = [];
 		});
 
 		it('should be called with an argument of type UniversalAnalyticsEcommerceProductImpressionsEvent', () => {
@@ -97,11 +108,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 				productImpressionEvent,
 			);
 
-			const isGtmEventType = (value: any) => {
-				return (value as GtmEvent).event !== undefined;
-			};
-
-			expect(isGtmEventType(returnValue)).toBe(true);
+			expect(isOfTypeGtmEvent(returnValue)).toBe(true);
 			expect(returnValue.event).toBe('angularProductImpressions');
 		});
 
@@ -115,81 +122,147 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 				productImpressionEvent,
 			);
 
-			const isUniversalAnalyticsEcommerceProductImpressionsEventType = (
-				value: any,
-			) => {
-				return (
-					(value as UniversalAnalyticsEcommerceProductImpressionsEvent)
-						.ecommerce !== undefined
-				);
-			};
-
 			expect(spyOnTransformProductImpressionEventToGtmEvent).toBeCalledWith(
 				productImpressionEvent,
 			);
 			expect(
-				isUniversalAnalyticsEcommerceProductImpressionsEventType(
+				isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent(
 					productImpressionEvent,
 				),
 			).toBe(true);
 		});
 	});
 
-	describe('#triggerProductClick', () => {
+	describe('#triggerProductClickEvent', () => {
+		let spyOnTriggerProductClickEvent: jest.SpyInstance<
+			void,
+			[productClickEvent: UniversalAnalyticsEcommerceProductClickEvent]
+		>;
+		let spyOnTransformProductClickEventToGtmEvent: jest.SpyInstance<
+			any,
+			unknown[]
+		>;
+
+		let triggerProductClickEventReturnValue: void;
+
+		beforeEach(() => {
+			spyOnTriggerProductClickEvent = jest.spyOn(
+				service,
+				'triggerProductClickEvent',
+			);
+			spyOnTransformProductClickEventToGtmEvent = jest.spyOn(
+				service as any,
+				'transformProductClickEventToGtmEvent',
+			);
+			spyOnPushToDataLayer = jest.spyOn(
+				trackingGoogleTagManagerService,
+				'pushToDataLayer',
+			);
+
+			triggerProductClickEventReturnValue =
+				service.triggerProductClickEvent(productClickEvent);
+		});
+
+		it('should take an argument of type UniversalAnalyticsEcommerceProductClickEvent', () => {
+			expect(
+				isOfTypeUniversalAnalyticsEcommerceProductClickEvent(productClickEvent),
+			).toBe(true);
+			expect(spyOnTriggerProductClickEvent).toBeCalled();
+		});
+
+		it('should call #transformProductClickEventToGtmEvent once', () => {
+			expect(spyOnTransformProductClickEventToGtmEvent).toBeCalledTimes(1);
+		});
+
+		it('should call pushToDataLayer() from service trackingGoogleTagManagerService', () => {
+			expect(spyOnPushToDataLayer).toBeCalledTimes(1);
+		});
+
+		it('should return void', () => {
+			expect(triggerProductClickEventReturnValue).toBe(undefined);
+		});
+
+		it('should push an "angularProductClick" event to the dataLayer', () => {
+			expect(dataLayer[dataLayer.length - 1].event).toBe('angularProductClick');
+		});
+	});
+
+	describe('#transformProductClickEventToGtmEvent', () => {
+		it('should return a GtmEvent', () => {
+			const returnValue =
+				service['transformProductClickEventToGtmEvent'](productClickEvent);
+
+			expect(isOfTypeGtmEvent(returnValue)).toBe(true);
+			expect(returnValue.event).toBe('angularProductClick');
+		});
+
+		it('should take an argument of type UniversalAnalyticsEcommerceProductClickEvent', () => {
+			const spyOnTransformProductClickEventToGtmEvent = jest.spyOn(
+				service as any,
+				'transformProductClickEventToGtmEvent',
+			);
+
+			service['transformProductClickEventToGtmEvent'](productClickEvent);
+
+			expect(spyOnTransformProductClickEventToGtmEvent).toBeCalledWith(
+				productClickEvent,
+			);
+
+			expect(
+				isOfTypeUniversalAnalyticsEcommerceProductClickEvent(productClickEvent),
+			).toBe(true);
+		});
+	});
+
+	describe('#triggerViewProductDetailsEvent', () => {
 		it('', () => {
 			//
 		});
 	});
 
-	describe('#triggerViewProductDetails', () => {
+	describe('#triggerAddToCartEvent', () => {
 		it('', () => {
 			//
 		});
 	});
 
-	describe('#triggerAddToCart', () => {
+	describe('#triggerRemoveFromCartEvent', () => {
 		it('', () => {
 			//
 		});
 	});
 
-	describe('#triggerRemoveFromCart', () => {
+	describe('#triggerPromotionImpressionEvent', () => {
 		it('', () => {
 			//
 		});
 	});
 
-	describe('#triggerPromotionImpression', () => {
+	describe('#triggerPromotionClickEvent', () => {
 		it('', () => {
 			//
 		});
 	});
 
-	describe('#triggerPromotionClick', () => {
+	describe('#triggerCheckoutStepEvent', () => {
 		it('', () => {
 			//
 		});
 	});
 
-	describe('#triggerCheckoutStep', () => {
+	describe('#triggerCheckoutOptionEvent', () => {
 		it('', () => {
 			//
 		});
 	});
 
-	describe('#triggerCheckoutOption', () => {
+	describe('#triggerPurchaseEvent', () => {
 		it('', () => {
 			//
 		});
 	});
 
-	describe('#triggerPurchase', () => {
-		it('', () => {
-			//
-		});
-	});
-
-	describe('#triggerRefund', () => {
+	describe('#triggerRefundEvent', () => {
 		it('', () => {
 			//
 		});

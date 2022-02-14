@@ -9,7 +9,7 @@ import {
 	getGtmScriptTagFromDom,
 	destroyDataLayer,
 	removeGtmScriptTagFromDom,
-} from './Utility/helper-functions-for-testing';
+} from './utilities/helper-functions.utility';
 
 describe('TrackingGoogleTagManagerService', () => {
 	let service: TrackingGoogleTagManagerService;
