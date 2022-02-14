@@ -1,7 +1,6 @@
 <h1>tracking-angular-universal-analytics</h1>
 
 <p>A collection of services and modules to easily integrate the virtual page views, custom events and E-commerce universal analytics functionality.</P>
-
 <p>Note: Further configuration will be needed on the Google Tag Manager.</P>
 
 <h1>Getting Started:</h1>
@@ -19,10 +18,12 @@ imports: [
 
 <h1>Services:</h1>
 
-<h2>TrackingGoogleTagManagerService:</h2>
+<h2>UniversalAnalyticsVirtualPageViewsService:</h2>
+
 <p>Note: This service has to be called on the app.component.ts</p>
 
 <h3 id="trackPageViews">trackPageViews();</h3>
+
 <p>Create a subscription to the Angular Router to start tracking pages views and send them to GTM dataLayer.</p>
 <p>Note: This method needs to be called on the constructor.</p>
 
@@ -36,7 +37,10 @@ constructor(
 
 ```
 
+<h2>UniversalAnalyticsCustomEventsService:</h2>
+
 <h3 id="triggerCustomEvent">triggerCustomEvent();</h3>
+
 <p>Send a Universal Analytics custom event using the GTM dataLayer.</p>
 <p>Argument: gtmObj<GtmUniversalAnalyticsCustomEvent></p>
 
