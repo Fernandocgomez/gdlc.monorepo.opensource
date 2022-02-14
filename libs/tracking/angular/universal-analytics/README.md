@@ -23,7 +23,8 @@ imports: [
 <p>Note: This service has to be called on the app.component.ts</p>
 
 <h3 id="trackPageViews">trackPageViews();</h3>
-<p>Create a subscription to the Angular Router to start tracking pages views and send them to GTM dataLayer. Note: This method needs to be called on the constructor.</p>
+<p>Create a subscription to the Angular Router to start tracking pages views and send them to GTM dataLayer.</p>
+<p>Note: This method needs to be called on the constructor.</p>
 
 ```javascript
 constructor(
