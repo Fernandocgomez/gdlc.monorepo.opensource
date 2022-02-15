@@ -4,6 +4,7 @@ import {
 	GtmEvent,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
+	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 import { UniversalAnalyticsEcommerceEventsService } from './universal-analytics-ecommerce-events.service';
@@ -12,11 +13,14 @@ import { TrackingGoogleTagManagerService } from '@multi-step-funnels/tracking/an
 import {
 	productImpressionEvent,
 	productClickEvent,
+	ViewProductDetailsEvent,
 } from './utilities/universal-analytics-ecommerce-event-objects';
+
 import {
 	isOfTypeGtmEvent,
 	isOfTypeUniversalAnalyticsEcommerceProductClickEvent,
 	isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent,
+	isOfTypeUniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from './utilities/helper-functions.utility';
 
 describe('UniversalAnalyticsEcommerceEventsService', () => {
@@ -174,7 +178,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(spyOnTransformProductClickEventToGtmEvent).toBeCalledTimes(1);
 		});
 
-		it('should call pushToDataLayer() from service trackingGoogleTagManagerService', () => {
+		it('should call pushToDataLayer() from service trackingGoogleTagManagerService once', () => {
 			expect(spyOnPushToDataLayer).toBeCalledTimes(1);
 		});
 
@@ -215,8 +219,60 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 	});
 
 	describe('#triggerViewProductDetailsEvent', () => {
-		it('', () => {
-			//
+		let spyOnTriggerViewProductDetailsEvent: jest.SpyInstance<
+			void,
+			[
+				viewProductDetailsEvent: UniversalAnalyticsEcommerceViewProductDetailsEvent,
+			]
+		>;
+		let spyOnTransformViewProductDetailsToGtmEvent: jest.SpyInstance<
+			any,
+			unknown[]
+		>;
+		let triggerViewProductDetailsEventReturnValue: void;
+
+		beforeEach(() => {
+			spyOnTriggerViewProductDetailsEvent = jest.spyOn(
+				service,
+				'triggerViewProductDetailsEvent',
+			);
+			spyOnTransformViewProductDetailsToGtmEvent = jest.spyOn(
+				service as any,
+				'transformViewProductDetailsToGtmEvent',
+			);
+			spyOnPushToDataLayer = jest.spyOn(
+				trackingGoogleTagManagerService,
+				'pushToDataLayer',
+			);
+			triggerViewProductDetailsEventReturnValue =
+				service.triggerViewProductDetailsEvent(ViewProductDetailsEvent);
+		});
+
+		it('should take an argument of type UniversalAnalyticsEcommerceViewProductDetailsEvent', () => {
+			expect(
+				isOfTypeUniversalAnalyticsEcommerceViewProductDetailsEvent(
+					ViewProductDetailsEvent,
+				),
+			).toBe(true);
+			expect(spyOnTriggerViewProductDetailsEvent).toBeCalled();
+		});
+
+		it('should call #transformViewProductDetailsToGtmEvent once', () => {
+			expect(spyOnTransformViewProductDetailsToGtmEvent).toBeCalledTimes(1);
+		});
+
+		it('should call pushToDataLayer() from service trackingGoogleTagManagerService once', () => {
+			expect(spyOnPushToDataLayer).toBeCalledTimes(1);
+		});
+
+		it('should return void', () => {
+			expect(triggerViewProductDetailsEventReturnValue).toBe(undefined);
+		});
+
+		it('should push an "angularViewProductDetails" event to the dataLayer', () => {
+			expect(dataLayer[dataLayer.length - 1].event).toBe(
+				'angularViewProductDetails',
+			);
 		});
 	});
 

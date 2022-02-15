@@ -1,6 +1,7 @@
 import {
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
+	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 export const productImpressionEvent: UniversalAnalyticsEcommerceProductImpressionsEvent =
@@ -51,3 +52,22 @@ export const productClickEvent: UniversalAnalyticsEcommerceProductClickEvent = {
 		},
 	},
 };
+
+export const ViewProductDetailsEvent: UniversalAnalyticsEcommerceViewProductDetailsEvent =
+	{
+		ecommerce: {
+			detail: {
+				actionField: { list: 'Apparel Gallery' },
+				products: [
+					{
+						name: 'Triblend Android T-Shirt',
+						id: '12345',
+						price: '15.25',
+						brand: 'Google',
+						category: 'Apparel',
+						variant: 'Gray',
+					},
+				],
+			},
+		},
+	};

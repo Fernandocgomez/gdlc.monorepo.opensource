@@ -2,6 +2,7 @@ import {
 	GtmEvent,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
+	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 export const isOfTypeUniversalAnalyticsEcommerceProductClickEvent = (
@@ -22,6 +23,15 @@ export const isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent = (
 ) => {
 	return (
 		(value as UniversalAnalyticsEcommerceProductImpressionsEvent).ecommerce !==
+		undefined
+	);
+};
+
+export const isOfTypeUniversalAnalyticsEcommerceViewProductDetailsEvent = (
+	value: any,
+) => {
+	return (
+		(value as UniversalAnalyticsEcommerceViewProductDetailsEvent).ecommerce !==
 		undefined
 	);
 };

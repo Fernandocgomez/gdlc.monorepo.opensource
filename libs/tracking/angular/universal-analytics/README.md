@@ -109,7 +109,7 @@ interface UniversalAnalyticsEcommerceProductImpressionsEvent {
 
 <h3>triggerProductClickEvent();</h3>
 <p>Measure clicks on product by sending a measuring-product-clicks event to Universal Analytics via the dataLayer, along with the product details to represent the clicked product.</p>
-<p>The product details should be available at the moment this method is called.</p>
+<p>The product object should be available at the moment this method is called.</p>
 <p>Arguments: productClickEvent: <UniversalAnalyticsEcommerceProductClickEvent></p>
 <p>UniversalAnalyticsEcommerceProductClickEvent Interface</p>
 
@@ -140,6 +140,37 @@ interface UniversalAnalyticsEcommerceProductClickEvent {
 ```
 
 <h3>triggerViewProductDetailsEvent();</h3>
+<p>Measure a view of product details by pushing a angularViewProductDetails event to the dataLayer, along with one or more product details representing the products being viewed.</p>
+<p>The product details should be available at the moment this method is called.</p>
+<p>Arguments: viewProductDetailsEvent: <UniversalAnalyticsEcommerceViewProductDetailsEvent></p>
+<p>UniversalAnalyticsEcommerceProductClickEvent Interface</p>
+
+```javascript
+interface UniversalAnalyticsEcommerceItem {
+	name: string;
+	id: string;
+	price?: string;
+	brand?: string;
+	category?: string;
+	variant?: string;
+	list?: string;
+	position?: number;
+	quantity?: number;
+	coupon?: string;
+}
+
+export interface UniversalAnalyticsEcommerceViewProductDetailsEvent {
+	ecommerce: {
+		detail: {
+			actionField?: {
+				list?: string,
+			},
+			products?: UniversalAnalyticsEcommerceItem[],
+		},
+	};
+}
+```
+
 <h3>triggerAddToCartEvent();</h3>
 <h3>triggerRemoveFromCartEvent();</h3>
 <h3>triggerPromotionViewEvent();</h3>
