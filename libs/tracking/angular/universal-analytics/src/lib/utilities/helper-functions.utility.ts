@@ -1,5 +1,6 @@
 import {
 	GtmEvent,
+	UniversalAnalyticsEcommerceAddToCartEvent,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
 	UniversalAnalyticsEcommerceViewProductDetailsEvent,
@@ -33,5 +34,13 @@ export const isOfTypeUniversalAnalyticsEcommerceViewProductDetailsEvent = (
 	return (
 		(value as UniversalAnalyticsEcommerceViewProductDetailsEvent).ecommerce !==
 		undefined
+	);
+};
+
+export const isOfTypeUniversalAnalyticsEcommerceAddToCartEvent = (
+	value: any,
+) => {
+	return (
+		(value as UniversalAnalyticsEcommerceAddToCartEvent).ecommerce !== undefined
 	);
 };
