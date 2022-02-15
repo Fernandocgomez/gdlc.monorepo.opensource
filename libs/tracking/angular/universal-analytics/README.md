@@ -43,6 +43,17 @@ constructor(
 
 <p>Send a Universal Analytics custom event using the GTM dataLayer.</p>
 <p>Argument: gtmObj<GtmUniversalAnalyticsCustomEvent></p>
+<p>GtmUniversalAnalyticsCustomEvent Interface</p>
+
+```javascript
+interface GtmUniversalAnalyticsCustomEvent {
+	event: string;
+	category: string;
+	action: string;
+	label?: string;
+	value?: number;
+}
+```
 
 ```html
 <a (click)="redirectToFacebookPage()">Facebook</a>
@@ -70,7 +81,7 @@ public redirectToFacebookPage(): void {
 
 <h3>triggerProductImpressionsEvent();</h3>
 <p>Send a product-impressions-ecommerce event to Universal Analytics via the dataLayer.</p>
-<p>When call this method make sure, you have access to your products displayed details.</p>
+<p>When calling this method make sure, you have access to your products displayed details.</p>
 <p>Arguments: productImpressionsEvent<UniversalAnalyticsEcommerceProductImpressionsEvent></p>
 <p>UniversalAnalyticsEcommerceProductImpressionsEvent Interface</p>
 
@@ -97,8 +108,8 @@ interface UniversalAnalyticsEcommerceProductImpressionsEvent {
 ```
 
 <h3>triggerProductClickEvent();</h3>
-<p>Measure clicks on product by sending a measuring-product-clicks event to Universal Analytics via the dataLayer, along with the product details to represent the clicked product</p>
-<p>The product details should be available at the moment this method is called</p>
+<p>Measure clicks on product by sending a measuring-product-clicks event to Universal Analytics via the dataLayer, along with the product details to represent the clicked product.</p>
+<p>The product details should be available at the moment this method is called.</p>
 <p>Arguments: productClickEvent: <UniversalAnalyticsEcommerceProductClickEvent></p>
 <p>UniversalAnalyticsEcommerceProductClickEvent Interface</p>
 
