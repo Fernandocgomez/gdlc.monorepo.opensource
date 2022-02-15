@@ -1,10 +1,8 @@
 <h1>tracking-angular-universal-analytics</h1>
-
-<p>A collection of services and modules to easily integrate the virtual page views, custom events and E-commerce universal analytics functionality.</P>
+<p>A collection of services, and directives to easily integrate the virtual page views, custom events and E-commerce universal analytics functionality.</P>
 <p>Note: Further configuration will be needed on the Google Tag Manager.</P>
 
 <h1>Getting Started:</h1>
-
 <p>After installation, import the TrackingAngularGoogleTagManagerModule and TrackingAngularUniversalAnalyticsModule inside the AppModule imports Array.</p>
 
 ```javascript
