@@ -14,7 +14,7 @@ describe('UniversalAnalyticsCustomEventsService', () => {
 		TestBed.configureTestingModule({
 			providers: [
 				{
-					provide: 'TrackingGoogleTagManagerConfig',
+					provide: 'GoogleTagManagerConfig',
 					useValue: { id: 'test_id' },
 				},
 			],

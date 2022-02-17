@@ -2,7 +2,7 @@ import { Inject, Injectable, Optional } from '@angular/core';
 
 import {
 	GtmEvent,
-	TrackingGoogleTagManagerConfig,
+	GoogleTagManagerConfig,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 declare global {
@@ -17,8 +17,8 @@ declare global {
 export class TrackingGoogleTagManagerService {
 	constructor(
 		@Optional()
-		@Inject('TrackingGoogleTagManagerConfig')
-		private config: TrackingGoogleTagManagerConfig = { id: null },
+		@Inject('GoogleTagManagerConfig')
+		private config: GoogleTagManagerConfig = { id: null },
 	) {
 		this.init();
 	}
