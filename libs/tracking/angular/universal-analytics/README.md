@@ -3,25 +3,23 @@
 <p>Note: Further configuration will be needed on the Google Tag Manager.</P>
 
 <h1>Getting Started:</h1>
-<p>After installation, import the TrackingAngularGoogleTagManagerModule and TrackingAngularUniversalAnalyticsModule inside the AppModule imports Array.</p>
+<p>After installation, import the TrackingAngularGoogleTagManagerModule and UniversalAnalyticsModule inside the AppModule imports Array.</p>
 
 ```javascript
 imports: [
 	...TrackingAngularGoogleTagManagerModule.forRoot({
 		id: YOUR_GTM_ID,
 	}),
-	TrackingAngularUniversalAnalyticsModule,
+	UniversalAnalyticsModule,
 ];
 ```
 
 <h1>Services:</h1>
 
 <h2>UniversalAnalyticsVirtualPageViewsService:</h2>
-
 <p>Note: This service has to be called on the app.component.ts</p>
 
 <h3>trackPageViews();</h3>
-
 <p>Create a subscription to the Angular Router to start tracking pages views and send them to GTM dataLayer.</p>
 <p>Note: This method needs to be called on the constructor.</p>
 
@@ -38,7 +36,6 @@ constructor(
 <h2>UniversalAnalyticsCustomEventsService:</h2>
 
 <h3>triggerCustomEvent();</h3>
-
 <p>Send a Universal Analytics Event sending a "customEvent" event using the GTM dataLayer.</p>
 <p>Argument: gtmObj<GtmUniversalAnalyticsCustomEvent></p>
 <p>GtmUniversalAnalyticsCustomEvent Interface</p>
