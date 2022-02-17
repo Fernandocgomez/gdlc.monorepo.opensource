@@ -21,9 +21,6 @@
 			"@multi-step-funnels/tracking-universal-analytics": [
 				"libs/tracking/universal-analytics/src/index.ts"
 			],
-			"@multi-step-funnels/tracking/angular/google-analytics-4": [
-				"libs/tracking/angular/google-analytics-4/src/index.ts"
-			],
 			"@multi-step-funnels/tracking/tracking-models": [
 				"libs/tracking/tracking-models/src/index.ts"
 			]
