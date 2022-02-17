@@ -9,7 +9,7 @@ import {
 } from '@multi-step-funnels/tracking/tracking-models';
 
 import { UniversalAnalyticsEcommerceEventsService } from './universal-analytics-ecommerce-events.service';
-import { TrackingGoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
+import { GoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
 
 import {
 	productImpressionEvent,
@@ -28,7 +28,7 @@ import {
 
 describe('UniversalAnalyticsEcommerceEventsService', () => {
 	let service: UniversalAnalyticsEcommerceEventsService;
-	let trackingGoogleTagManagerService: TrackingGoogleTagManagerService;
+	let googleTagManagerService: GoogleTagManagerService;
 
 	let dataLayer: GtmEvent[];
 
@@ -44,9 +44,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			],
 		});
 		service = TestBed.inject(UniversalAnalyticsEcommerceEventsService);
-		trackingGoogleTagManagerService = TestBed.inject(
-			TrackingGoogleTagManagerService,
-		);
+		googleTagManagerService = TestBed.inject(GoogleTagManagerService);
 
 		dataLayer = window.dataLayer || [];
 	});
@@ -81,7 +79,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 				'transformProductImpressionEventToGtmEvent',
 			);
 			spyOnPushToDataLayer = jest.spyOn(
-				trackingGoogleTagManagerService,
+				googleTagManagerService,
 				'pushToDataLayer',
 			);
 
@@ -162,7 +160,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 				'transformProductClickEventToGtmEvent',
 			);
 			spyOnPushToDataLayer = jest.spyOn(
-				trackingGoogleTagManagerService,
+				googleTagManagerService,
 				'pushToDataLayer',
 			);
 
@@ -181,7 +179,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(spyOnTransformProductClickEventToGtmEvent).toBeCalledTimes(1);
 		});
 
-		it('should call pushToDataLayer() from service trackingGoogleTagManagerService once', () => {
+		it('should call pushToDataLayer() from service GoogleTagManagerService once', () => {
 			expect(spyOnPushToDataLayer).toBeCalledTimes(1);
 		});
 
@@ -249,7 +247,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 				'transformViewProductDetailsToGtmEvent',
 			);
 			spyOnPushToDataLayer = jest.spyOn(
-				trackingGoogleTagManagerService,
+				googleTagManagerService,
 				'pushToDataLayer',
 			);
 			triggerViewProductDetailsEventReturnValue =
@@ -269,7 +267,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(spyOnTransformViewProductDetailsToGtmEvent).toBeCalledTimes(1);
 		});
 
-		it('should call pushToDataLayer() from service trackingGoogleTagManagerService once', () => {
+		it('should call pushToDataLayer() from service GoogleTagManagerService once', () => {
 			expect(spyOnPushToDataLayer).toBeCalledTimes(1);
 		});
 
@@ -304,7 +302,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			);
 
 			spyOnPushToDataLayer = jest.spyOn(
-				trackingGoogleTagManagerService,
+				googleTagManagerService,
 				'pushToDataLayer',
 			);
 
@@ -324,7 +322,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(spyOnTransformAddToCartEventToGtmEvent).toBeCalledTimes(1);
 		});
 
-		it('should call pushToDataLayer() from service trackingGoogleTagManagerService once', () => {
+		it('should call pushToDataLayer() from service GoogleTagManagerService once', () => {
 			expect(spyOnPushToDataLayer).toBeCalledTimes(1);
 		});
 

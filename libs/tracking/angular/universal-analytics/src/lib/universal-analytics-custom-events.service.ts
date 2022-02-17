@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { TrackingGoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
+import { GoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
 
 import { GtmUniversalAnalyticsCustomEvent } from '@multi-step-funnels/tracking/tracking-models';
 
@@ -8,9 +8,7 @@ import { GtmUniversalAnalyticsCustomEvent } from '@multi-step-funnels/tracking/t
 	providedIn: 'root',
 })
 export class UniversalAnalyticsCustomEventsService {
-	constructor(
-		private googleTagManagerService: TrackingGoogleTagManagerService,
-	) {}
+	constructor(private googleTagManagerService: GoogleTagManagerService) {}
 
 	public triggerCustomEvent(gtmObj: GtmUniversalAnalyticsCustomEvent): void {
 		this.googleTagManagerService.pushToDataLayer(gtmObj);

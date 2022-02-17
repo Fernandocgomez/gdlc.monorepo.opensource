@@ -17,7 +17,7 @@ imports: [
 
 <h1>Services:</h1>
 
-<h2>TrackingGoogleTagManagerService:</h2>
+<h2>GoogleTagManagerService:</h2>
 
 <h3 id="pushToDataLayer">pushToDataLayer(obj);</h3>
 <p>Push GTM events to the dataLayer.</p>
@@ -26,12 +26,12 @@ imports: [
 ```javascript
 constructor(
   ...
-  private trackingGoogleTagManagerService: TrackingGoogleTagManagerService,
+  private GoogleTagManagerService: GoogleTagManagerService,
 ) { }
 ```
 
 ```javascript
-this.trackingGoogleTagManagerService.pushToDataLayer({
+this.GoogleTagManagerService.pushToDataLayer({
 	ecommerce: {
 		refund: {
 			actionField: { id: 'T12345' },

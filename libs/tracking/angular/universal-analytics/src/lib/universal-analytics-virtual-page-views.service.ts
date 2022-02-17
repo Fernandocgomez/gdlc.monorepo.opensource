@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { TrackingGoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
+import { GoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
 
 import { GtmEvent } from '@multi-step-funnels/tracking/tracking-models';
 
@@ -15,7 +15,7 @@ export class UniversalAnalyticsVirtualPageViewsService {
 	private navigationEndObservable?: Observable<NavigationEnd>;
 
 	constructor(
-		private googleTagManagerService: TrackingGoogleTagManagerService,
+		private googleTagManagerService: GoogleTagManagerService,
 		private router: Router,
 	) {}
 

@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TrackingGoogleTagManagerService } from './tracking-angular-google-tag-manager.service';
+import { GoogleTagManagerService } from './google-tag-manager.service';
 
 import { GtmEvent } from '@multi-step-funnels/tracking/tracking-models';
 
@@ -11,8 +11,8 @@ import {
 	removeGtmScriptTagFromDom,
 } from './utilities/helper-functions.utility';
 
-describe('TrackingGoogleTagManagerService', () => {
-	let service: TrackingGoogleTagManagerService;
+describe('GoogleTagManagerService', () => {
+	let service: GoogleTagManagerService;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('TrackingGoogleTagManagerService', () => {
 				},
 			],
 		});
-		service = TestBed.inject(TrackingGoogleTagManagerService);
+		service = TestBed.inject(GoogleTagManagerService);
 	});
 
 	it('should be created', () => {

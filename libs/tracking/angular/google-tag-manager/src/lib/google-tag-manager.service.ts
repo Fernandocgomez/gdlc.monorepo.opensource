@@ -14,7 +14,7 @@ declare global {
 @Injectable({
 	providedIn: 'root',
 })
-export class TrackingGoogleTagManagerService {
+export class GoogleTagManagerService {
 	constructor(
 		@Optional()
 		@Inject('GoogleTagManagerConfig')

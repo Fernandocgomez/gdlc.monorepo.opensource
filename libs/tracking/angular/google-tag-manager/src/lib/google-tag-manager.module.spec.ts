@@ -2,9 +2,9 @@ import { inject, TestBed } from '@angular/core/testing';
 
 import { GoogleTagManagerModule } from './google-tag-manager.module';
 
-import { TrackingGoogleTagManagerService } from './tracking-angular-google-tag-manager.service';
+import { GoogleTagManagerService } from './google-tag-manager.service';
 
-describe('TrackingGoogleTagManagerService', () => {
+describe('GoogleTagManagerService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [
@@ -15,9 +15,9 @@ describe('TrackingGoogleTagManagerService', () => {
 		});
 	});
 
-	it('should create a TrackingGoogleTagManagerService', inject(
-		[TrackingGoogleTagManagerService],
-		(service: TrackingGoogleTagManagerService) => {
+	it('should create a GoogleTagManagerService', inject(
+		[GoogleTagManagerService],
+		(service: GoogleTagManagerService) => {
 			expect(service).toBeTruthy();
 		},
 	));

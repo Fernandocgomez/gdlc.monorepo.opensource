@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { TrackingGoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
+import { GoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
 
 import {
 	GtmEvent,
@@ -14,9 +14,7 @@ import {
 	providedIn: 'root',
 })
 export class UniversalAnalyticsEcommerceEventsService {
-	constructor(
-		private trackingGoogleTagManagerService: TrackingGoogleTagManagerService,
-	) {}
+	constructor(private GoogleTagManagerService: GoogleTagManagerService) {}
 
 	public triggerProductImpressionsEvent(
 		productImpressionsEvent: UniversalAnalyticsEcommerceProductImpressionsEvent,
@@ -24,7 +22,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 		const gtmEvent = this.transformProductImpressionEventToGtmEvent(
 			productImpressionsEvent,
 		);
-		this.trackingGoogleTagManagerService.pushToDataLayer(gtmEvent);
+		this.GoogleTagManagerService.pushToDataLayer(gtmEvent);
 	}
 
 	private transformProductImpressionEventToGtmEvent(
@@ -38,7 +36,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 	): void {
 		const gtmEvent =
 			this.transformProductClickEventToGtmEvent(productClickEvent);
-		this.trackingGoogleTagManagerService.pushToDataLayer(gtmEvent);
+		this.GoogleTagManagerService.pushToDataLayer(gtmEvent);
 	}
 
 	private transformProductClickEventToGtmEvent(
@@ -53,7 +51,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 		const gtmEvent = this.transformViewProductDetailsToGtmEvent(
 			viewProductDetailsEvent,
 		);
-		this.trackingGoogleTagManagerService.pushToDataLayer(gtmEvent);
+		this.GoogleTagManagerService.pushToDataLayer(gtmEvent);
 	}
 
 	private transformViewProductDetailsToGtmEvent(
@@ -66,7 +64,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 		addToCartEvent: UniversalAnalyticsEcommerceAddToCartEvent,
 	): void {
 		const gtmEvent = this.transformAddToCartEventToGtmEvent(addToCartEvent);
-		this.trackingGoogleTagManagerService.pushToDataLayer(gtmEvent);
+		this.GoogleTagManagerService.pushToDataLayer(gtmEvent);
 	}
 
 	private transformAddToCartEventToGtmEvent(
