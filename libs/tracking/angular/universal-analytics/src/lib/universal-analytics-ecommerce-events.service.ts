@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { GoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
+import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag-manager';
 
 import {
 	GtmEvent,

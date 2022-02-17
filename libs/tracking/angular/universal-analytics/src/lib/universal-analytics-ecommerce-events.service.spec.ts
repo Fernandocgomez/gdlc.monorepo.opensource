@@ -9,7 +9,7 @@ import {
 } from '@multi-step-funnels/tracking/tracking-models';
 
 import { UniversalAnalyticsEcommerceEventsService } from './universal-analytics-ecommerce-events.service';
-import { GoogleTagManagerService } from '@multi-step-funnels/tracking/angular/google-tag-manager';
+import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag-manager';
 
 import {
 	productImpressionEvent,

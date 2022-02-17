@@ -1,6 +1,6 @@
 module.exports = {
-	displayName: 'tracking-angular-google-tag-manager',
-	preset: '../../../../jest.preset.js',
+	displayName: 'tracking-google-tag-manager',
+	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
 	globals: {
 		'ts-jest': {
@@ -8,8 +8,7 @@ module.exports = {
 			stringifyContentPathRegex: '\\.(html|svg)$',
 		},
 	},
-	coverageDirectory:
-		'../../../../coverage/libs/tracking/angular/google-tag-manager',
+	coverageDirectory: '../../../coverage/libs/tracking/google-tag-manager',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
 	},

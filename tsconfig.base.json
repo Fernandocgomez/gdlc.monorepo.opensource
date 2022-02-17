@@ -15,11 +15,11 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
+			"@multi-step-funnels/tracking-google-tag-manager": [
+				"libs/tracking/google-tag-manager/src/index.ts"
+			],
 			"@multi-step-funnels/tracking/angular/google-analytics-4": [
 				"libs/tracking/angular/google-analytics-4/src/index.ts"
-			],
-			"@multi-step-funnels/tracking/angular/google-tag-manager": [
-				"libs/tracking/angular/google-tag-manager/src/index.ts"
 			],
 			"@multi-step-funnels/tracking/angular/universal-analytics": [
 				"libs/tracking/angular/universal-analytics/src/index.ts"

@@ -1,4 +1,4 @@
-<h1>tracking-angular-google-tag-manager</h1>
+<h1>tracking-google-tag-manager</h1>
 <p>A simple abstraction to integrate GTM into an Angular project.</p>
 
 <h1>Getting Started:</h1>
@@ -44,4 +44,4 @@ this.GoogleTagManagerService.pushToDataLayer({
 
 <h2>Running unit tests:</h2>
 
-<p>Run `nx affected:test tracking-angular-google-tag-manager --parallel --maxParallel 10 --watch --colors` to execute the unit tests.</p>
+<p>Run `nx affected:test tracking-google-tag-manager --parallel --maxParallel 10 --watch --colors` to execute the unit tests.</p>
