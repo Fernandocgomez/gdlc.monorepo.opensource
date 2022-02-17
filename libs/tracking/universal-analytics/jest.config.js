@@ -1,6 +1,6 @@
 module.exports = {
-	displayName: 'tracking-angular-universal-analytics',
-	preset: '../../../../jest.preset.js',
+	displayName: 'tracking-universal-analytics',
+	preset: '../../../jest.preset.js',
 	setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
 	globals: {
 		'ts-jest': {
@@ -8,8 +8,7 @@ module.exports = {
 			stringifyContentPathRegex: '\\.(html|svg)$',
 		},
 	},
-	coverageDirectory:
-		'../../../../coverage/libs/tracking/angular/universal-analytics',
+	coverageDirectory: '../../../coverage/libs/tracking/universal-analytics',
 	transform: {
 		'^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
 	},

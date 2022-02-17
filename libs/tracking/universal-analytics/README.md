@@ -1,4 +1,4 @@
-<h1>tracking-angular-universal-analytics</h1>
+<h1>tracking-universal-analytics</h1>
 <p>A collection of services, and directives to easily integrate the virtual page views, custom events and E-commerce universal analytics functionality.</P>
 <p>Note: Further configuration will be needed on the Google Tag Manager.</P>
 
@@ -207,4 +207,4 @@ export interface UniversalAnalyticsEcommerceAddToCartEvent {
 
 <h2>Running unit tests:</h2>
 
-<P>Run `nx affected:test tracking-angular-universal-analytics --parallel --maxParallel 10 --watch --colors` to execute the unit tests.</P>
+<P>Run `nx affected:test tracking-universal-analytics --parallel --maxParallel 10 --watch --colors` to execute the unit tests.</P>
