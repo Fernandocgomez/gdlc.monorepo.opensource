@@ -1,6 +1,8 @@
 {
 	"version": 2,
 	"projects": {
+		"library-tester": "apps/library-tester",
+		"library-tester-e2e": "apps/library-tester-e2e",
 		"tracking-google-tag-manager": "libs/tracking/google-tag-manager",
 		"tracking-tracking-models": "libs/tracking/tracking-models",
 		"tracking-universal-analytics": "libs/tracking/universal-analytics"
