@@ -19,7 +19,7 @@ imports: [
 
 <h2>GoogleTagManagerService:</h2>
 
-<h3 id="pushToDataLayer">pushToDataLayer(obj);</h3>
+<h3>pushToDataLayer(obj);</h3>
 <p>Push GTM events to the dataLayer.</p>
 <p>Argument: obj<GtmEvent></p>
 
@@ -40,8 +40,9 @@ this.GoogleTagManagerService.pushToDataLayer({
 });
 ```
 
+<h3>clearEcommerceObject();</h3>
+<p>Clear the ecommerce property inside the dataLayer object.</p>
+
 <h1>Development:</h1>
-
 <h2>Running unit tests:</h2>
-
 <p>Run `nx affected:test tracking-google-tag-manager --parallel --maxParallel 10 --watch --colors` to execute the unit tests.</p>
