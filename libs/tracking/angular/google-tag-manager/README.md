@@ -3,13 +3,13 @@
 
 <h1>Getting Started:</h1>
 <ul>
-  <li>After installation, import the TrackingAngularGoogleTagManagerModule inside the AppModule imports Array.</li>
+  <li>After installation, import the GoogleTagManagerModule inside the AppModule imports Array.</li>
   <li>Provide the GTM id on the forRoot method.</li>
 </ul>
 
 ```javascript
 imports: [
-	...TrackingAngularGoogleTagManagerModule.forRoot({
+	...GoogleTagManagerModule.forRoot({
 		id: YOUR_GTM_ID,
 	}),
 ];

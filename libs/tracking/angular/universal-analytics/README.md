@@ -3,11 +3,11 @@
 <p>Note: Further configuration will be needed on the Google Tag Manager.</P>
 
 <h1>Getting Started:</h1>
-<p>After installation, import the TrackingAngularGoogleTagManagerModule and UniversalAnalyticsModule inside the AppModule imports Array.</p>
+<p>After installation, import the GoogleTagManagerModule and UniversalAnalyticsModule inside the AppModule imports Array.</p>
 
 ```javascript
 imports: [
-	...TrackingAngularGoogleTagManagerModule.forRoot({
+	...GoogleTagManagerModule.forRoot({
 		id: YOUR_GTM_ID,
 	}),
 	UniversalAnalyticsModule,
