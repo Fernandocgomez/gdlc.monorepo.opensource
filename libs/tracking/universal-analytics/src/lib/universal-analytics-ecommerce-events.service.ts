@@ -11,6 +11,7 @@ import {
 } from '@multi-step-funnels/tracking/tracking-models';
 
 import {
+	AddToCartEvent,
 	ProductClickEvent,
 	ProductImpressionsEvent,
 	ViewProductDetailsEvent,
@@ -23,15 +24,17 @@ export class UniversalAnalyticsEcommerceEventsService {
 	private productImpressionsEvent: ProductImpressionsEvent;
 	private productClickEvent: ProductClickEvent;
 	private viewProductDetailsEvent: ViewProductDetailsEvent;
+	private addToCartEvent: AddToCartEvent;
 
-	constructor(private GoogleTagManagerService: GoogleTagManagerService) {
+	constructor(private googleTagManagerService: GoogleTagManagerService) {
 		this.productImpressionsEvent = new ProductImpressionsEvent(
-			GoogleTagManagerService,
+			googleTagManagerService,
 		);
-		this.productClickEvent = new ProductClickEvent(GoogleTagManagerService);
+		this.productClickEvent = new ProductClickEvent(googleTagManagerService);
 		this.viewProductDetailsEvent = new ViewProductDetailsEvent(
-			GoogleTagManagerService,
+			googleTagManagerService,
 		);
+		this.addToCartEvent = new AddToCartEvent(googleTagManagerService);
 	}
 
 	public triggerProductImpressionsEvent(
@@ -55,14 +58,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 	public triggerAddToCartEvent(
 		addToCartEvent: UniversalAnalyticsEcommerceAddToCartEvent,
 	): void {
-		const gtmEvent = this.transformAddToCartEventToGtmEvent(addToCartEvent);
-		this.GoogleTagManagerService.pushToDataLayer(gtmEvent);
-	}
-
-	private transformAddToCartEventToGtmEvent(
-		addToCartEvent: UniversalAnalyticsEcommerceAddToCartEvent,
-	): GtmEvent {
-		return { ...addToCartEvent, event: 'angularAddToCart' };
+		this.addToCartEvent.trigger(addToCartEvent);
 	}
 
 	public triggerRemoveFromCartEvent(): void {

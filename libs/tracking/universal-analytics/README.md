@@ -207,4 +207,4 @@ export interface UniversalAnalyticsEcommerceAddToCartEvent {
 
 <h2>Running unit tests:</h2>
 
-<P>Run `nx affected:test tracking-universal-analytics --parallel --maxParallel 10 --watch --colors` to execute the unit tests.</P>
+<P>Run `nx affected:test tracking-universal-analytics --watch --colors` to execute the unit tests.</P>

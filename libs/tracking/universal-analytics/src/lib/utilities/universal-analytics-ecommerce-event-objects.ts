@@ -74,7 +74,7 @@ export const viewProductDetailsEventMock: UniversalAnalyticsEcommerceViewProduct
 		},
 	};
 
-export const addToCartEvent: UniversalAnalyticsEcommerceAddToCartEvent = {
+export const addToCartEventMock: UniversalAnalyticsEcommerceAddToCartEvent = {
 	ecommerce: {
 		currencyCode: 'EUR',
 		add: {

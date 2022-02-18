@@ -9,17 +9,15 @@ import {
 } from '@multi-step-funnels/tracking/tracking-models';
 
 import { UniversalAnalyticsEcommerceEventsService } from './universal-analytics-ecommerce-events.service';
-import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag-manager';
 
 import {
 	productImpressionEventMock,
 	productClickEventMock,
 	viewProductDetailsEventMock,
-	addToCartEvent,
+	addToCartEventMock,
 } from './utilities/universal-analytics-ecommerce-event-objects';
 
 import {
-	isOfTypeGtmEvent,
 	isOfTypeUniversalAnalyticsEcommerceProductClickEvent,
 	isOfTypeUniversalAnalyticsEcommerceViewProductDetailsEvent,
 	isOfTypeUniversalAnalyticsEcommerceAddToCartEvent,
@@ -27,11 +25,8 @@ import {
 
 describe('UniversalAnalyticsEcommerceEventsService', () => {
 	let service: UniversalAnalyticsEcommerceEventsService;
-	let googleTagManagerService: GoogleTagManagerService;
 
 	let dataLayer: GtmEvent[];
-
-	let spyOnPushToDataLayer: jest.SpyInstance<void, [obj: GtmEvent]>;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -43,7 +38,6 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			],
 		});
 		service = TestBed.inject(UniversalAnalyticsEcommerceEventsService);
-		googleTagManagerService = TestBed.inject(GoogleTagManagerService);
 
 		dataLayer = window.dataLayer || [];
 	});
@@ -100,11 +94,6 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 				'triggerProductClickEvent',
 			);
 
-			spyOnPushToDataLayer = jest.spyOn(
-				googleTagManagerService,
-				'pushToDataLayer',
-			);
-
 			triggerProductClickEventReturnValue = service.triggerProductClickEvent(
 				productClickEventMock,
 			);
@@ -142,10 +131,6 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 				service,
 				'triggerViewProductDetailsEvent',
 			);
-			spyOnPushToDataLayer = jest.spyOn(
-				googleTagManagerService,
-				'pushToDataLayer',
-			);
 			triggerViewProductDetailsEventReturnValue =
 				service.triggerViewProductDetailsEvent(viewProductDetailsEventMock);
 		});
@@ -175,125 +160,30 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			void,
 			[addToCartEvent: UniversalAnalyticsEcommerceAddToCartEvent]
 		>;
-		let spyOnTransformAddToCartEventToGtmEvent: jest.SpyInstance<
-			any,
-			unknown[]
-		>;
+
 		let triggerAddToCartEventReturnValue: void;
 
 		beforeEach(() => {
 			spyOnTriggerAddToCartEvent = jest.spyOn(service, 'triggerAddToCartEvent');
 
-			spyOnTransformAddToCartEventToGtmEvent = jest.spyOn(
-				service as any,
-				'transformAddToCartEventToGtmEvent',
-			);
-
-			spyOnPushToDataLayer = jest.spyOn(
-				googleTagManagerService,
-				'pushToDataLayer',
-			);
-
 			triggerAddToCartEventReturnValue =
-				service.triggerAddToCartEvent(addToCartEvent);
+				service.triggerAddToCartEvent(addToCartEventMock);
 		});
 
 		it('should take an argument of type UniversalAnalyticsEcommerceAddToCartEvent', () => {
 			expect(
-				isOfTypeUniversalAnalyticsEcommerceAddToCartEvent(addToCartEvent),
+				isOfTypeUniversalAnalyticsEcommerceAddToCartEvent(addToCartEventMock),
 			).toBe(true);
-			expect(spyOnTriggerAddToCartEvent).toBeCalledWith(addToCartEvent);
+			expect(spyOnTriggerAddToCartEvent).toBeCalledWith(addToCartEventMock);
 			expect(spyOnTriggerAddToCartEvent).toBeCalled();
-		});
-
-		it('should call #transformAddToCartEventToGtmEvent once', () => {
-			expect(spyOnTransformAddToCartEventToGtmEvent).toBeCalledTimes(1);
-		});
-
-		it('should call pushToDataLayer() from service GoogleTagManagerService once', () => {
-			expect(spyOnPushToDataLayer).toBeCalledTimes(1);
 		});
 
 		it('should return void', () => {
 			expect(triggerAddToCartEventReturnValue).toBe(undefined);
 		});
 
-		it('should push an "angularViewProductDetails" event to the dataLayer', () => {
+		it('should push an "angularAddToCart" event to the dataLayer', () => {
 			expect(dataLayer[dataLayer.length - 1].event).toBe('angularAddToCart');
-		});
-	});
-
-	describe('#transformAddToCartEventToGtmEvent', () => {
-		let spyOnTransformAddToCartEventToGtmEvent: jest.SpyInstance<
-			any,
-			unknown[]
-		>;
-		let returnValue: GtmEvent;
-
-		beforeEach(() => {
-			spyOnTransformAddToCartEventToGtmEvent = jest.spyOn(
-				service as any,
-				'transformAddToCartEventToGtmEvent',
-			);
-
-			returnValue =
-				service['transformAddToCartEventToGtmEvent'](addToCartEvent);
-		});
-
-		it('should return a GtmEvent', () => {
-			expect(isOfTypeGtmEvent(returnValue)).toBe(true);
-			expect(returnValue.event).toBe('angularAddToCart');
-		});
-
-		it('should take an argument of type UniversalAnalyticsEcommerceAddToCartEvent', () => {
-			expect(spyOnTransformAddToCartEventToGtmEvent).toBeCalledWith(
-				addToCartEvent,
-			);
-			expect(
-				isOfTypeUniversalAnalyticsEcommerceAddToCartEvent(addToCartEvent),
-			).toBe(true);
-		});
-	});
-
-	describe('#triggerRemoveFromCartEvent', () => {
-		it('', () => {
-			//
-		});
-	});
-
-	describe('#triggerPromotionImpressionEvent', () => {
-		it('', () => {
-			//
-		});
-	});
-
-	describe('#triggerPromotionClickEvent', () => {
-		it('', () => {
-			//
-		});
-	});
-
-	describe('#triggerCheckoutStepEvent', () => {
-		it('', () => {
-			//
-		});
-	});
-
-	describe('#triggerCheckoutOptionEvent', () => {
-		it('', () => {
-			//
-		});
-	});
-
-	describe('#triggerPurchaseEvent', () => {
-		it('', () => {
-			//
-		});
-	});
-
-	describe('#triggerRefundEvent', () => {
-		it('', () => {
-			//
 		});
 	});
 });
