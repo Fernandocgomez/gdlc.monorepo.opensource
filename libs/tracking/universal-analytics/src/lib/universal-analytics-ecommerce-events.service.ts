@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag-manager';
 
 import {
-	GtmEvent,
 	UniversalAnalyticsEcommerceAddToCartEvent,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
