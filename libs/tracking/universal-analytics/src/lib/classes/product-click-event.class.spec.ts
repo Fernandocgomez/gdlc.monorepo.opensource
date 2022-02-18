@@ -2,12 +2,12 @@ import { TestBed } from '@angular/core/testing';
 
 import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag-manager';
 
-import { ProductImpressionsEvent } from './product-impressions-event.class';
+import { ProductClickEvent } from './product-click-event.class';
 
-import { productImpressionEventMock } from '../utilities/universal-analytics-ecommerce-event-objects';
+import { productClickEventMock } from '../utilities/universal-analytics-ecommerce-event-objects';
 import {
 	isOfTypeGtmEvent,
-	isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent,
+	isOfTypeUniversalAnalyticsEcommerceProductClickEvent,
 } from '../utilities/helper-functions.utility';
 
 import {
@@ -18,10 +18,10 @@ import {
 	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
-describe('ProductImpressionsEvent', () => {
+describe('ProductClickEvent', () => {
 	let googleTagManagerService: GoogleTagManagerService;
 
-	let productImpressionsEventInstance: ProductImpressionsEvent;
+	let productClickEventInstance: ProductClickEvent;
 
 	let dataLayer: GtmEvent[];
 
@@ -37,9 +37,7 @@ describe('ProductImpressionsEvent', () => {
 
 		googleTagManagerService = TestBed.inject(GoogleTagManagerService);
 
-		productImpressionsEventInstance = new ProductImpressionsEvent(
-			googleTagManagerService,
-		);
+		productClickEventInstance = new ProductClickEvent(googleTagManagerService);
 
 		dataLayer = window.dataLayer || [];
 	});
@@ -49,7 +47,7 @@ describe('ProductImpressionsEvent', () => {
 	});
 
 	it('should be created', () => {
-		expect(productImpressionsEventInstance).toBeTruthy();
+		expect(productClickEventInstance).toBeTruthy();
 	});
 
 	describe('#transformToGtmEvent', () => {
@@ -58,12 +56,12 @@ describe('ProductImpressionsEvent', () => {
 
 		beforeEach(() => {
 			spyOnTransformToGtmEvent = jest.spyOn(
-				productImpressionsEventInstance as any,
+				productClickEventInstance as any,
 				'transformToGtmEvent',
 			);
 
-			returnValue = productImpressionsEventInstance['transformToGtmEvent'](
-				productImpressionEventMock,
+			returnValue = productClickEventInstance['transformToGtmEvent'](
+				productClickEventMock,
 			);
 		});
 
@@ -71,17 +69,15 @@ describe('ProductImpressionsEvent', () => {
 			expect(isOfTypeGtmEvent(returnValue)).toBe(true);
 		});
 
-		it('should return an "angularProductImpressions" event', () => {
-			expect(returnValue.event).toBe('angularProductImpressions');
+		it('should return an "angularProductClick" event', () => {
+			expect(returnValue.event).toBe('angularProductClick');
 		});
 
-		it('should take an argument of type UniversalAnalyticsEcommerceProductImpressionsEvent', () => {
-			expect(spyOnTransformToGtmEvent).toBeCalledWith(
-				productImpressionEventMock,
-			);
+		it('should take an argument of type UniversalAnalyticsEcommerceProductClickEvent', () => {
+			expect(spyOnTransformToGtmEvent).toBeCalledWith(productClickEventMock);
 			expect(
-				isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent(
-					productImpressionEventMock,
+				isOfTypeUniversalAnalyticsEcommerceProductClickEvent(
+					productClickEventMock,
 				),
 			).toBe(true);
 		});
@@ -100,24 +96,22 @@ describe('ProductImpressionsEvent', () => {
 		>;
 
 		beforeEach(() => {
-			spyOnTrigger = jest.spyOn(productImpressionsEventInstance, 'trigger');
+			spyOnTrigger = jest.spyOn(productClickEventInstance, 'trigger');
 
-			productImpressionsEventInstance.trigger(productImpressionEventMock);
+			productClickEventInstance.trigger(productClickEventMock);
 		});
 
-		it('should take an argument of type UniversalAnalyticsEcommerceProductImpressionsEvent', () => {
-			expect(spyOnTrigger).toBeCalledWith(productImpressionEventMock);
+		it('should take an argument of type UniversalAnalyticsEcommerceProductClickEvent', () => {
+			expect(spyOnTrigger).toBeCalledWith(productClickEventMock);
 			expect(
-				isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent(
-					productImpressionEventMock,
+				isOfTypeUniversalAnalyticsEcommerceProductClickEvent(
+					productClickEventMock,
 				),
 			).toBe(true);
 		});
 
-		it('should push an "angularProductImpressions" event to the dataLayer', () => {
-			expect(dataLayer[dataLayer.length - 1].event).toBe(
-				'angularProductImpressions',
-			);
+		it('should push an "angularProductClick" event to the dataLayer', () => {
+			expect(dataLayer[dataLayer.length - 1].event).toBe('angularProductClick');
 		});
 	});
 });

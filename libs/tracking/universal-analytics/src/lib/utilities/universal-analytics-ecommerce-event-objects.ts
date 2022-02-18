@@ -34,25 +34,26 @@ export const productImpressionEventMock: UniversalAnalyticsEcommerceProductImpre
 		},
 	};
 
-export const productClickEvent: UniversalAnalyticsEcommerceProductClickEvent = {
-	ecommerce: {
-		click: {
-			actionField: { list: 'Search Results' },
-			products: [
-				{
-					name: 'Triblend Android T-Shirt',
-					id: '12345',
-					price: '15.25',
-					brand: 'Google',
-					category: 'Apparel',
-					variant: 'Gray',
-					list: 'Search Results',
-					position: 1,
-				},
-			],
+export const productClickEventMock: UniversalAnalyticsEcommerceProductClickEvent =
+	{
+		ecommerce: {
+			click: {
+				actionField: { list: 'Search Results' },
+				products: [
+					{
+						name: 'Triblend Android T-Shirt',
+						id: '12345',
+						price: '15.25',
+						brand: 'Google',
+						category: 'Apparel',
+						variant: 'Gray',
+						list: 'Search Results',
+						position: 1,
+					},
+				],
+			},
 		},
-	},
-};
+	};
 
 export const ViewProductDetailsEvent: UniversalAnalyticsEcommerceViewProductDetailsEvent =
 	{

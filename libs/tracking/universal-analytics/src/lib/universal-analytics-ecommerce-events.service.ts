@@ -11,17 +11,20 @@ import {
 } from '@multi-step-funnels/tracking/tracking-models';
 
 import { ProductImpressionsEvent } from './classes/product-impressions-event.class';
+import { ProductClickEvent } from './classes/product-click-event.class';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class UniversalAnalyticsEcommerceEventsService {
 	private productImpressionsEvent: ProductImpressionsEvent;
+	private productClickEvent: ProductClickEvent;
 
 	constructor(private GoogleTagManagerService: GoogleTagManagerService) {
 		this.productImpressionsEvent = new ProductImpressionsEvent(
 			GoogleTagManagerService,
 		);
+		this.productClickEvent = new ProductClickEvent(GoogleTagManagerService);
 	}
 
 	public triggerProductImpressionsEvent(
@@ -33,15 +36,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 	public triggerProductClickEvent(
 		productClickEvent: UniversalAnalyticsEcommerceProductClickEvent,
 	): void {
-		const gtmEvent =
-			this.transformProductClickEventToGtmEvent(productClickEvent);
-		this.GoogleTagManagerService.pushToDataLayer(gtmEvent);
-	}
-
-	private transformProductClickEventToGtmEvent(
-		productClickEvent: UniversalAnalyticsEcommerceProductClickEvent,
-	): GtmEvent {
-		return { ...productClickEvent, event: 'angularProductClick' };
+		this.productClickEvent.trigger(productClickEvent);
 	}
 
 	public triggerViewProductDetailsEvent(
