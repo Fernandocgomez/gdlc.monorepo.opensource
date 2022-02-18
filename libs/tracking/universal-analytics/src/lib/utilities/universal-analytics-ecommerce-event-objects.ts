@@ -5,7 +5,7 @@ import {
 	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
-export const productImpressionEvent: UniversalAnalyticsEcommerceProductImpressionsEvent =
+export const productImpressionEventMock: UniversalAnalyticsEcommerceProductImpressionsEvent =
 	{
 		ecommerce: {
 			currencyCode: 'EUR',
