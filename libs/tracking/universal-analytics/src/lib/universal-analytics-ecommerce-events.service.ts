@@ -10,8 +10,11 @@ import {
 	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
-import { ProductImpressionsEvent } from './classes/product-impressions-event.class';
-import { ProductClickEvent } from './classes/product-click-event.class';
+import {
+	ProductClickEvent,
+	ProductImpressionsEvent,
+	ViewProductDetailsEvent,
+} from './classes';
 
 @Injectable({
 	providedIn: 'root',
@@ -19,12 +22,16 @@ import { ProductClickEvent } from './classes/product-click-event.class';
 export class UniversalAnalyticsEcommerceEventsService {
 	private productImpressionsEvent: ProductImpressionsEvent;
 	private productClickEvent: ProductClickEvent;
+	private viewProductDetailsEvent: ViewProductDetailsEvent;
 
 	constructor(private GoogleTagManagerService: GoogleTagManagerService) {
 		this.productImpressionsEvent = new ProductImpressionsEvent(
 			GoogleTagManagerService,
 		);
 		this.productClickEvent = new ProductClickEvent(GoogleTagManagerService);
+		this.viewProductDetailsEvent = new ViewProductDetailsEvent(
+			GoogleTagManagerService,
+		);
 	}
 
 	public triggerProductImpressionsEvent(
@@ -42,16 +49,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 	public triggerViewProductDetailsEvent(
 		viewProductDetailsEvent: UniversalAnalyticsEcommerceViewProductDetailsEvent,
 	): void {
-		const gtmEvent = this.transformViewProductDetailsToGtmEvent(
-			viewProductDetailsEvent,
-		);
-		this.GoogleTagManagerService.pushToDataLayer(gtmEvent);
-	}
-
-	private transformViewProductDetailsToGtmEvent(
-		viewProductDetailsEvent: UniversalAnalyticsEcommerceViewProductDetailsEvent,
-	): GtmEvent {
-		return { ...viewProductDetailsEvent, event: 'angularViewProductDetails' };
+		this.viewProductDetailsEvent.trigger(viewProductDetailsEvent);
 	}
 
 	public triggerAddToCartEvent(

@@ -55,7 +55,7 @@ export const productClickEventMock: UniversalAnalyticsEcommerceProductClickEvent
 		},
 	};
 
-export const ViewProductDetailsEvent: UniversalAnalyticsEcommerceViewProductDetailsEvent =
+export const viewProductDetailsEventMock: UniversalAnalyticsEcommerceViewProductDetailsEvent =
 	{
 		ecommerce: {
 			detail: {
