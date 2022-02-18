@@ -8,7 +8,7 @@ import {
 	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
-import { EcommerceEvent } from './ecommerce-event.class';
+import { EcommerceEvent } from './ecommerce-event.abstract-class';
 
 export class ViewProductDetailsEvent extends EcommerceEvent {
 	constructor(
