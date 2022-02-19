@@ -270,32 +270,65 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 	describe('#triggerAddToCartEvent', () => {
 		let spyOnTriggerAddToCartEvent: jest.SpyInstance<
 			void,
-			[addToCartEvent: UniversalAnalyticsEcommerceAddToCartEvent]
+			[
+				products: UniversalAnalyticsEcommerceItem[],
+				currencyCode?: string | undefined,
+			]
 		>;
 
 		let triggerAddToCartEventReturnValue: void;
 
+		const secondArgument = 'EUR';
+
 		beforeEach(() => {
 			spyOnTriggerAddToCartEvent = jest.spyOn(service, 'triggerAddToCartEvent');
 
-			triggerAddToCartEventReturnValue =
-				service.triggerAddToCartEvent(addToCartEventMock);
+			triggerAddToCartEventReturnValue = service.triggerAddToCartEvent(
+				ecommerceProductsMock,
+				secondArgument,
+			);
 		});
 
-		it('should take an argument of type UniversalAnalyticsEcommerceAddToCartEvent', () => {
-			expect(
-				isOfTypeUniversalAnalyticsEcommerceAddToCartEvent(addToCartEventMock),
-			).toBe(true);
-			expect(spyOnTriggerAddToCartEvent).toBeCalledWith(addToCartEventMock);
-			expect(spyOnTriggerAddToCartEvent).toBeCalled();
+		it('should push an "angularAddToCart" event to the dataLayer', () => {
+			expect(dataLayer[dataLayer.length - 1].event).toBe('angularAddToCart');
+		});
+
+		it('can be call with two or one argument', () => {
+			expect(spyOnTriggerAddToCartEvent).toBeCalledWith(
+				ecommerceProductsMock,
+				secondArgument,
+			);
+			service.triggerAddToCartEvent(ecommerceProductsMock);
+			expect(spyOnTriggerAddToCartEvent).toBeCalledWith(ecommerceProductsMock);
 		});
 
 		it('should return void', () => {
 			expect(triggerAddToCartEventReturnValue).toBe(undefined);
 		});
 
-		it('should push an "angularAddToCart" event to the dataLayer', () => {
-			expect(dataLayer[dataLayer.length - 1].event).toBe('angularAddToCart');
+		describe('first argument "products"', () => {
+			it('should be of type UniversalAnalyticsEcommerceItem[]', () => {
+				expect(
+					isAnArrayOfTypeUniversalAnalyticsEcommerceItem(ecommerceProductsMock),
+				).toBe(true);
+				expect(Array.isArray(ecommerceProductsMock)).toBe(true);
+			});
+		});
+
+		describe('second argument "currencyCode"', () => {
+			it('should be of type string', () => {
+				expect(typeof secondArgument).toBe('string');
+			});
+
+			it('should have a default value equal to "USD"', () => {
+				service.triggerAddToCartEvent(ecommerceProductsMock);
+				expect(
+					dataLayer[dataLayer.length - 1]['ecommerce']['currencyCode'],
+				).toBe('USD');
+				expect(spyOnTriggerAddToCartEvent).toHaveBeenLastCalledWith(
+					ecommerceProductsMock,
+				);
+			});
 		});
 	});
 

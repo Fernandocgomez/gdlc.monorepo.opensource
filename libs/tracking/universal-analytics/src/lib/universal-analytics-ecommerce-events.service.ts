@@ -91,8 +91,17 @@ export class UniversalAnalyticsEcommerceEventsService {
 	}
 
 	public triggerAddToCartEvent(
-		addToCartEvent: UniversalAnalyticsEcommerceAddToCartEvent,
+		products: UniversalAnalyticsEcommerceItem[],
+		currencyCode: string = 'USD',
 	): void {
+		const addToCartEvent: UniversalAnalyticsEcommerceAddToCartEvent = {
+			ecommerce: {
+				currencyCode,
+				add: {
+					products,
+				},
+			},
+		};
 		this.addToCartEvent.trigger(addToCartEvent);
 	}
 

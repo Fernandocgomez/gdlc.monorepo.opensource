@@ -97,31 +97,32 @@ interface UniversalAnalyticsEcommerceItem {
 	coupon?: string;
 }
 
-this.triggerProductImpressionsEvent(
-	[
-		{
-			name: 'Triblend Android T-Shirt',
-			id: '12345',
-			price: '15.25',
-			brand: 'Google',
-			category: 'Apparel',
-			variant: 'Gray',
-			list: 'Search Results',
-			position: 1,
-		},
-		{
-			name: 'Donut Friday Scented T-Shirt',
-			id: '67890',
-			price: '33.75',
-			brand: 'Google',
-			category: 'Apparel',
-			variant: 'Black',
-			list: 'Search Results',
-			position: 2,
-		},
-	],
-	'EUR',
-);
+const ecommerceProducts = [
+	{
+		name: 'Triblend Android T-Shirt',
+		id: '12345',
+		price: '15.25',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Gray',
+		list: 'Search Results',
+		position: 1,
+	},
+	{
+		name: 'Donut Friday Scented T-Shirt',
+		id: '67890',
+		price: '33.75',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Black',
+		list: 'Search Results',
+		position: 2,
+	},
+];
+
+const currencyCode = 'EUR';
+
+this.triggerProductImpressionsEvent(ecommerceProducts, currencyCode);
 ```
 
 <h3>triggerProductClickEvent();</h3>
@@ -148,19 +149,22 @@ interface UniversalAnalyticsEcommerceItem {
 	coupon?: string;
 }
 
-this.triggerProductClickEvent(
-	[
-		{
-			name: 'Triblend Android T-Shirt',
-			id: '12345',
-			price: '15.25',
-			brand: 'Google',
-			category: 'Apparel',
-			variant: 'Gray',
-		},
-	],
-	'Search Results',
-);
+const ecommerceProduct = [
+	{
+		name: 'Triblend Android T-Shirt',
+		id: '12345',
+		price: '15.25',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Gray',
+		list: 'Search Results',
+		position: 1,
+	},
+];
+
+const searchList = 'Search Results';
+
+this.triggerProductClickEvent(ecommerceProduct, searchList);
 ```
 
 <h3>triggerViewProductDetailsEvent();</h3>
@@ -187,26 +191,33 @@ interface UniversalAnalyticsEcommerceItem {
 	coupon?: string;
 }
 
-this.triggerViewProductDetailsEvent(
-	[
-		{
-			name: 'Triblend Android T-Shirt',
-			id: '12345',
-			price: '15.25',
-			brand: 'Google',
-			category: 'Apparel',
-			variant: 'Gray',
-		},
-	],
-	'Search Results',
-);
+const ecommerceProduct = [
+	{
+		name: 'Triblend Android T-Shirt',
+		id: '12345',
+		price: '15.25',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Gray',
+		list: 'Search Results',
+		position: 1,
+	},
+];
+
+const searchList = 'Search Results';
+
+this.triggerViewProductDetailsEvent(ecommerceProduct, searchList);
 ```
 
 <h3>triggerAddToCartEvent();</h3>
-<p>Measure adding a product to a shopping cart by using an "angularAddToCart" event and a list of products</p>
+<p>Measure adding a product to a shopping cart by sending an "angularAddToCart" event and a list of products to the dataLayer</p>
 <p>The product object should be available at the moment this method is called.</p>
-<p>Arguments: addToCartEvent: <UniversalAnalyticsEcommerceAddToCartEvent></p>
-<p>UniversalAnalyticsEcommerceAddToCartEvent Interface</p>
+<p>Arguments: </p>
+<ul>
+	<li>products: <UniversalAnalyticsEcommerceItem[]></li>
+	<li>currencyCode: <String> = 'USD'</li>
+</ul>
+<p>The currencyCode argument has a default value of USD.</p>
 
 ```javascript
 interface UniversalAnalyticsEcommerceItem {
@@ -222,14 +233,22 @@ interface UniversalAnalyticsEcommerceItem {
 	coupon?: string;
 }
 
-export interface UniversalAnalyticsEcommerceAddToCartEvent {
-	ecommerce: {
-		currencyCode?: string,
-		add: {
-			products?: UniversalAnalyticsEcommerceItem[],
-		},
-	};
-}
+const ecommerceProduct = [
+	{
+		name: 'Triblend Android T-Shirt',
+		id: '12345',
+		price: '15.25',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Gray',
+		list: 'Search Results',
+		position: 1,
+	},
+];
+
+const currencyCode = 'EUR';
+
+this.triggerAddToCartEvent(ecommerceProduct, currencyCode);
 ```
 
 <h3>#();</h3>
