@@ -2,6 +2,7 @@ import {
 	GtmEvent,
 	UniversalAnalyticsEcommerceAddToCartEvent,
 	UniversalAnalyticsEcommerceEvent,
+	UniversalAnalyticsEcommerceItem,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
 	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
@@ -24,6 +25,20 @@ export const isOfTypeUniversalAnalyticsEcommerceProductClickEvent = (
 	return (
 		(value as UniversalAnalyticsEcommerceProductClickEvent).ecommerce !==
 		undefined
+	);
+};
+
+export const isAnArrayOfTypeUniversalAnalyticsEcommerceItem = (
+	array: Array<any>,
+) => {
+	if (array.length <= 0) {
+		return false;
+	}
+
+	const firstEcommerceItem = (array as UniversalAnalyticsEcommerceItem[])[0];
+
+	return (
+		firstEcommerceItem.id !== undefined && firstEcommerceItem.name !== undefined
 	);
 };
 

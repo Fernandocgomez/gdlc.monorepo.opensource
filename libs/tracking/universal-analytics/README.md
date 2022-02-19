@@ -75,9 +75,13 @@ public redirectToFacebookPage(): void {
 
 <h3>triggerProductImpressionsEvent();</h3>
 <p>Send an "angularProductImpressions" event to Universal Analytics via the dataLayer.</p>
-<p>When calling this method make sure, you have access to your products displayed details.</p>
-<p>Arguments: productImpressionsEvent<UniversalAnalyticsEcommerceProductImpressionsEvent></p>
-<p>UniversalAnalyticsEcommerceProductImpressionsEvent Interface</p>
+<p>The product object should be available at the moment this method is called.</p>
+<p>Arguments: </p>
+<ul>
+	<li>products: <UniversalAnalyticsEcommerceItem[]></li>
+	<li>currencyCode: <String> = 'USD'</li>
+</ul>
+<p>The currencyCode argument has a default value of USD.</p>
 
 ```javascript
 interface UniversalAnalyticsEcommerceItem {
@@ -93,12 +97,31 @@ interface UniversalAnalyticsEcommerceItem {
 	coupon?: string;
 }
 
-interface UniversalAnalyticsEcommerceProductImpressionsEvent {
-	ecommerce: {
-		currencyCode?: string,
-		impressions: UniversalAnalyticsEcommerceItem[],
-	};
-}
+triggerProductImpressionsEvent(
+	[
+		{
+			name: 'Triblend Android T-Shirt',
+			id: '12345',
+			price: '15.25',
+			brand: 'Google',
+			category: 'Apparel',
+			variant: 'Gray',
+			list: 'Search Results',
+			position: 1,
+		},
+		{
+			name: 'Donut Friday Scented T-Shirt',
+			id: '67890',
+			price: '33.75',
+			brand: 'Google',
+			category: 'Apparel',
+			variant: 'Black',
+			list: 'Search Results',
+			position: 2,
+		},
+	],
+	'EUR',
+);
 ```
 
 <h3>triggerProductClickEvent();</h3>
@@ -195,7 +218,7 @@ export interface UniversalAnalyticsEcommerceAddToCartEvent {
 }
 ```
 
-<h3>triggerRemoveFromCartEvent();</h3>
+<h3>#();</h3>
 <p>Measure the removal of a product from a shopping cart by pushing an "angularRemoveFromCart" event to the dataLayer.</p>
 <p>The product object should be available at the moment this method is called.</p>
 <p>Arguments: removeFromCartEvent: <UniversalAnalyticsEcommerceRemoveProductFromCartEvent></p>

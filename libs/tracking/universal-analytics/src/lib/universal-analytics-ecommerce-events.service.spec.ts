@@ -3,8 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import {
 	GtmEvent,
 	UniversalAnalyticsEcommerceAddToCartEvent,
+	UniversalAnalyticsEcommerceItem,
 	UniversalAnalyticsEcommerceProductClickEvent,
-	UniversalAnalyticsEcommerceProductImpressionsEvent,
 	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
 	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
@@ -12,11 +12,11 @@ import {
 import { UniversalAnalyticsEcommerceEventsService } from './universal-analytics-ecommerce-events.service';
 
 import {
-	productImpressionEventMock,
 	productClickEventMock,
 	viewProductDetailsEventMock,
 	addToCartEventMock,
 	removeFromCartEventMock,
+	ecommerceProductsMock,
 } from './utilities/universal-analytics-ecommerce-event-objects';
 
 import {
@@ -24,6 +24,7 @@ import {
 	isOfTypeUniversalAnalyticsEcommerceViewProductDetailsEvent,
 	isOfTypeUniversalAnalyticsEcommerceAddToCartEvent,
 	isOfTypeUniversalAnalyticsEcommerceRemoveProductFromCartEvent,
+	isAnArrayOfTypeUniversalAnalyticsEcommerceItem,
 } from './utilities/helper-functions.utility';
 
 describe('UniversalAnalyticsEcommerceEventsService', () => {
@@ -57,9 +58,12 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 		let spyOnTriggerProductImpressionsEvent: jest.SpyInstance<
 			void,
 			[
-				productImpressionsEvent: UniversalAnalyticsEcommerceProductImpressionsEvent,
+				products: UniversalAnalyticsEcommerceItem[],
+				currencyCode?: string | undefined,
 			]
 		>;
+
+		const secondArgument = 'EUR';
 
 		beforeEach(() => {
 			spyOnTriggerProductImpressionsEvent = jest.spyOn(
@@ -67,12 +71,9 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 				'triggerProductImpressionsEvent',
 			);
 
-			service.triggerProductImpressionsEvent(productImpressionEventMock);
-		});
-
-		it('should be called with an argument of type UniversalAnalyticsEcommerceProductImpressionsEvent', () => {
-			expect(spyOnTriggerProductImpressionsEvent).toBeCalledWith(
-				productImpressionEventMock,
+			service.triggerProductImpressionsEvent(
+				ecommerceProductsMock,
+				secondArgument,
 			);
 		});
 
@@ -80,6 +81,38 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(dataLayer[dataLayer.length - 1].event).toBe(
 				'angularProductImpressions',
 			);
+		});
+
+		it('should be called with an argument of type UniversalAnalyticsEcommerceProductImpressionsEvent', () => {
+			expect(spyOnTriggerProductImpressionsEvent).toBeCalledWith(
+				ecommerceProductsMock,
+				secondArgument,
+			);
+		});
+
+		describe('first argument "products"', () => {
+			it('should be of type UniversalAnalyticsEcommerceItem[]', () => {
+				expect(
+					isAnArrayOfTypeUniversalAnalyticsEcommerceItem(ecommerceProductsMock),
+				).toBe(true);
+				expect(Array.isArray(ecommerceProductsMock)).toBe(true);
+			});
+		});
+
+		describe('second argument "currencyCode"', () => {
+			it('should be of type string', () => {
+				expect(typeof secondArgument).toBe('string');
+			});
+
+			it('should a a default value equal to "USD"', () => {
+				service.triggerProductImpressionsEvent(ecommerceProductsMock);
+				expect(
+					dataLayer[dataLayer.length - 1]['ecommerce']['currencyCode'],
+				).toBe('USD');
+				expect(spyOnTriggerProductImpressionsEvent).toHaveBeenLastCalledWith(
+					ecommerceProductsMock,
+				);
+			});
 		});
 	});
 

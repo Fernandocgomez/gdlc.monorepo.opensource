@@ -1,4 +1,4 @@
-interface UniversalAnalyticsEcommerceItem {
+export interface UniversalAnalyticsEcommerceItem {
 	name: string;
 	id: string;
 	price?: string;

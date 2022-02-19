@@ -4,6 +4,7 @@ import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag
 
 import {
 	UniversalAnalyticsEcommerceAddToCartEvent,
+	UniversalAnalyticsEcommerceItem,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
 	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
@@ -41,8 +42,16 @@ export class UniversalAnalyticsEcommerceEventsService {
 	}
 
 	public triggerProductImpressionsEvent(
-		productImpressionsEvent: UniversalAnalyticsEcommerceProductImpressionsEvent,
+		products: UniversalAnalyticsEcommerceItem[],
+		currencyCode: string = 'USD',
 	): void {
+		const productImpressionsEvent: UniversalAnalyticsEcommerceProductImpressionsEvent =
+			{
+				ecommerce: {
+					currencyCode,
+					impressions: products,
+				},
+			};
 		this.productImpressionsEvent.trigger(productImpressionsEvent);
 	}
 
