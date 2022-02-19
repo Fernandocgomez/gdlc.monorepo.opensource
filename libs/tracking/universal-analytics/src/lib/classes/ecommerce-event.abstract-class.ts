@@ -10,6 +10,7 @@ export abstract class EcommerceEvent {
 
 	trigger(event: UniversalAnalyticsEcommerceEvent): void {
 		const gtmEvent = this.transformToGtmEvent(event);
+		this.googleTagManagerService.clearEcommerceObject();
 		this.googleTagManagerService.pushToDataLayer(gtmEvent);
 	}
 

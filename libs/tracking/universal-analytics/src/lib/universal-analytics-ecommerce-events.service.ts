@@ -56,8 +56,19 @@ export class UniversalAnalyticsEcommerceEventsService {
 	}
 
 	public triggerProductClickEvent(
-		productClickEvent: UniversalAnalyticsEcommerceProductClickEvent,
+		products: UniversalAnalyticsEcommerceItem[],
+		searchList: string = '',
 	): void {
+		const productClickEvent: UniversalAnalyticsEcommerceProductClickEvent = {
+			ecommerce: {
+				click: {
+					actionField: {
+						list: searchList ? searchList : '',
+					},
+					products,
+				},
+			},
+		};
 		this.productClickEvent.trigger(productClickEvent);
 	}
 

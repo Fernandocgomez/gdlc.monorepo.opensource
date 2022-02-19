@@ -63,6 +63,8 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			]
 		>;
 
+		let triggerProductImpressionsEventReturnValue: void;
+
 		const secondArgument = 'EUR';
 
 		beforeEach(() => {
@@ -71,10 +73,11 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 				'triggerProductImpressionsEvent',
 			);
 
-			service.triggerProductImpressionsEvent(
-				ecommerceProductsMock,
-				secondArgument,
-			);
+			triggerProductImpressionsEventReturnValue =
+				service.triggerProductImpressionsEvent(
+					ecommerceProductsMock,
+					secondArgument,
+				);
 		});
 
 		it('should push an "angularProductImpressions" event to the dataLayer', () => {
@@ -83,11 +86,19 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			);
 		});
 
-		it('should be called with an argument of type UniversalAnalyticsEcommerceProductImpressionsEvent', () => {
+		it('can be call with two or one argument', () => {
 			expect(spyOnTriggerProductImpressionsEvent).toBeCalledWith(
 				ecommerceProductsMock,
 				secondArgument,
 			);
+			service.triggerProductImpressionsEvent(ecommerceProductsMock);
+			expect(spyOnTriggerProductImpressionsEvent).toBeCalledWith(
+				ecommerceProductsMock,
+			);
+		});
+
+		it('should return void', () => {
+			expect(triggerProductImpressionsEventReturnValue).toBe(undefined);
 		});
 
 		describe('first argument "products"', () => {
@@ -104,7 +115,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 				expect(typeof secondArgument).toBe('string');
 			});
 
-			it('should a a default value equal to "USD"', () => {
+			it('should have a default value equal to "USD"', () => {
 				service.triggerProductImpressionsEvent(ecommerceProductsMock);
 				expect(
 					dataLayer[dataLayer.length - 1]['ecommerce']['currencyCode'],
@@ -119,10 +130,15 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 	describe('#triggerProductClickEvent', () => {
 		let spyOnTriggerProductClickEvent: jest.SpyInstance<
 			void,
-			[productClickEvent: UniversalAnalyticsEcommerceProductClickEvent]
+			[
+				products: UniversalAnalyticsEcommerceItem[],
+				searchList?: string | undefined,
+			]
 		>;
 
 		let triggerProductClickEventReturnValue: void;
+
+		const secondArgument = 'Search Result';
 
 		beforeEach(() => {
 			spyOnTriggerProductClickEvent = jest.spyOn(
@@ -131,18 +147,23 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			);
 
 			triggerProductClickEventReturnValue = service.triggerProductClickEvent(
-				productClickEventMock,
+				ecommerceProductsMock,
+				secondArgument,
 			);
 		});
 
-		it('should take an argument of type UniversalAnalyticsEcommerceProductClickEvent', () => {
-			expect(
-				isOfTypeUniversalAnalyticsEcommerceProductClickEvent(
-					productClickEventMock,
-				),
-			).toBe(true);
+		it('should push an "angularProductClick" event to the dataLayer', () => {
+			expect(dataLayer[dataLayer.length - 1].event).toBe('angularProductClick');
+		});
+
+		it('can be call with two or one argument', () => {
 			expect(spyOnTriggerProductClickEvent).toBeCalledWith(
-				productClickEventMock,
+				ecommerceProductsMock,
+				secondArgument,
+			);
+			service.triggerProductClickEvent(ecommerceProductsMock);
+			expect(spyOnTriggerProductClickEvent).toBeCalledWith(
+				ecommerceProductsMock,
 			);
 		});
 
@@ -150,8 +171,31 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(triggerProductClickEventReturnValue).toBe(undefined);
 		});
 
-		it('should push an "angularProductClick" event to the dataLayer', () => {
-			expect(dataLayer[dataLayer.length - 1].event).toBe('angularProductClick');
+		describe('first argument "products"', () => {
+			it('should be of type UniversalAnalyticsEcommerceItem[]', () => {
+				expect(
+					isAnArrayOfTypeUniversalAnalyticsEcommerceItem(ecommerceProductsMock),
+				).toBe(true);
+				expect(Array.isArray(ecommerceProductsMock)).toBe(true);
+			});
+		});
+
+		describe('second argument "searchList"', () => {
+			it('should be of type String', () => {
+				expect(typeof secondArgument).toBe('string');
+			});
+
+			it('should have a default value equal to empty string', () => {
+				service.triggerProductClickEvent(ecommerceProductsMock);
+				expect(
+					dataLayer[dataLayer.length - 1]['ecommerce']['click']['actionField'][
+						'list'
+					],
+				).toBe('');
+				expect(spyOnTriggerProductClickEvent).toHaveBeenLastCalledWith(
+					ecommerceProductsMock,
+				);
+			});
 		});
 	});
 

@@ -97,7 +97,7 @@ interface UniversalAnalyticsEcommerceItem {
 	coupon?: string;
 }
 
-triggerProductImpressionsEvent(
+this.triggerProductImpressionsEvent(
 	[
 		{
 			name: 'Triblend Android T-Shirt',
@@ -127,8 +127,12 @@ triggerProductImpressionsEvent(
 <h3>triggerProductClickEvent();</h3>
 <p>Measure clicks on product by sending an "angularProductClick" event to Universal Analytics via the dataLayer, along with the product details to represent the clicked product.</p>
 <p>The product object should be available at the moment this method is called.</p>
-<p>Arguments: productClickEvent: <UniversalAnalyticsEcommerceProductClickEvent></p>
-<p>UniversalAnalyticsEcommerceProductClickEvent Interface</p>
+<p>Arguments: </p>
+<ul>
+	<li>products: <UniversalAnalyticsEcommerceItem[]></li>
+	<li>searchList: <String> = ''</li>
+</ul>
+<p>The searchList argument has a default value of ''.</p>
 
 ```javascript
 interface UniversalAnalyticsEcommerceItem {
@@ -144,16 +148,19 @@ interface UniversalAnalyticsEcommerceItem {
 	coupon?: string;
 }
 
-interface UniversalAnalyticsEcommerceProductClickEvent {
-	ecommerce: {
-		click: {
-			actionField?: {
-				list?: string,
-			},
-			products?: UniversalAnalyticsEcommerceItem[],
+this.triggerProductClickEvent(
+	[
+		{
+			name: 'Triblend Android T-Shirt',
+			id: '12345',
+			price: '15.25',
+			brand: 'Google',
+			category: 'Apparel',
+			variant: 'Gray',
 		},
-	};
-}
+	],
+	'Search Results',
+);
 ```
 
 <h3>triggerViewProductDetailsEvent();</h3>
