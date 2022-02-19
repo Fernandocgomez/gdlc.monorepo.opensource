@@ -2,31 +2,18 @@ import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag
 
 import {
 	GtmEvent,
-	UniversalAnalyticsEcommerceAddToCartEvent,
-	UniversalAnalyticsEcommerceProductClickEvent,
-	UniversalAnalyticsEcommerceProductImpressionsEvent,
-	UniversalAnalyticsEcommerceViewProductDetailsEvent,
+	UniversalAnalyticsEcommerceEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 export abstract class EcommerceEvent {
 	constructor(protected googleTagManagerService: GoogleTagManagerService) {}
 
-	trigger(
-		event:
-			| UniversalAnalyticsEcommerceProductImpressionsEvent
-			| UniversalAnalyticsEcommerceProductClickEvent
-			| UniversalAnalyticsEcommerceViewProductDetailsEvent
-			| UniversalAnalyticsEcommerceAddToCartEvent,
-	): void {
+	trigger(event: UniversalAnalyticsEcommerceEvent): void {
 		const gtmEvent = this.transformToGtmEvent(event);
 		this.googleTagManagerService.pushToDataLayer(gtmEvent);
 	}
 
 	protected abstract transformToGtmEvent(
-		event:
-			| UniversalAnalyticsEcommerceProductImpressionsEvent
-			| UniversalAnalyticsEcommerceProductClickEvent
-			| UniversalAnalyticsEcommerceViewProductDetailsEvent
-			| UniversalAnalyticsEcommerceAddToCartEvent,
+		event: UniversalAnalyticsEcommerceEvent,
 	): GtmEvent;
 }

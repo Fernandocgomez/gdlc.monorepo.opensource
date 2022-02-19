@@ -2,9 +2,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag-manager';
 
-import { ViewProductDetailsEvent } from './view-product-details-event.class';
+import { RemoveFromCartEvent } from './remove-from-cart-event.class';
 
-import { viewProductDetailsEventMock } from '../utilities/universal-analytics-ecommerce-event-objects';
+import { removeFromCartEventMock } from '../utilities/universal-analytics-ecommerce-event-objects';
+
 import {
 	isOfTypeGtmEvent,
 	isOfTypeUniversalAnalyticsEcommerceEvent,
@@ -15,10 +16,10 @@ import {
 	UniversalAnalyticsEcommerceEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
-describe('ViewProductDetailsEvent', () => {
+describe('RemoveFromCartEvent', () => {
 	let googleTagManagerService: GoogleTagManagerService;
 
-	let viewProductDetailsEventInstance: ViewProductDetailsEvent;
+	let removeFromCartEventInstance: RemoveFromCartEvent;
 
 	let dataLayer: GtmEvent[];
 
@@ -34,7 +35,7 @@ describe('ViewProductDetailsEvent', () => {
 
 		googleTagManagerService = TestBed.inject(GoogleTagManagerService);
 
-		viewProductDetailsEventInstance = new ViewProductDetailsEvent(
+		removeFromCartEventInstance = new RemoveFromCartEvent(
 			googleTagManagerService,
 		);
 
@@ -46,21 +47,22 @@ describe('ViewProductDetailsEvent', () => {
 	});
 
 	it('should be created', () => {
-		expect(viewProductDetailsEventInstance).toBeTruthy();
+		expect(removeFromCartEventInstance).toBeTruthy();
 	});
 
 	describe('#transformToGtmEvent', () => {
 		let returnValue: GtmEvent;
+
 		let spyOnTransformToGtmEvent: jest.SpyInstance<any, unknown[]>;
 
 		beforeEach(() => {
 			spyOnTransformToGtmEvent = jest.spyOn(
-				viewProductDetailsEventInstance as any,
+				removeFromCartEventInstance as any,
 				'transformToGtmEvent',
 			);
 
-			returnValue = viewProductDetailsEventInstance['transformToGtmEvent'](
-				viewProductDetailsEventMock,
+			returnValue = removeFromCartEventInstance['transformToGtmEvent'](
+				removeFromCartEventMock,
 			);
 		});
 
@@ -68,16 +70,14 @@ describe('ViewProductDetailsEvent', () => {
 			expect(isOfTypeGtmEvent(returnValue)).toBe(true);
 		});
 
-		it('should return an "angularViewProductDetails" event', () => {
-			expect(returnValue.event).toBe('angularViewProductDetails');
+		it('should return an "angularRemoveFromCart" event', () => {
+			expect(returnValue.event).toBe('angularRemoveFromCart');
 		});
 
 		it('should take an argument of type UniversalAnalyticsEcommerceEvent', () => {
-			expect(spyOnTransformToGtmEvent).toBeCalledWith(
-				viewProductDetailsEventMock,
-			);
+			expect(spyOnTransformToGtmEvent).toBeCalledWith(removeFromCartEventMock);
 			expect(
-				isOfTypeUniversalAnalyticsEcommerceEvent(viewProductDetailsEventMock),
+				isOfTypeUniversalAnalyticsEcommerceEvent(removeFromCartEventMock),
 			).toBe(true);
 		});
 	});
@@ -89,21 +89,21 @@ describe('ViewProductDetailsEvent', () => {
 		>;
 
 		beforeEach(() => {
-			spyOnTrigger = jest.spyOn(viewProductDetailsEventInstance, 'trigger');
+			spyOnTrigger = jest.spyOn(removeFromCartEventInstance, 'trigger');
 
-			viewProductDetailsEventInstance.trigger(viewProductDetailsEventMock);
+			removeFromCartEventInstance.trigger(removeFromCartEventMock);
 		});
 
 		it('should take an argument of type UniversalAnalyticsEcommerceEvent', () => {
-			expect(spyOnTrigger).toBeCalledWith(viewProductDetailsEventMock);
+			expect(spyOnTrigger).toBeCalledWith(removeFromCartEventMock);
 			expect(
-				isOfTypeUniversalAnalyticsEcommerceEvent(viewProductDetailsEventMock),
+				isOfTypeUniversalAnalyticsEcommerceEvent(removeFromCartEventMock),
 			).toBe(true);
 		});
 
-		it('should push an "angularViewProductDetails" event to the dataLayer', () => {
+		it('should push an "angularRemoveFromCart" event to the dataLayer', () => {
 			expect(dataLayer[dataLayer.length - 1].event).toBe(
-				'angularViewProductDetails',
+				'angularRemoveFromCart',
 			);
 		});
 	});

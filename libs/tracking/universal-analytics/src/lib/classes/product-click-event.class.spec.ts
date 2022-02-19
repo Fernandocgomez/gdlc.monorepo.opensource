@@ -7,15 +7,12 @@ import { ProductClickEvent } from './product-click-event.class';
 import { productClickEventMock } from '../utilities/universal-analytics-ecommerce-event-objects';
 import {
 	isOfTypeGtmEvent,
-	isOfTypeUniversalAnalyticsEcommerceProductClickEvent,
+	isOfTypeUniversalAnalyticsEcommerceEvent,
 } from '../utilities/helper-functions.utility';
 
 import {
 	GtmEvent,
-	UniversalAnalyticsEcommerceAddToCartEvent,
-	UniversalAnalyticsEcommerceProductClickEvent,
-	UniversalAnalyticsEcommerceProductImpressionsEvent,
-	UniversalAnalyticsEcommerceViewProductDetailsEvent,
+	UniversalAnalyticsEcommerceEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 describe('ProductClickEvent', () => {
@@ -73,12 +70,10 @@ describe('ProductClickEvent', () => {
 			expect(returnValue.event).toBe('angularProductClick');
 		});
 
-		it('should take an argument of type UniversalAnalyticsEcommerceProductClickEvent', () => {
+		it('should take an argument of type UniversalAnalyticsEcommerceEvent', () => {
 			expect(spyOnTransformToGtmEvent).toBeCalledWith(productClickEventMock);
 			expect(
-				isOfTypeUniversalAnalyticsEcommerceProductClickEvent(
-					productClickEventMock,
-				),
+				isOfTypeUniversalAnalyticsEcommerceEvent(productClickEventMock),
 			).toBe(true);
 		});
 	});
@@ -86,13 +81,7 @@ describe('ProductClickEvent', () => {
 	describe('#trigger', () => {
 		let spyOnTrigger: jest.SpyInstance<
 			void,
-			[
-				event:
-					| UniversalAnalyticsEcommerceProductImpressionsEvent
-					| UniversalAnalyticsEcommerceProductClickEvent
-					| UniversalAnalyticsEcommerceViewProductDetailsEvent
-					| UniversalAnalyticsEcommerceAddToCartEvent,
-			]
+			[event: UniversalAnalyticsEcommerceEvent]
 		>;
 
 		beforeEach(() => {
@@ -101,12 +90,10 @@ describe('ProductClickEvent', () => {
 			productClickEventInstance.trigger(productClickEventMock);
 		});
 
-		it('should take an argument of type UniversalAnalyticsEcommerceProductClickEvent', () => {
+		it('should take an argument of type UniversalAnalyticsEcommerceEvent', () => {
 			expect(spyOnTrigger).toBeCalledWith(productClickEventMock);
 			expect(
-				isOfTypeUniversalAnalyticsEcommerceProductClickEvent(
-					productClickEventMock,
-				),
+				isOfTypeUniversalAnalyticsEcommerceEvent(productClickEventMock),
 			).toBe(true);
 		});
 

@@ -11,7 +11,7 @@ imports: [
 		id: YOUR_GTM_ID,
 	}),
 	UniversalAnalyticsModule,
-];
+],
 ```
 
 <h1>Services:</h1>
@@ -196,6 +196,34 @@ export interface UniversalAnalyticsEcommerceAddToCartEvent {
 ```
 
 <h3>triggerRemoveFromCartEvent();</h3>
+<p>Measure the removal of a product from a shopping cart by pushing an "angularRemoveFromCart" event to the dataLayer.</p>
+<p>The product object should be available at the moment this method is called.</p>
+<p>Arguments: removeFromCartEvent: <UniversalAnalyticsEcommerceRemoveProductFromCartEvent></p>
+<p>UniversalAnalyticsEcommerceRemoveProductFromCartEvent Interface</p>
+
+```javascript
+interface UniversalAnalyticsEcommerceItem {
+	name: string;
+	id: string;
+	price?: string;
+	brand?: string;
+	category?: string;
+	variant?: string;
+	list?: string;
+	position?: number;
+	quantity?: number;
+	coupon?: string;
+}
+
+export interface UniversalAnalyticsEcommerceRemoveProductFromCartEvent {
+	ecommerce: {
+		remove: {
+			products?: UniversalAnalyticsEcommerceItem[],
+		},
+	};
+}
+```
+
 <h3>triggerPromotionViewEvent();</h3>
 <h3>triggerPromotionClickEvent();</h3>
 <h3>triggerCheckoutStepEvent();</h3>

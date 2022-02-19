@@ -7,7 +7,7 @@ import {
 
 import { EcommerceEvent } from './ecommerce-event.abstract-class';
 
-export class AddToCartEvent extends EcommerceEvent {
+export class RemoveFromCartEvent extends EcommerceEvent {
 	constructor(
 		protected override googleTagManagerService: GoogleTagManagerService,
 	) {
@@ -17,6 +17,6 @@ export class AddToCartEvent extends EcommerceEvent {
 	protected transformToGtmEvent(
 		event: UniversalAnalyticsEcommerceEvent,
 	): GtmEvent {
-		return { ...event, event: 'angularAddToCart' };
+		return { ...event, event: 'angularRemoveFromCart' };
 	}
 }

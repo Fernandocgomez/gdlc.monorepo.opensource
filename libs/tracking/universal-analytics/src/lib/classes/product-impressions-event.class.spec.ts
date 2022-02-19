@@ -7,15 +7,12 @@ import { ProductImpressionsEvent } from './product-impressions-event.class';
 import { productImpressionEventMock } from '../utilities/universal-analytics-ecommerce-event-objects';
 import {
 	isOfTypeGtmEvent,
-	isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent,
+	isOfTypeUniversalAnalyticsEcommerceEvent,
 } from '../utilities/helper-functions.utility';
 
 import {
 	GtmEvent,
-	UniversalAnalyticsEcommerceAddToCartEvent,
-	UniversalAnalyticsEcommerceProductClickEvent,
-	UniversalAnalyticsEcommerceProductImpressionsEvent,
-	UniversalAnalyticsEcommerceViewProductDetailsEvent,
+	UniversalAnalyticsEcommerceEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 describe('ProductImpressionsEvent', () => {
@@ -75,14 +72,12 @@ describe('ProductImpressionsEvent', () => {
 			expect(returnValue.event).toBe('angularProductImpressions');
 		});
 
-		it('should take an argument of type UniversalAnalyticsEcommerceProductImpressionsEvent', () => {
+		it('should take an argument of type UniversalAnalyticsEcommerceEvent', () => {
 			expect(spyOnTransformToGtmEvent).toBeCalledWith(
 				productImpressionEventMock,
 			);
 			expect(
-				isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent(
-					productImpressionEventMock,
-				),
+				isOfTypeUniversalAnalyticsEcommerceEvent(productImpressionEventMock),
 			).toBe(true);
 		});
 	});
@@ -90,13 +85,7 @@ describe('ProductImpressionsEvent', () => {
 	describe('#trigger', () => {
 		let spyOnTrigger: jest.SpyInstance<
 			void,
-			[
-				event:
-					| UniversalAnalyticsEcommerceProductImpressionsEvent
-					| UniversalAnalyticsEcommerceProductClickEvent
-					| UniversalAnalyticsEcommerceViewProductDetailsEvent
-					| UniversalAnalyticsEcommerceAddToCartEvent,
-			]
+			[event: UniversalAnalyticsEcommerceEvent]
 		>;
 
 		beforeEach(() => {
@@ -105,12 +94,10 @@ describe('ProductImpressionsEvent', () => {
 			productImpressionsEventInstance.trigger(productImpressionEventMock);
 		});
 
-		it('should take an argument of type UniversalAnalyticsEcommerceProductImpressionsEvent', () => {
+		it('should take an argument of type UniversalAnalyticsEcommerceEvent', () => {
 			expect(spyOnTrigger).toBeCalledWith(productImpressionEventMock);
 			expect(
-				isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent(
-					productImpressionEventMock,
-				),
+				isOfTypeUniversalAnalyticsEcommerceEvent(productImpressionEventMock),
 			).toBe(true);
 		});
 

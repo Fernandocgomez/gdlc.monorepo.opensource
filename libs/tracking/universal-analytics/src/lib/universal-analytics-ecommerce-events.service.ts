@@ -6,6 +6,7 @@ import {
 	UniversalAnalyticsEcommerceAddToCartEvent,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
+	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
 	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
@@ -13,6 +14,7 @@ import {
 	AddToCartEvent,
 	ProductClickEvent,
 	ProductImpressionsEvent,
+	RemoveFromCartEvent,
 	ViewProductDetailsEvent,
 } from './classes';
 
@@ -24,6 +26,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 	private productClickEvent: ProductClickEvent;
 	private viewProductDetailsEvent: ViewProductDetailsEvent;
 	private addToCartEvent: AddToCartEvent;
+	private removeFromCartEvent: RemoveFromCartEvent;
 
 	constructor(private googleTagManagerService: GoogleTagManagerService) {
 		this.productImpressionsEvent = new ProductImpressionsEvent(
@@ -34,6 +37,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 			googleTagManagerService,
 		);
 		this.addToCartEvent = new AddToCartEvent(googleTagManagerService);
+		this.removeFromCartEvent = new RemoveFromCartEvent(googleTagManagerService);
 	}
 
 	public triggerProductImpressionsEvent(
@@ -60,8 +64,10 @@ export class UniversalAnalyticsEcommerceEventsService {
 		this.addToCartEvent.trigger(addToCartEvent);
 	}
 
-	public triggerRemoveFromCartEvent(): void {
-		//
+	public triggerRemoveFromCartEvent(
+		removeFromCartEvent: UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
+	): void {
+		this.removeFromCartEvent.trigger(removeFromCartEvent);
 	}
 
 	public triggerPromotionViewEvent(): void {

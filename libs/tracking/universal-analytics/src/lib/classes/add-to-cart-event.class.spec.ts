@@ -7,15 +7,12 @@ import { AddToCartEvent } from './add-to-cart-event.class';
 import { addToCartEventMock } from '../utilities/universal-analytics-ecommerce-event-objects';
 import {
 	isOfTypeGtmEvent,
-	isOfTypeUniversalAnalyticsEcommerceAddToCartEvent,
+	isOfTypeUniversalAnalyticsEcommerceEvent,
 } from '../utilities/helper-functions.utility';
 
 import {
 	GtmEvent,
-	UniversalAnalyticsEcommerceAddToCartEvent,
-	UniversalAnalyticsEcommerceProductClickEvent,
-	UniversalAnalyticsEcommerceProductImpressionsEvent,
-	UniversalAnalyticsEcommerceViewProductDetailsEvent,
+	UniversalAnalyticsEcommerceEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 describe('AddToCartEvent', () => {
@@ -72,24 +69,18 @@ describe('AddToCartEvent', () => {
 			expect(returnValue.event).toBe('angularAddToCart');
 		});
 
-		it('should take an argument of type UniversalAnalyticsEcommerceAddToCartEvent', () => {
+		it('should take an argument of type UniversalAnalyticsEcommerceEvent', () => {
 			expect(spyOnTransformToGtmEvent).toBeCalledWith(addToCartEventMock);
-			expect(
-				isOfTypeUniversalAnalyticsEcommerceAddToCartEvent(addToCartEventMock),
-			).toBe(true);
+			expect(isOfTypeUniversalAnalyticsEcommerceEvent(addToCartEventMock)).toBe(
+				true,
+			);
 		});
 	});
 
 	describe('#trigger', () => {
 		let spyOnTrigger: jest.SpyInstance<
 			void,
-			[
-				event:
-					| UniversalAnalyticsEcommerceProductImpressionsEvent
-					| UniversalAnalyticsEcommerceProductClickEvent
-					| UniversalAnalyticsEcommerceViewProductDetailsEvent
-					| UniversalAnalyticsEcommerceAddToCartEvent,
-			]
+			[event: UniversalAnalyticsEcommerceEvent]
 		>;
 
 		beforeEach(() => {
@@ -98,11 +89,11 @@ describe('AddToCartEvent', () => {
 			addToCartEventInstance.trigger(addToCartEventMock);
 		});
 
-		it('should take an argument of type UniversalAnalyticsEcommerceAddToCartEvent', () => {
+		it('should take an argument of type UniversalAnalyticsEcommerceEvent', () => {
 			expect(spyOnTrigger).toBeCalledWith(addToCartEventMock);
-			expect(
-				isOfTypeUniversalAnalyticsEcommerceAddToCartEvent(addToCartEventMock),
-			).toBe(true);
+			expect(isOfTypeUniversalAnalyticsEcommerceEvent(addToCartEventMock)).toBe(
+				true,
+			);
 		});
 
 		it('should push an "angularAddToCart" event to the dataLayer', () => {

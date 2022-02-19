@@ -1,10 +1,22 @@
 import {
 	GtmEvent,
 	UniversalAnalyticsEcommerceAddToCartEvent,
+	UniversalAnalyticsEcommerceEvent,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
+	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
 	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
+
+export const isOfTypeGtmEvent = (value: any) => {
+	return (value as GtmEvent).event !== undefined;
+};
+
+export const isOfTypeUniversalAnalyticsEcommerceEvent = (
+	value: any,
+): boolean => {
+	return (value as UniversalAnalyticsEcommerceEvent).ecommerce !== undefined;
+};
 
 export const isOfTypeUniversalAnalyticsEcommerceProductClickEvent = (
 	value: any,
@@ -13,10 +25,6 @@ export const isOfTypeUniversalAnalyticsEcommerceProductClickEvent = (
 		(value as UniversalAnalyticsEcommerceProductClickEvent).ecommerce !==
 		undefined
 	);
-};
-
-export const isOfTypeGtmEvent = (value: any) => {
-	return (value as GtmEvent).event !== undefined;
 };
 
 export const isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent = (
@@ -42,5 +50,14 @@ export const isOfTypeUniversalAnalyticsEcommerceAddToCartEvent = (
 ) => {
 	return (
 		(value as UniversalAnalyticsEcommerceAddToCartEvent).ecommerce !== undefined
+	);
+};
+
+export const isOfTypeUniversalAnalyticsEcommerceRemoveProductFromCartEvent = (
+	value: any,
+) => {
+	return (
+		(value as UniversalAnalyticsEcommerceRemoveProductFromCartEvent)
+			.ecommerce !== undefined
 	);
 };

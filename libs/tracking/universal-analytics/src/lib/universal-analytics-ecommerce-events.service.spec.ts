@@ -5,6 +5,7 @@ import {
 	UniversalAnalyticsEcommerceAddToCartEvent,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
+	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
 	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
@@ -15,12 +16,14 @@ import {
 	productClickEventMock,
 	viewProductDetailsEventMock,
 	addToCartEventMock,
+	removeFromCartEventMock,
 } from './utilities/universal-analytics-ecommerce-event-objects';
 
 import {
 	isOfTypeUniversalAnalyticsEcommerceProductClickEvent,
 	isOfTypeUniversalAnalyticsEcommerceViewProductDetailsEvent,
 	isOfTypeUniversalAnalyticsEcommerceAddToCartEvent,
+	isOfTypeUniversalAnalyticsEcommerceRemoveProductFromCartEvent,
 } from './utilities/helper-functions.utility';
 
 describe('UniversalAnalyticsEcommerceEventsService', () => {
@@ -105,7 +108,9 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 					productClickEventMock,
 				),
 			).toBe(true);
-			expect(spyOnTriggerProductClickEvent).toBeCalled();
+			expect(spyOnTriggerProductClickEvent).toBeCalledWith(
+				productClickEventMock,
+			);
 		});
 
 		it('should return void', () => {
@@ -184,6 +189,48 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 
 		it('should push an "angularAddToCart" event to the dataLayer', () => {
 			expect(dataLayer[dataLayer.length - 1].event).toBe('angularAddToCart');
+		});
+	});
+
+	describe('#triggerRemoveFromCartEvent', () => {
+		let spyOnTriggerRemoveFromCartEvent: jest.SpyInstance<
+			void,
+			[
+				removeFromCartEvent: UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
+			]
+		>;
+
+		let triggerRemoveFromCartEventReturnValue: void;
+
+		beforeEach(() => {
+			spyOnTriggerRemoveFromCartEvent = jest.spyOn(
+				service,
+				'triggerRemoveFromCartEvent',
+			);
+
+			triggerRemoveFromCartEventReturnValue =
+				service.triggerRemoveFromCartEvent(removeFromCartEventMock);
+		});
+
+		it('should take an argument of type UniversalAnalyticsEcommerceRemoveProductFromCartEvent', () => {
+			expect(
+				isOfTypeUniversalAnalyticsEcommerceRemoveProductFromCartEvent(
+					removeFromCartEventMock,
+				),
+			).toBe(true);
+			expect(spyOnTriggerRemoveFromCartEvent).toBeCalledWith(
+				removeFromCartEventMock,
+			);
+		});
+
+		it('should return void', () => {
+			expect(triggerRemoveFromCartEventReturnValue).toBe(undefined);
+		});
+
+		it('should push an "angularRemoveFromCart" event to the dataLayer', () => {
+			expect(dataLayer[dataLayer.length - 1].event).toBe(
+				'angularRemoveFromCart',
+			);
 		});
 	});
 });

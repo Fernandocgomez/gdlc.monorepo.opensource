@@ -2,10 +2,7 @@ import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag
 
 import {
 	GtmEvent,
-	UniversalAnalyticsEcommerceAddToCartEvent,
-	UniversalAnalyticsEcommerceProductClickEvent,
-	UniversalAnalyticsEcommerceProductImpressionsEvent,
-	UniversalAnalyticsEcommerceViewProductDetailsEvent,
+	UniversalAnalyticsEcommerceEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 import { EcommerceEvent } from './ecommerce-event.abstract-class';
@@ -18,11 +15,7 @@ export class ProductImpressionsEvent extends EcommerceEvent {
 	}
 
 	protected transformToGtmEvent(
-		event:
-			| UniversalAnalyticsEcommerceProductImpressionsEvent
-			| UniversalAnalyticsEcommerceProductClickEvent
-			| UniversalAnalyticsEcommerceViewProductDetailsEvent
-			| UniversalAnalyticsEcommerceAddToCartEvent,
+		event: UniversalAnalyticsEcommerceEvent,
 	): GtmEvent {
 		return { ...event, event: 'angularProductImpressions' };
 	}
