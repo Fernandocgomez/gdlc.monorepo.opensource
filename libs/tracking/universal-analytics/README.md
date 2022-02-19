@@ -166,8 +166,12 @@ this.triggerProductClickEvent(
 <h3>triggerViewProductDetailsEvent();</h3>
 <p>Measure a view of product details by pushing an "angularViewProductDetails" event to the dataLayer, along with one or more product details representing the products being viewed.</p>
 <p>The product details should be available at the moment this method is called.</p>
-<p>Arguments: viewProductDetailsEvent: <UniversalAnalyticsEcommerceViewProductDetailsEvent></p>
-<p>UniversalAnalyticsEcommerceProductClickEvent Interface</p>
+<p>Arguments: </p>
+<ul>
+	<li>products: <UniversalAnalyticsEcommerceItem[]></li>
+	<li>searchList: <String> = ''</li>
+</ul>
+<p>The searchList argument has a default value of ''.</p>
 
 ```javascript
 interface UniversalAnalyticsEcommerceItem {
@@ -183,16 +187,19 @@ interface UniversalAnalyticsEcommerceItem {
 	coupon?: string;
 }
 
-interface UniversalAnalyticsEcommerceViewProductDetailsEvent {
-	ecommerce: {
-		detail: {
-			actionField?: {
-				list?: string,
-			},
-			products?: UniversalAnalyticsEcommerceItem[],
+this.triggerViewProductDetailsEvent(
+	[
+		{
+			name: 'Triblend Android T-Shirt',
+			id: '12345',
+			price: '15.25',
+			brand: 'Google',
+			category: 'Apparel',
+			variant: 'Gray',
 		},
-	};
-}
+	],
+	'Search Results',
+);
 ```
 
 <h3>triggerAddToCartEvent();</h3>

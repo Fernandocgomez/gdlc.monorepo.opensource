@@ -73,8 +73,20 @@ export class UniversalAnalyticsEcommerceEventsService {
 	}
 
 	public triggerViewProductDetailsEvent(
-		viewProductDetailsEvent: UniversalAnalyticsEcommerceViewProductDetailsEvent,
+		products: UniversalAnalyticsEcommerceItem[],
+		searchList: string = '',
 	): void {
+		const viewProductDetailsEvent: UniversalAnalyticsEcommerceViewProductDetailsEvent =
+			{
+				ecommerce: {
+					detail: {
+						actionField: {
+							list: searchList ? searchList : '',
+						},
+						products,
+					},
+				},
+			};
 		this.viewProductDetailsEvent.trigger(viewProductDetailsEvent);
 	}
 

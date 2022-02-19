@@ -4,24 +4,18 @@ import {
 	GtmEvent,
 	UniversalAnalyticsEcommerceAddToCartEvent,
 	UniversalAnalyticsEcommerceItem,
-	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
-	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 import { UniversalAnalyticsEcommerceEventsService } from './universal-analytics-ecommerce-events.service';
 
 import {
-	productClickEventMock,
-	viewProductDetailsEventMock,
 	addToCartEventMock,
 	removeFromCartEventMock,
 	ecommerceProductsMock,
 } from './utilities/universal-analytics-ecommerce-event-objects';
 
 import {
-	isOfTypeUniversalAnalyticsEcommerceProductClickEvent,
-	isOfTypeUniversalAnalyticsEcommerceViewProductDetailsEvent,
 	isOfTypeUniversalAnalyticsEcommerceAddToCartEvent,
 	isOfTypeUniversalAnalyticsEcommerceRemoveProductFromCartEvent,
 	isAnArrayOfTypeUniversalAnalyticsEcommerceItem,
@@ -203,10 +197,14 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 		let spyOnTriggerViewProductDetailsEvent: jest.SpyInstance<
 			void,
 			[
-				viewProductDetailsEvent: UniversalAnalyticsEcommerceViewProductDetailsEvent,
+				products: UniversalAnalyticsEcommerceItem[],
+				searchList?: string | undefined,
 			]
 		>;
+
 		let triggerViewProductDetailsEventReturnValue: void;
+
+		const secondArgument = 'Search Result';
 
 		beforeEach(() => {
 			spyOnTriggerViewProductDetailsEvent = jest.spyOn(
@@ -214,26 +212,58 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 				'triggerViewProductDetailsEvent',
 			);
 			triggerViewProductDetailsEventReturnValue =
-				service.triggerViewProductDetailsEvent(viewProductDetailsEventMock);
-		});
-
-		it('should take an argument of type UniversalAnalyticsEcommerceViewProductDetailsEvent', () => {
-			expect(
-				isOfTypeUniversalAnalyticsEcommerceViewProductDetailsEvent(
-					viewProductDetailsEventMock,
-				),
-			).toBe(true);
-			expect(spyOnTriggerViewProductDetailsEvent).toBeCalled();
-		});
-
-		it('should return void', () => {
-			expect(triggerViewProductDetailsEventReturnValue).toBe(undefined);
+				service.triggerViewProductDetailsEvent(
+					ecommerceProductsMock,
+					secondArgument,
+				);
 		});
 
 		it('should push an "angularViewProductDetails" event to the dataLayer', () => {
 			expect(dataLayer[dataLayer.length - 1].event).toBe(
 				'angularViewProductDetails',
 			);
+		});
+
+		it('can be call with two or one argument', () => {
+			expect(spyOnTriggerViewProductDetailsEvent).toBeCalledWith(
+				ecommerceProductsMock,
+				secondArgument,
+			);
+			service.triggerViewProductDetailsEvent(ecommerceProductsMock);
+			expect(spyOnTriggerViewProductDetailsEvent).toBeCalledWith(
+				ecommerceProductsMock,
+			);
+		});
+
+		it('should return void', () => {
+			expect(triggerViewProductDetailsEventReturnValue).toBe(undefined);
+		});
+
+		describe('first argument "products"', () => {
+			it('should be of type UniversalAnalyticsEcommerceItem[]', () => {
+				expect(
+					isAnArrayOfTypeUniversalAnalyticsEcommerceItem(ecommerceProductsMock),
+				).toBe(true);
+				expect(Array.isArray(ecommerceProductsMock)).toBe(true);
+			});
+		});
+
+		describe('second argument "searchList"', () => {
+			it('should be of type String', () => {
+				expect(typeof secondArgument).toBe('string');
+			});
+
+			it('should have a default value equal to empty string', () => {
+				service.triggerViewProductDetailsEvent(ecommerceProductsMock);
+				expect(
+					dataLayer[dataLayer.length - 1]['ecommerce']['detail']['actionField'][
+						'list'
+					],
+				).toBe('');
+				expect(spyOnTriggerViewProductDetailsEvent).toHaveBeenLastCalledWith(
+					ecommerceProductsMock,
+				);
+			});
 		});
 	});
 
