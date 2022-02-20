@@ -4,7 +4,7 @@ import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag
 
 import { RemoveFromCartEvent } from './remove-from-cart-event.class';
 
-import { removeFromCartEventMock } from '../utilities/universal-analytics-ecommerce-event-objects';
+import { removeFromCartEventMock } from '../utilities/universal-analytics-ecommerce-event-mock-objects';
 
 import {
 	isOfTypeGtmEvent,

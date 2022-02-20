@@ -11,7 +11,7 @@ import { UniversalAnalyticsEcommerceEventsService } from './universal-analytics-
 import {
 	ecommerceProductsMock,
 	ecommercePromotionsMock,
-} from './utilities/universal-analytics-ecommerce-event-objects';
+} from './utilities/universal-analytics-ecommerce-event-mock-objects';
 
 import {
 	isAnArrayOfTypeUniversalAnalyticsEcommerceItem,

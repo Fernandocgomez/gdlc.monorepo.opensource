@@ -4,7 +4,7 @@ import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag
 
 import { ProductClickEvent } from './product-click-event.class';
 
-import { productClickEventMock } from '../utilities/universal-analytics-ecommerce-event-objects';
+import { productClickEventMock } from '../utilities/universal-analytics-ecommerce-event-mock-objects';
 import {
 	isOfTypeGtmEvent,
 	isOfTypeUniversalAnalyticsEcommerceEvent,
