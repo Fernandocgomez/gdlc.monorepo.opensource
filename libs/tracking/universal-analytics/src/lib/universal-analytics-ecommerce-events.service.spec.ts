@@ -407,4 +407,43 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			);
 		});
 	});
+
+	describe('#triggerPromotionClickEvent', () => {
+		let spyOnTriggerPromotionClickEvent: jest.SpyInstance<
+			void,
+			[promotions: UniversalAnalyticsEcommercePromotion[]]
+		>;
+
+		let triggerPromotionClickEventReturnValue: void;
+
+		beforeEach(() => {
+			spyOnTriggerPromotionClickEvent = jest.spyOn(
+				service,
+				'triggerPromotionClickEvent',
+			);
+
+			triggerPromotionClickEventReturnValue =
+				service.triggerPromotionClickEvent(ecommercePromotionsMock);
+		});
+
+		it('should push an "angularPromoClick" tp the dataLayer', () => {
+			expect(dataLayer[dataLayer.length - 1].event).toBe('angularPromoClick');
+		});
+
+		it('should return void', () => {
+			expect(triggerPromotionClickEventReturnValue).toBe(undefined);
+		});
+
+		it('should be called with an argument of type UniversalAnalyticsEcommercePromotion[]', () => {
+			expect(
+				isAnArrayOfTypeUniversalAnalyticsEcommercePromotion(
+					ecommercePromotionsMock,
+				),
+			).toBe(true);
+			expect(Array.isArray(ecommercePromotionsMock)).toBe(true);
+			expect(spyOnTriggerPromotionClickEvent).toBeCalledWith(
+				ecommercePromotionsMock,
+			);
+		});
+	});
 });

@@ -7,6 +7,7 @@ import {
 	UniversalAnalyticsEcommerceItem,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
+	UniversalAnalyticsEcommercePromoClickEvent,
 	UniversalAnalyticsEcommercePromotion,
 	UniversalAnalyticsEcommercePromoViewEvent,
 	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
@@ -20,6 +21,7 @@ import {
 	RemoveFromCartEvent,
 	ViewProductDetailsEvent,
 	PromotionViewEvent,
+	PromotionClickEvent,
 } from './classes';
 
 @Injectable({
@@ -32,6 +34,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 	private addToCartEvent: AddToCartEvent;
 	private removeFromCartEvent: RemoveFromCartEvent;
 	private promotionViewEvent: PromotionViewEvent;
+	private promotionClickEvent: PromotionClickEvent;
 
 	constructor(private googleTagManagerService: GoogleTagManagerService) {
 		this.productImpressionsEvent = new ProductImpressionsEvent(
@@ -44,6 +47,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 		this.addToCartEvent = new AddToCartEvent(googleTagManagerService);
 		this.removeFromCartEvent = new RemoveFromCartEvent(googleTagManagerService);
 		this.promotionViewEvent = new PromotionViewEvent(googleTagManagerService);
+		this.promotionClickEvent = new PromotionClickEvent(googleTagManagerService);
 	}
 
 	public triggerProductImpressionsEvent(
@@ -137,8 +141,17 @@ export class UniversalAnalyticsEcommerceEventsService {
 		this.promotionViewEvent.trigger(promoViewEvent);
 	}
 
-	public triggerPromotionClickEvent(): void {
-		//
+	public triggerPromotionClickEvent(
+		promotions: UniversalAnalyticsEcommercePromotion[],
+	): void {
+		const promotionClickEvent: UniversalAnalyticsEcommercePromoClickEvent = {
+			ecommerce: {
+				promoClick: {
+					promotions,
+				},
+			},
+		};
+		this.promotionClickEvent.trigger(promotionClickEvent);
 	}
 
 	public triggerCheckoutStepEvent(): void {

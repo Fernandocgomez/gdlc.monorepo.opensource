@@ -3,6 +3,7 @@ import {
 	UniversalAnalyticsEcommerceItem,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
+	UniversalAnalyticsEcommercePromoClickEvent,
 	UniversalAnalyticsEcommercePromotion,
 	UniversalAnalyticsEcommercePromoViewEvent,
 	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
@@ -97,6 +98,15 @@ export const promotionViewEventMock: UniversalAnalyticsEcommercePromoViewEvent =
 	{
 		ecommerce: {
 			promoView: {
+				promotions: ecommercePromotionsMock,
+			},
+		},
+	};
+
+export const promotionClickEventMock: UniversalAnalyticsEcommercePromoClickEvent =
+	{
+		ecommerce: {
+			promoClick: {
 				promotions: ecommercePromotionsMock,
 			},
 		},

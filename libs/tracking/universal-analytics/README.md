@@ -319,7 +319,7 @@ interface UniversalAnalyticsEcommercePromotion {
 	position?: string;
 }
 
-const ecommercePromotion = [
+const ecommercePromotions = [
 	{
 		id: 'JUNE_PROMO13',
 		name: 'June Sale',
@@ -335,11 +335,40 @@ const ecommercePromotion = [
 ];
 
 this.universalAnalyticsEcommerceEventsService.triggerPromotionViewEvent(
-	ecommercePromotion,
+	ecommercePromotions,
 );
 ```
 
 <h3>triggerPromotionClickEvent();</h3>
+<p>Measure clicks on internal site promotions, such as banners displayed on the site itself advertising a sale on a particular subset of products, or an offer for free shipping.</p>
+<p>The information about the promotions should be available at the moment this method is called.</p>
+<p>Arguments: </p>
+<ul>
+	<li>promotions: <UniversalAnalyticsEcommercePromotion[]></li>
+</ul>
+
+```javascript
+interface UniversalAnalyticsEcommercePromotion {
+	id: string;
+	name: string;
+	creative?: string;
+	position?: string;
+}
+
+const ecommercePromotion = [
+	{
+		id: 'JUNE_PROMO13',
+		name: 'June Sale',
+		creative: 'banner1',
+		position: 'slot1',
+	},
+];
+
+this.universalAnalyticsEcommerceEventsService.triggerPromotionClickEvent(
+	ecommercePromotion,
+);
+```
+
 <h3>triggerCheckoutStepEvent();</h3>
 <h3>triggerCheckoutOptionEvent();</h3>
 <h3>triggerPurchaseEvent();</h3>
