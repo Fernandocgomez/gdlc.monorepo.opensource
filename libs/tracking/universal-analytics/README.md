@@ -122,7 +122,10 @@ const ecommerceProducts = [
 
 const currencyCode = 'EUR';
 
-this.triggerProductImpressionsEvent(ecommerceProducts, currencyCode);
+this.universalAnalyticsEcommerceEventsService.triggerProductImpressionsEvent(
+	ecommerceProducts,
+	currencyCode,
+);
 ```
 
 <h3>triggerProductClickEvent();</h3>
@@ -164,7 +167,10 @@ const ecommerceProduct = [
 
 const searchList = 'Search Results';
 
-this.triggerProductClickEvent(ecommerceProduct, searchList);
+this.universalAnalyticsEcommerceEventsService.triggerProductClickEvent(
+	ecommerceProduct,
+	searchList,
+);
 ```
 
 <h3>triggerViewProductDetailsEvent();</h3>
@@ -206,7 +212,10 @@ const ecommerceProduct = [
 
 const searchList = 'Search Results';
 
-this.triggerViewProductDetailsEvent(ecommerceProduct, searchList);
+this.universalAnalyticsEcommerceEventsService.triggerViewProductDetailsEvent(
+	ecommerceProduct,
+	searchList,
+);
 ```
 
 <h3>triggerAddToCartEvent();</h3>
@@ -248,14 +257,19 @@ const ecommerceProduct = [
 
 const currencyCode = 'EUR';
 
-this.triggerAddToCartEvent(ecommerceProduct, currencyCode);
+this.universalAnalyticsEcommerceEventsService.triggerAddToCartEvent(
+	ecommerceProduct,
+	currencyCode,
+);
 ```
 
-<h3>#();</h3>
+<h3>triggerRemoveFromCartEvent();</h3>
 <p>Measure the removal of a product from a shopping cart by pushing an "angularRemoveFromCart" event to the dataLayer.</p>
 <p>The product object should be available at the moment this method is called.</p>
-<p>Arguments: removeFromCartEvent: <UniversalAnalyticsEcommerceRemoveProductFromCartEvent></p>
-<p>UniversalAnalyticsEcommerceRemoveProductFromCartEvent Interface</p>
+<p>Arguments: </p>
+<ul>
+	<li>products: <UniversalAnalyticsEcommerceItem[]></li>
+</ul>
 
 ```javascript
 interface UniversalAnalyticsEcommerceItem {
@@ -271,16 +285,60 @@ interface UniversalAnalyticsEcommerceItem {
 	coupon?: string;
 }
 
-export interface UniversalAnalyticsEcommerceRemoveProductFromCartEvent {
-	ecommerce: {
-		remove: {
-			products?: UniversalAnalyticsEcommerceItem[],
-		},
-	};
-}
+const ecommerceProduct = [
+	{
+		name: 'Triblend Android T-Shirt',
+		id: '12345',
+		price: '15.25',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Gray',
+		list: 'Search Results',
+		position: 1,
+	},
+];
+
+this.universalAnalyticsEcommerceEventsService.triggerRemoveFromCartEvent(
+	ecommerceProduct,
+);
 ```
 
 <h3>triggerPromotionViewEvent();</h3>
+<p>Measure impressions on internal site promotions, such as banners displayed on the site itself advertising a sale on a particular subset of products, or an offer for free shipping.</p>
+<p>The information about the promotions should be available at the moment this method is called.</p>
+<p>Arguments: </p>
+<ul>
+	<li>promotions: <UniversalAnalyticsEcommercePromotion[]></li>
+</ul>
+
+```javascript
+interface UniversalAnalyticsEcommercePromotion {
+	id: string;
+	name: string;
+	creative?: string;
+	position?: string;
+}
+
+const ecommercePromotion = [
+	{
+		id: 'JUNE_PROMO13',
+		name: 'June Sale',
+		creative: 'banner1',
+		position: 'slot1',
+	},
+	{
+		id: 'FREE_SHIP13',
+		name: 'Free Shipping Promo',
+		creative: 'skyscraper1',
+		position: 'slot2',
+	},
+];
+
+this.universalAnalyticsEcommerceEventsService.triggerPromotionViewEvent(
+	ecommercePromotion,
+);
+```
+
 <h3>triggerPromotionClickEvent();</h3>
 <h3>triggerCheckoutStepEvent();</h3>
 <h3>triggerCheckoutOptionEvent();</h3>

@@ -3,6 +3,8 @@ import {
 	UniversalAnalyticsEcommerceItem,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
+	UniversalAnalyticsEcommercePromotion,
+	UniversalAnalyticsEcommercePromoViewEvent,
 	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
 	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
@@ -30,6 +32,21 @@ export const ecommerceProductsMock: UniversalAnalyticsEcommerceItem[] = [
 	},
 ];
 
+export const ecommercePromotionsMock: UniversalAnalyticsEcommercePromotion[] = [
+	{
+		id: 'JUNE_PROMO13',
+		name: 'June Sale',
+		creative: 'banner1',
+		position: 'slot1',
+	},
+	{
+		id: 'FREE_SHIP13',
+		name: 'Free Shipping Promo',
+		creative: 'skyscraper1',
+		position: 'slot2',
+	},
+];
+
 export const productImpressionEventMock: UniversalAnalyticsEcommerceProductImpressionsEvent =
 	{
 		ecommerce: {
@@ -43,18 +60,7 @@ export const productClickEventMock: UniversalAnalyticsEcommerceProductClickEvent
 		ecommerce: {
 			click: {
 				actionField: { list: 'Search Results' },
-				products: [
-					{
-						name: 'Triblend Android T-Shirt',
-						id: '12345',
-						price: '15.25',
-						brand: 'Google',
-						category: 'Apparel',
-						variant: 'Gray',
-						list: 'Search Results',
-						position: 1,
-					},
-				],
+				products: ecommerceProductsMock,
 			},
 		},
 	};
@@ -64,16 +70,7 @@ export const viewProductDetailsEventMock: UniversalAnalyticsEcommerceViewProduct
 		ecommerce: {
 			detail: {
 				actionField: { list: 'Apparel Gallery' },
-				products: [
-					{
-						name: 'Triblend Android T-Shirt',
-						id: '12345',
-						price: '15.25',
-						brand: 'Google',
-						category: 'Apparel',
-						variant: 'Gray',
-					},
-				],
+				products: ecommerceProductsMock,
 			},
 		},
 	};
@@ -82,17 +79,7 @@ export const addToCartEventMock: UniversalAnalyticsEcommerceAddToCartEvent = {
 	ecommerce: {
 		currencyCode: 'EUR',
 		add: {
-			products: [
-				{
-					name: 'Triblend Android T-Shirt',
-					id: '12345',
-					price: '15.25',
-					brand: 'Google',
-					category: 'Apparel',
-					variant: 'Gray',
-					quantity: 1,
-				},
-			],
+			products: ecommerceProductsMock,
 		},
 	},
 };
@@ -101,17 +88,16 @@ export const removeFromCartEventMock: UniversalAnalyticsEcommerceRemoveProductFr
 	{
 		ecommerce: {
 			remove: {
-				products: [
-					{
-						name: 'Triblend Android T-Shirt',
-						id: '12345',
-						price: '15.25',
-						brand: 'Google',
-						category: 'Apparel',
-						variant: 'Gray',
-						quantity: 1,
-					},
-				],
+				products: ecommerceProductsMock,
+			},
+		},
+	};
+
+export const promotionViewEventMock: UniversalAnalyticsEcommercePromoViewEvent =
+	{
+		ecommerce: {
+			promoView: {
+				promotions: ecommercePromotionsMock,
 			},
 		},
 	};

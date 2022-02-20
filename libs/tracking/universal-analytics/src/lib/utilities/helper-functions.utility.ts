@@ -42,6 +42,23 @@ export const isAnArrayOfTypeUniversalAnalyticsEcommerceItem = (
 	);
 };
 
+export const isAnArrayOfTypeUniversalAnalyticsEcommercePromotion = (
+	array: Array<any>,
+) => {
+	if (array.length <= 0) {
+		return false;
+	}
+
+	const firstEcommercePromotion = (
+		array as UniversalAnalyticsEcommerceItem[]
+	)[0];
+
+	return (
+		firstEcommercePromotion.id !== undefined &&
+		firstEcommercePromotion.name !== undefined
+	);
+};
+
 export const isOfTypeUniversalAnalyticsEcommerceProductImpressionsEvent = (
 	value: any,
 ) => {

@@ -2,23 +2,20 @@ import { TestBed } from '@angular/core/testing';
 
 import {
 	GtmEvent,
-	UniversalAnalyticsEcommerceAddToCartEvent,
 	UniversalAnalyticsEcommerceItem,
-	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
+	UniversalAnalyticsEcommercePromotion,
 } from '@multi-step-funnels/tracking/tracking-models';
 
 import { UniversalAnalyticsEcommerceEventsService } from './universal-analytics-ecommerce-events.service';
 
 import {
-	addToCartEventMock,
-	removeFromCartEventMock,
 	ecommerceProductsMock,
+	ecommercePromotionsMock,
 } from './utilities/universal-analytics-ecommerce-event-objects';
 
 import {
-	isOfTypeUniversalAnalyticsEcommerceAddToCartEvent,
-	isOfTypeUniversalAnalyticsEcommerceRemoveProductFromCartEvent,
 	isAnArrayOfTypeUniversalAnalyticsEcommerceItem,
+	isAnArrayOfTypeUniversalAnalyticsEcommercePromotion,
 } from './utilities/helper-functions.utility';
 
 describe('UniversalAnalyticsEcommerceEventsService', () => {
@@ -80,6 +77,10 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			);
 		});
 
+		it('should return void', () => {
+			expect(triggerProductImpressionsEventReturnValue).toBe(undefined);
+		});
+
 		it('can be call with two or one argument', () => {
 			expect(spyOnTriggerProductImpressionsEvent).toBeCalledWith(
 				ecommerceProductsMock,
@@ -89,10 +90,6 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(spyOnTriggerProductImpressionsEvent).toBeCalledWith(
 				ecommerceProductsMock,
 			);
-		});
-
-		it('should return void', () => {
-			expect(triggerProductImpressionsEventReturnValue).toBe(undefined);
 		});
 
 		describe('first argument "products"', () => {
@@ -150,6 +147,10 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(dataLayer[dataLayer.length - 1].event).toBe('angularProductClick');
 		});
 
+		it('should return void', () => {
+			expect(triggerProductClickEventReturnValue).toBe(undefined);
+		});
+
 		it('can be call with two or one argument', () => {
 			expect(spyOnTriggerProductClickEvent).toBeCalledWith(
 				ecommerceProductsMock,
@@ -159,10 +160,6 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(spyOnTriggerProductClickEvent).toBeCalledWith(
 				ecommerceProductsMock,
 			);
-		});
-
-		it('should return void', () => {
-			expect(triggerProductClickEventReturnValue).toBe(undefined);
 		});
 
 		describe('first argument "products"', () => {
@@ -224,6 +221,10 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			);
 		});
 
+		it('should return void', () => {
+			expect(triggerViewProductDetailsEventReturnValue).toBe(undefined);
+		});
+
 		it('can be call with two or one argument', () => {
 			expect(spyOnTriggerViewProductDetailsEvent).toBeCalledWith(
 				ecommerceProductsMock,
@@ -233,10 +234,6 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(spyOnTriggerViewProductDetailsEvent).toBeCalledWith(
 				ecommerceProductsMock,
 			);
-		});
-
-		it('should return void', () => {
-			expect(triggerViewProductDetailsEventReturnValue).toBe(undefined);
 		});
 
 		describe('first argument "products"', () => {
@@ -293,6 +290,10 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(dataLayer[dataLayer.length - 1].event).toBe('angularAddToCart');
 		});
 
+		it('should return void', () => {
+			expect(triggerAddToCartEventReturnValue).toBe(undefined);
+		});
+
 		it('can be call with two or one argument', () => {
 			expect(spyOnTriggerAddToCartEvent).toBeCalledWith(
 				ecommerceProductsMock,
@@ -300,10 +301,6 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			);
 			service.triggerAddToCartEvent(ecommerceProductsMock);
 			expect(spyOnTriggerAddToCartEvent).toBeCalledWith(ecommerceProductsMock);
-		});
-
-		it('should return void', () => {
-			expect(triggerAddToCartEventReturnValue).toBe(undefined);
 		});
 
 		describe('first argument "products"', () => {
@@ -335,9 +332,7 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 	describe('#triggerRemoveFromCartEvent', () => {
 		let spyOnTriggerRemoveFromCartEvent: jest.SpyInstance<
 			void,
-			[
-				removeFromCartEvent: UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
-			]
+			[products: UniversalAnalyticsEcommerceItem[]]
 		>;
 
 		let triggerRemoveFromCartEventReturnValue: void;
@@ -349,17 +344,12 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			);
 
 			triggerRemoveFromCartEventReturnValue =
-				service.triggerRemoveFromCartEvent(removeFromCartEventMock);
+				service.triggerRemoveFromCartEvent(ecommerceProductsMock);
 		});
 
-		it('should take an argument of type UniversalAnalyticsEcommerceRemoveProductFromCartEvent', () => {
-			expect(
-				isOfTypeUniversalAnalyticsEcommerceRemoveProductFromCartEvent(
-					removeFromCartEventMock,
-				),
-			).toBe(true);
-			expect(spyOnTriggerRemoveFromCartEvent).toBeCalledWith(
-				removeFromCartEventMock,
+		it('should push an "angularRemoveFromCart" event to the dataLayer', () => {
+			expect(dataLayer[dataLayer.length - 1].event).toBe(
+				'angularRemoveFromCart',
 			);
 		});
 
@@ -367,9 +357,53 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			expect(triggerRemoveFromCartEventReturnValue).toBe(undefined);
 		});
 
-		it('should push an "angularRemoveFromCart" event to the dataLayer', () => {
-			expect(dataLayer[dataLayer.length - 1].event).toBe(
-				'angularRemoveFromCart',
+		it('should be called with an argument of type UniversalAnalyticsEcommerceItem[]', () => {
+			expect(
+				isAnArrayOfTypeUniversalAnalyticsEcommerceItem(ecommerceProductsMock),
+			).toBe(true);
+			expect(Array.isArray(ecommerceProductsMock)).toBe(true);
+			expect(spyOnTriggerRemoveFromCartEvent).toBeCalledWith(
+				ecommerceProductsMock,
+			);
+		});
+	});
+
+	describe('#triggerPromotionViewEvent', () => {
+		let spyOnTriggerPromotionViewEvent: jest.SpyInstance<
+			void,
+			[promotions: UniversalAnalyticsEcommercePromotion[]]
+		>;
+
+		let triggerPromotionViewEventReturnValue: void;
+
+		beforeEach(() => {
+			spyOnTriggerPromotionViewEvent = jest.spyOn(
+				service,
+				'triggerPromotionViewEvent',
+			);
+
+			triggerPromotionViewEventReturnValue = service.triggerPromotionViewEvent(
+				ecommercePromotionsMock,
+			);
+		});
+
+		it('should push an "angularPromoView" event to the dataLayer', () => {
+			expect(dataLayer[dataLayer.length - 1].event).toBe('angularPromoView');
+		});
+
+		it('should return void', () => {
+			expect(triggerPromotionViewEventReturnValue).toBe(undefined);
+		});
+
+		it('should be called with an argument of type UniversalAnalyticsEcommercePromotion[]', () => {
+			expect(
+				isAnArrayOfTypeUniversalAnalyticsEcommercePromotion(
+					ecommercePromotionsMock,
+				),
+			).toBe(true);
+			expect(Array.isArray(ecommercePromotionsMock)).toBe(true);
+			expect(spyOnTriggerPromotionViewEvent).toBeCalledWith(
+				ecommercePromotionsMock,
 			);
 		});
 	});

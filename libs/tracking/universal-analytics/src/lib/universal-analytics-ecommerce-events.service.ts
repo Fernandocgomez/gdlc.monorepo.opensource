@@ -7,6 +7,8 @@ import {
 	UniversalAnalyticsEcommerceItem,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
+	UniversalAnalyticsEcommercePromotion,
+	UniversalAnalyticsEcommercePromoViewEvent,
 	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
 	UniversalAnalyticsEcommerceViewProductDetailsEvent,
 } from '@multi-step-funnels/tracking/tracking-models';
@@ -17,6 +19,7 @@ import {
 	ProductImpressionsEvent,
 	RemoveFromCartEvent,
 	ViewProductDetailsEvent,
+	PromotionViewEvent,
 } from './classes';
 
 @Injectable({
@@ -28,6 +31,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 	private viewProductDetailsEvent: ViewProductDetailsEvent;
 	private addToCartEvent: AddToCartEvent;
 	private removeFromCartEvent: RemoveFromCartEvent;
+	private promotionViewEvent: PromotionViewEvent;
 
 	constructor(private googleTagManagerService: GoogleTagManagerService) {
 		this.productImpressionsEvent = new ProductImpressionsEvent(
@@ -39,6 +43,7 @@ export class UniversalAnalyticsEcommerceEventsService {
 		);
 		this.addToCartEvent = new AddToCartEvent(googleTagManagerService);
 		this.removeFromCartEvent = new RemoveFromCartEvent(googleTagManagerService);
+		this.promotionViewEvent = new PromotionViewEvent(googleTagManagerService);
 	}
 
 	public triggerProductImpressionsEvent(
@@ -106,13 +111,30 @@ export class UniversalAnalyticsEcommerceEventsService {
 	}
 
 	public triggerRemoveFromCartEvent(
-		removeFromCartEvent: UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
+		products: UniversalAnalyticsEcommerceItem[],
 	): void {
+		const removeFromCartEvent: UniversalAnalyticsEcommerceRemoveProductFromCartEvent =
+			{
+				ecommerce: {
+					remove: {
+						products,
+					},
+				},
+			};
 		this.removeFromCartEvent.trigger(removeFromCartEvent);
 	}
 
-	public triggerPromotionViewEvent(): void {
-		//
+	public triggerPromotionViewEvent(
+		promotions: UniversalAnalyticsEcommercePromotion[],
+	): void {
+		const promoViewEvent: UniversalAnalyticsEcommercePromoViewEvent = {
+			ecommerce: {
+				promoView: {
+					promotions,
+				},
+			},
+		};
+		this.promotionViewEvent.trigger(promoViewEvent);
 	}
 
 	public triggerPromotionClickEvent(): void {

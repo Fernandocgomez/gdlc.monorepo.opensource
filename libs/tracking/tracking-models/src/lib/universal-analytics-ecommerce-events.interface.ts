@@ -57,7 +57,7 @@ export interface UniversalAnalyticsEcommerceRemoveProductFromCartEvent {
 	};
 }
 
-interface UniversalAnalyticsEcommercePromotion {
+export interface UniversalAnalyticsEcommercePromotion {
 	id: string;
 	name: string;
 	creative?: string;
