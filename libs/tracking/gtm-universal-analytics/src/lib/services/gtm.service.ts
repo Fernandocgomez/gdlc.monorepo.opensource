@@ -17,6 +17,6 @@ export class GtmService {
 		@Inject('GtmConfig')
 		private config: GtmConfig = { id: null },
 	) {
-		//
+		console.log(config);
 	}
 }
