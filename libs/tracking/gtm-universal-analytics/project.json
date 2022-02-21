@@ -1,0 +1,42 @@
+{
+	"projectType": "library",
+	"root": "libs/tracking/gtm-universal-analytics",
+	"sourceRoot": "libs/tracking/gtm-universal-analytics/src",
+	"prefix": "multi-step-funnels",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/angular:package",
+			"outputs": ["dist/libs/tracking/gtm-universal-analytics"],
+			"options": {
+				"project": "libs/tracking/gtm-universal-analytics/ng-package.json"
+			},
+			"configurations": {
+				"production": {
+					"tsConfig": "libs/tracking/gtm-universal-analytics/tsconfig.lib.prod.json"
+				},
+				"development": {
+					"tsConfig": "libs/tracking/gtm-universal-analytics/tsconfig.lib.json"
+				}
+			},
+			"defaultConfiguration": "production"
+		},
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/tracking/gtm-universal-analytics"],
+			"options": {
+				"jestConfig": "libs/tracking/gtm-universal-analytics/jest.config.js",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/tracking/gtm-universal-analytics/src/**/*.ts",
+					"libs/tracking/gtm-universal-analytics/src/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
+}

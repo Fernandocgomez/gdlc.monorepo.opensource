@@ -15,6 +15,9 @@
 		"skipDefaultLibCheck": true,
 		"baseUrl": ".",
 		"paths": {
+			"@gdlc/gtm-universal-analytics": [
+				"libs/tracking/gtm-universal-analytics/src/index.ts"
+			],
 			"@multi-step-funnels/tracking-google-tag-manager": [
 				"libs/tracking/google-tag-manager/src/index.ts"
 			],
