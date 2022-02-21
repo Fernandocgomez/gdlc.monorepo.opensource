@@ -1,0 +1,26 @@
+import {
+	UniversalAnalyticsEcommerceAddToCartEvent,
+	UniversalAnalyticsEcommerceCheckoutOptionEvent,
+	UniversalAnalyticsEcommerceCheckoutStepEvent,
+	UniversalAnalyticsEcommerceProductClickEvent,
+	UniversalAnalyticsEcommerceProductImpressionsEvent,
+	UniversalAnalyticsEcommercePromoClickEvent,
+	UniversalAnalyticsEcommercePromoViewEvent,
+	UniversalAnalyticsEcommercePurchaseEvent,
+	UniversalAnalyticsEcommerceRefundEvent,
+	UniversalAnalyticsEcommerceRemoveProductFromCartEvent,
+	UniversalAnalyticsEcommerceViewProductDetailsEvent,
+} from './universal-analytics-ecommerce-events.interface';
+
+export type UniversalAnalyticsEcommerceEvent =
+	| UniversalAnalyticsEcommerceProductImpressionsEvent
+	| UniversalAnalyticsEcommerceProductClickEvent
+	| UniversalAnalyticsEcommerceViewProductDetailsEvent
+	| UniversalAnalyticsEcommerceAddToCartEvent
+	| UniversalAnalyticsEcommerceRemoveProductFromCartEvent
+	| UniversalAnalyticsEcommercePromoViewEvent
+	| UniversalAnalyticsEcommercePromoClickEvent
+	| UniversalAnalyticsEcommerceCheckoutStepEvent
+	| UniversalAnalyticsEcommerceCheckoutOptionEvent
+	| UniversalAnalyticsEcommercePurchaseEvent
+	| UniversalAnalyticsEcommerceRefundEvent;

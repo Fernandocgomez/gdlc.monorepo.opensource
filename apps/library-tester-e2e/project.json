@@ -1,0 +1,28 @@
+{
+	"root": "apps/library-tester-e2e",
+	"sourceRoot": "apps/library-tester-e2e/src",
+	"projectType": "application",
+	"targets": {
+		"e2e": {
+			"executor": "@nrwl/cypress:cypress",
+			"options": {
+				"cypressConfig": "apps/library-tester-e2e/cypress.json",
+				"devServerTarget": "library-tester:serve:development"
+			},
+			"configurations": {
+				"production": {
+					"devServerTarget": "library-tester:serve:production"
+				}
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["apps/library-tester-e2e/**/*.{js,ts}"]
+			}
+		}
+	},
+	"tags": [],
+	"implicitDependencies": ["library-tester"]
+}

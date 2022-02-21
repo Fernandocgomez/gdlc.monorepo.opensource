@@ -1,0 +1,26 @@
+{
+	"projectType": "library",
+	"root": "libs/tracking/universal-analytics",
+	"sourceRoot": "libs/tracking/universal-analytics/src",
+	"prefix": "tracking",
+	"targets": {
+		"test": {
+			"executor": "@nrwl/jest:jest",
+			"outputs": ["coverage/libs/tracking/universal-analytics"],
+			"options": {
+				"jestConfig": "libs/tracking/universal-analytics/jest.config.js",
+				"passWithNoTests": true
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"options": {
+				"lintFilePatterns": [
+					"libs/tracking/universal-analytics/src/**/*.ts",
+					"libs/tracking/universal-analytics/src/**/*.html"
+				]
+			}
+		}
+	},
+	"tags": []
+}
