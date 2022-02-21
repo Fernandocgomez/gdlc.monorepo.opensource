@@ -446,4 +446,92 @@ describe('UniversalAnalyticsEcommerceEventsService', () => {
 			);
 		});
 	});
+
+	// describe('#triggerCheckoutStepEvent', () => {
+	// 	let spyOnTriggerCheckoutStepEvent: jest.SpyInstance<void, [step: number, additionalDataAboutPage: string, products: UniversalAnalyticsEcommerceItem[]]>;
+
+	// 	let triggerCheckoutStepEventReturnValue: void;
+
+	// 	const stepOne = 1;
+	// 	const additionalDataForStepOne = 'user info';
+
+	// 	beforeEach(() => {
+	// 		spyOnTriggerCheckoutStepEvent = jest.spyOn(
+	// 			service,
+	// 			'triggerCheckoutStepEvent'
+	// 		);
+
+	// 		triggerCheckoutStepEventReturnValue = service.triggerCheckoutStepEvent(
+	// 			stepOne,
+	// 			additionalDataForStepOne,
+	// 			ecommerceProductsMock
+	// 		);
+	// 	});
+
+	// 	describe('when passing the right arguments', () => {
+	// 		it('should push an "angularCheckout" event to the dataLayer', () => {
+	// 			expect(dataLayer[dataLayer.length - 1].event).toBe('angularCheckout');
+	// 		});
+
+	// 		it('should return void', () => {
+	// 			expect(triggerCheckoutStepEventReturnValue).toBe(undefined);
+	// 		});
+	// 	});
+
+	// 	describe('first argument "step"', () => {
+	// 		it('should be of type number', () => {
+	// 			expect(typeof stepOne).toBe('number');
+	// 		});
+
+	// 		it('should be a positive number', () => {
+	// 			expect(Math.sign(stepOne) === 1).toBe(true);
+	// 		});
+
+	// 		describe('when it is not positive number', () => {
+	// 			let errorMessage: string;
+
+	// 			beforeEach(() => {
+	// 				const causeErrorOnTriggerCheckoutStepEvent = () => {
+	// 					service.triggerCheckoutStepEvent(
+	// 						-1,
+	// 						additionalDataForStepOne,
+	// 						ecommerceProductsMock
+	// 					);
+	// 				};
+
+	// 				try {
+	// 					causeErrorOnTriggerCheckoutStepEvent()
+	// 				} catch (error: any) {
+	// 					errorMessage = error.message;
+	// 				}
+	// 			});
+
+	// 			it('should throw an Error with the message "step should be a positive number"', () => {
+	// 				expect(errorMessage).toBe('step should be a positive number');
+	// 			});
+
+	// 			it('should not push an "angularCheckout" event to the dataLayer', () => {
+	// 				expect(dataLayer[dataLayer.length - 1]?.event).toBe(undefined);
+	// 			});
+	// 		});
+	// 	});
+
+	// 	describe('second argument "additionalDataAboutPage"', () => {
+	// 		it('should be of type string', () => {
+	// 			expect(typeof additionalDataForStepOne).toBe('string');
+	// 		});
+	// 	});
+
+	// 	describe('third argument "products"', () => {
+	// 		it('should be of type UniversalAnalyticsEcommerceItem[]', () => {
+	// 			expect(
+	// 				isAnArrayOfTypeUniversalAnalyticsEcommerceItem(
+	// 					ecommerceProductsMock,
+	// 				),
+	// 			).toBe(true);
+	// 			expect(Array.isArray(ecommerceProductsMock)).toBe(true);
+	// 		});
+	// 	});
+
+	// });
 });

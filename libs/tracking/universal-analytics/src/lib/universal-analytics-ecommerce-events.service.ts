@@ -4,6 +4,7 @@ import { GoogleTagManagerService } from '@multi-step-funnels/tracking-google-tag
 
 import {
 	UniversalAnalyticsEcommerceAddToCartEvent,
+	UniversalAnalyticsEcommerceCheckoutStepEvent,
 	UniversalAnalyticsEcommerceItem,
 	UniversalAnalyticsEcommerceProductClickEvent,
 	UniversalAnalyticsEcommerceProductImpressionsEvent,
@@ -154,8 +155,25 @@ export class UniversalAnalyticsEcommerceEventsService {
 		this.promotionClickEvent.trigger(promotionClickEvent);
 	}
 
-	public triggerCheckoutStepEvent(): void {
-		//
+	public triggerCheckoutStepEvent(
+		step: number,
+		additionalDataAboutPage: string,
+		products: UniversalAnalyticsEcommerceItem[],
+	): void {
+		if (Math.sign(step) === -1) {
+			throw new Error('step should be a positive number');
+		}
+		const checkoutStepEvent: UniversalAnalyticsEcommerceCheckoutStepEvent = {
+			ecommerce: {
+				checkout: {
+					actionField: {
+						step,
+						option: additionalDataAboutPage,
+					},
+					products,
+				},
+			},
+		};
 	}
 
 	public triggerCheckoutOptionEvent(): void {
