@@ -1,1 +1,1 @@
-export * from './lib/tracking-gtm-universal-analytics.module';
+export * from './lib/gtm-universal-analytics.module';
