@@ -1,18 +1,24 @@
-import { async, TestBed } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
+
 import { GtmUniversalAnalyticsModule } from './gtm-universal-analytics.module';
 
-describe('GtmUniversalAnalyticsModule', () => {
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
-			imports: [GtmUniversalAnalyticsModule],
-		}).compileComponents();
-	}));
+import { GtmService } from './services/gtm.service';
 
-	// TODO: Add real tests here.
-	//
-	// NB: This particular test does not do anything useful.
-	//     It does NOT check for correct instantiation of the module.
-	it('should have a module definition', () => {
-		expect(GtmUniversalAnalyticsModule).toBeDefined();
+describe('GtmUniversalAnalyticsModule', () => {
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			imports: [
+				GtmUniversalAnalyticsModule.forRoot({
+					id: 'test_id',
+				}),
+			],
+		});
 	});
+
+	it('should inject a GoogleTagManagerConfig to the GtmService', inject(
+		[GtmService],
+		(gtmService: GtmService) => {
+			expect(gtmService['config'].id).toBe('test_id');
+		},
+	));
 });

@@ -1,10 +1,22 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
+
+import { GtmEvent, GtmConfig } from '../models';
+
+declare global {
+	interface Window {
+		dataLayer: Array<GtmEvent>;
+	}
+}
 
 @Injectable({
 	providedIn: 'root',
 })
 export class GtmService {
-	constructor() {
+	constructor(
+		@Optional()
+		@Inject('GtmConfig')
+		private config: GtmConfig = { id: null },
+	) {
 		//
 	}
 }
