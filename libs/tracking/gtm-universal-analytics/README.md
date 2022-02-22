@@ -3,7 +3,7 @@
 <ul>
 	<li>Virtual page views</li>
 	<li>Custom Events</li>
-    <li>Ecommerce Events</li>
+  <li>Ecommerce Events</li>
 </ul>
 <p>Note: Further configuration will be needed on the Google Tag Manager.</P>
 
