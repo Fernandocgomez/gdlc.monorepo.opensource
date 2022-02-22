@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { GtmService } from '@gdlc/gtm-universal-analytics';
+import { GtmUaVirtualPageViewsService } from '@gdlc/gtm-universal-analytics';
 
 @Component({
 	selector: 'multi-step-funnels-root',
@@ -10,5 +10,9 @@ import { GtmService } from '@gdlc/gtm-universal-analytics';
 export class AppComponent {
 	title = 'library-tester';
 
-	constructor(private gtmService: GtmService) {}
+	constructor(
+		private gtmUaVirtualPageViewsService: GtmUaVirtualPageViewsService,
+	) {
+		//
+	}
 }

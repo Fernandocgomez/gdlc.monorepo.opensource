@@ -6,7 +6,14 @@ describe('GtmUaVirtualPageViewsService', () => {
 	let service: GtmUaVirtualPageViewsService;
 
 	beforeEach(() => {
-		TestBed.configureTestingModule({});
+		TestBed.configureTestingModule({
+			providers: [
+				{
+					provide: 'GtmConfig',
+					useValue: { id: 'test_id' },
+				},
+			],
+		});
 		service = TestBed.inject(GtmUaVirtualPageViewsService);
 	});
 
