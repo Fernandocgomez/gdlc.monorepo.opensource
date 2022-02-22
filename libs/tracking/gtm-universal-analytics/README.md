@@ -55,14 +55,15 @@ imports: [
 <h1 id="gtm-config">GTM Configuration:</h1>
 <p>In order to make this library work with your GTM container, we will need to import some tags, triggers, and variables into your GTM container.</p>
 <p>Fortunately, Tag Manager has the option to import configuration from other GTM container into yours.</p>
-<a href="#">Click on this link to download the config file in JSON format.</a>
-<p>Once you have this file, go to your GTM container and click on the Admin tab. It is right next to the Version tab.</p>
-<p>Then, click on Import Container and upload the config file you download.</p>
+<p><a href="#">Click on this link to download the config file in JSON format.</a></p>
+<p>Once you have the file, go to your GTM container and click on the "Admin" tab. It is right next to the "Version" tab.</p>
+<p>Then, click on "Import Container" and upload the config file you download.</p>
 <p>Select your work space if you have multiple ones or create a new one.</p>
 <p>The last option is up to you. If you want to overwrite or merge.</p>
-<p>Don't worry about the option you selected. You can alway reverse your changes back.</p>
+<p>Don't worry about the option you select. You can alway reverse your changes back.</p>
 <p>Before you publish your changes, you will need to make a change to one of the variables.</p>
-<p>Go to Variable, and look for "Universal Analytics || Tracking Id". Here you will need to type your own Universal Analytics Id.</p>
+<p>Click on Variables on the left side hand, and look for "Universal Analytics || Tracking Id". Here you will need to type your own Universal Analytics Id.</p>
+<p>And done!</p>
 
 <h1>Services:</h1>
 
