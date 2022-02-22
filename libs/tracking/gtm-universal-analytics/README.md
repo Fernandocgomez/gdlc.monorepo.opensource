@@ -1,4 +1,4 @@
-<h1>gtm-universal-analytics</h1>
+<h1>Angular GTM Universal Analytics</h1>
 <p>A collection of services, and directives to easily integrate universal analytics features such as:</P>
 <ul>
 	<li>Virtual page views</li>
