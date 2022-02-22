@@ -13,6 +13,6 @@ export class AppComponent {
 	constructor(
 		private gtmUaVirtualPageViewsService: GtmUaVirtualPageViewsService,
 	) {
-		//
+		this.gtmUaVirtualPageViewsService.sendVirtualPageViews();
 	}
 }
