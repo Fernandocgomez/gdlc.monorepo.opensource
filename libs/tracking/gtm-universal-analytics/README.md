@@ -25,12 +25,12 @@
   </li>
   <li>
     <a href="#custom-event">
-      How to send custom event?
+      How to send custom events?
     </a>
   </li>
   <li>
     <a href="#ecommerce-events">
-      how to send Ecommerce events?
+      How to send Ecommerce events?
     </a>
   </li>
   <li>
