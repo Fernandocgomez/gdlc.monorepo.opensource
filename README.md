@@ -1,6 +1,6 @@
 <h1>Directory</h2>
 
-<h2>Open Source:</h2>
+<h2>Documentation: </h2>
 
 <ul>
   <li>
@@ -9,5 +9,3 @@
     </a>
   </li>
 </ul>
-
-<h2>Personal Projects:</h2>
