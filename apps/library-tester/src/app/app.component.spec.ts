@@ -7,6 +7,12 @@ describe('AppComponent', () => {
 		await TestBed.configureTestingModule({
 			imports: [RouterTestingModule],
 			declarations: [AppComponent],
+			providers: [
+				{
+					provide: 'GtmConfig',
+					useValue: { id: 'test_id' },
+				},
+			],
 		}).compileComponents();
 	});
 

@@ -1,4 +1,13 @@
 {
+	"name": "@gdlc/angular-gtm-universal-analytics",
+	"version": "0.0.1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Fernandocgomez/gdlc.monorepo.opensource/tree/master/libs/tracking/gtm-universal-analytics"
+	},
+	"description": "A collection of services, and directives to easily integrate universal analytics features such as: Virtual page views, Custom Events, and Ecommerce Events",
+	"author": "fernandocgomez@live.com",
+	"license": "MIT",
 	"name": "@gdlc/gtm-universal-analytics",
 	"version": "0.0.1",
 	"peerDependencies": {

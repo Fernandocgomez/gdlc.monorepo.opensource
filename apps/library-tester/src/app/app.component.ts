@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { GtmUaVirtualPageViewsService } from '@gdlc/gtm-universal-analytics';
+
 @Component({
 	selector: 'multi-step-funnels-root',
 	templateUrl: './app.component.html',
@@ -7,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 	title = 'library-tester';
+
+	constructor(
+		private gtmUaVirtualPageViewsService: GtmUaVirtualPageViewsService,
+	) {
+		this.gtmUaVirtualPageViewsService.sendVirtualPageViews();
+	}
 }

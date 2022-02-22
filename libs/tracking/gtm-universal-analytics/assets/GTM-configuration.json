@@ -1,0 +1,240 @@
+{
+	"exportFormatVersion": 2,
+	"exportTime": "2022-02-22 03:55:49",
+	"containerVersion": {
+		"path": "accounts/6005886945/containers/58551734/versions/6",
+		"accountId": "6005886945",
+		"containerId": "58551734",
+		"containerVersionId": "6",
+		"name": "remove my ua id",
+		"container": {
+			"path": "accounts/6005886945/containers/58551734",
+			"accountId": "6005886945",
+			"containerId": "58551734",
+			"name": "Angular GTM Libraries",
+			"publicId": "GTM-TH4Z92G",
+			"usageContext": ["WEB"],
+			"fingerprint": "1645502118628",
+			"tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6005886945/containers/58551734/workspaces?apiLink=container"
+		},
+		"tag": [
+			{
+				"accountId": "6005886945",
+				"containerId": "58551734",
+				"tagId": "7",
+				"name": "UA || Virtual Page Views",
+				"type": "ua",
+				"parameter": [
+					{
+						"type": "BOOLEAN",
+						"key": "overrideGaSettings",
+						"value": "true"
+					},
+					{
+						"type": "LIST",
+						"key": "fieldsToSet",
+						"list": [
+							{
+								"type": "MAP",
+								"map": [
+									{
+										"type": "TEMPLATE",
+										"key": "fieldName",
+										"value": "page"
+									},
+									{
+										"type": "TEMPLATE",
+										"key": "value",
+										"value": "{{Data Layer Variable || Url}}"
+									}
+								]
+							},
+							{
+								"type": "MAP",
+								"map": [
+									{
+										"type": "TEMPLATE",
+										"key": "fieldName",
+										"value": "title"
+									},
+									{
+										"type": "TEMPLATE",
+										"key": "value",
+										"value": "{{Data Layer Variable || Title}}"
+									}
+								]
+							}
+						]
+					},
+					{
+						"type": "TEMPLATE",
+						"key": "trackType",
+						"value": "TRACK_PAGEVIEW"
+					},
+					{
+						"type": "TEMPLATE",
+						"key": "trackingId",
+						"value": "{{Universal Analytics || Tracking Id}}"
+					}
+				],
+				"fingerprint": "1645495198556",
+				"firingTriggerId": ["5"],
+				"tagFiringOption": "ONCE_PER_EVENT",
+				"monitoringMetadata": {
+					"type": "MAP"
+				},
+				"consentSettings": {
+					"consentStatus": "NOT_SET"
+				}
+			}
+		],
+		"trigger": [
+			{
+				"accountId": "6005886945",
+				"containerId": "58551734",
+				"triggerId": "5",
+				"name": "virtualPageView Event",
+				"type": "CUSTOM_EVENT",
+				"customEventFilter": [
+					{
+						"type": "MATCH_REGEX",
+						"parameter": [
+							{
+								"type": "TEMPLATE",
+								"key": "arg0",
+								"value": "{{_event}}"
+							},
+							{
+								"type": "TEMPLATE",
+								"key": "arg1",
+								"value": "virtualPageView"
+							}
+						]
+					}
+				],
+				"filter": [
+					{
+						"type": "CONTAINS",
+						"parameter": [
+							{
+								"type": "TEMPLATE",
+								"key": "arg0",
+								"value": "{{Event}}"
+							},
+							{
+								"type": "TEMPLATE",
+								"key": "arg1",
+								"value": "virtualPageView"
+							}
+						]
+					}
+				],
+				"fingerprint": "1645494894410"
+			}
+		],
+		"variable": [
+			{
+				"accountId": "6005886945",
+				"containerId": "58551734",
+				"variableId": "6",
+				"name": "Universal Analytics || Tracking Id",
+				"type": "c",
+				"parameter": [
+					{
+						"type": "TEMPLATE",
+						"key": "value",
+						"value": "Your UA ID"
+					}
+				],
+				"fingerprint": "1645501996787",
+				"formatValue": {}
+			},
+			{
+				"accountId": "6005886945",
+				"containerId": "58551734",
+				"variableId": "8",
+				"name": "Data Layer Variable || Url",
+				"type": "v",
+				"parameter": [
+					{
+						"type": "INTEGER",
+						"key": "dataLayerVersion",
+						"value": "2"
+					},
+					{
+						"type": "BOOLEAN",
+						"key": "setDefaultValue",
+						"value": "false"
+					},
+					{
+						"type": "TEMPLATE",
+						"key": "name",
+						"value": "url"
+					}
+				],
+				"fingerprint": "1645494786668",
+				"formatValue": {}
+			},
+			{
+				"accountId": "6005886945",
+				"containerId": "58551734",
+				"variableId": "9",
+				"name": "Data Layer Variable || Title",
+				"type": "v",
+				"parameter": [
+					{
+						"type": "INTEGER",
+						"key": "dataLayerVersion",
+						"value": "2"
+					},
+					{
+						"type": "BOOLEAN",
+						"key": "setDefaultValue",
+						"value": "false"
+					},
+					{
+						"type": "TEMPLATE",
+						"key": "name",
+						"value": "title"
+					}
+				],
+				"fingerprint": "1645495189387",
+				"formatValue": {}
+			}
+		],
+		"builtInVariable": [
+			{
+				"accountId": "6005886945",
+				"containerId": "58551734",
+				"type": "PAGE_URL",
+				"name": "Page URL"
+			},
+			{
+				"accountId": "6005886945",
+				"containerId": "58551734",
+				"type": "PAGE_HOSTNAME",
+				"name": "Page Hostname"
+			},
+			{
+				"accountId": "6005886945",
+				"containerId": "58551734",
+				"type": "PAGE_PATH",
+				"name": "Page Path"
+			},
+			{
+				"accountId": "6005886945",
+				"containerId": "58551734",
+				"type": "REFERRER",
+				"name": "Referrer"
+			},
+			{
+				"accountId": "6005886945",
+				"containerId": "58551734",
+				"type": "EVENT",
+				"name": "Event"
+			}
+		],
+		"fingerprint": "1645502026018",
+		"tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6005886945/containers/58551734/versions/6?apiLink=version"
+	}
+}
