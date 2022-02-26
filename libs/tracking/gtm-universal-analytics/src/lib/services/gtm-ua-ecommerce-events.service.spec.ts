@@ -67,6 +67,16 @@ describe('GtmUaEcommerceEventsService', () => {
 				expect(getLastElementOnDataLayer()['category']).toBe('ecommerce');
 			});
 
+			it('should have the property "label" equals to "product impressions"', () => {
+				expect(getLastElementOnDataLayer()['label']).toBe(
+					'product impressions',
+				);
+			});
+
+			it('should have the property "nonInteraction" equals to "false"', () => {
+				expect(getLastElementOnDataLayer()['nonInteraction']).toBe(false);
+			});
+
 			it('should have the property "action" equals to "impressions"', () => {
 				expect(getLastElementOnDataLayer()['action']).toBe('impressions');
 			});

@@ -22,6 +22,8 @@ export class UaEcommerceProductImpressionsEvent extends UaEcommerceEventAbstract
 			},
 			category: this.eventCategory,
 			action: 'impressions',
+			label: 'product impressions',
+			nonInteraction: false,
 		};
 	}
 }
