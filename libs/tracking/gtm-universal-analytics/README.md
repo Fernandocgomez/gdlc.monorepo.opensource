@@ -84,6 +84,7 @@ constructor(
 ```
 
 <h2 id="custom-event">GtmUaCustomEventsService:</h2>
+
 <h3>sendCustomEvent(customEvent: GtmUaCustomEvent);</h3>
 <p>Send custom events to Universal Analytics via the GTM dataLayer.</p>
 <p>If you're unfamiliar with events in Google Analytics you should first read the article <a href="https://support.google.com/analytics/answer/1033068">About Events</a></p>
@@ -120,6 +121,64 @@ public redirectToFacebookPage(): void {
 
   location.href = 'https://facebook.com/xyz-company';
 };
+```
+
+<h2 id="ecommerce-events">GtmUaEcommerceEventsService:</h2>
+
+<h3>sendProductImpressionsEvent(products: UaEcommerceProduct[], currencyCode: CurrencyCode = 'USD');</h3>
+<p>Send an "angularEcommerce" event to Universal Analytics via the dataLayer.</p>
+<p>The object pushed to the dataLayer contains ecommerce meta data for Measuring Product Impressions</p>
+<p>The product object should be available at the moment this method is called.</p>
+<p>Arguments: </p>
+<ul>
+	<li>products: <UaEcommerceProduct[]></li>
+	<li>currencyCode: <CurrencyCode> = 'USD'</li>
+</ul>
+<p>The currencyCode argument has a default value of USD.</p>
+
+```javascript
+interface UaEcommerceProduct {
+	name: string;
+	id: string;
+	price?: string;
+	brand?: string;
+	category?: string;
+	variant?: string;
+	list?: string;
+	position?: number;
+	quantity?: number;
+	coupon?: string;
+}
+
+const ecommerceProducts: UaEcommerceProduct = [
+	{
+		name: 'Triblend Android T-Shirt',
+		id: '12345',
+		price: '15.25',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Gray',
+		list: 'Search Results',
+		position: 1,
+	},
+	{
+		name: 'Donut Friday Scented T-Shirt',
+		id: '67890',
+		price: '33.75',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Black',
+		list: 'Search Results',
+		position: 2,
+	},
+];
+
+const currencyCode = 'EUR';
+
+this.gtmUaEcommerceEventsService.sendProductImpressionsEvent(
+	ecommerceProducts,
+	currencyCode,
+);
 ```
 
 <h1 id="development">Development:</h1>
