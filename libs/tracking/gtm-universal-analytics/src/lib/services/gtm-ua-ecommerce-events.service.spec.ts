@@ -4,6 +4,7 @@ import {
 	CurrencyCode,
 	GtmEvent,
 	listOfCurrencyCodeSupportedByUA,
+	UaEcommerceProduct,
 } from '../models';
 
 import { GtmUaEcommerceEventsService } from './gtm-ua-ecommerce-events.service';
@@ -67,6 +68,10 @@ describe('GtmUaEcommerceEventsService', () => {
 				expect(getLastElementOnDataLayer()['category']).toBe('ecommerce');
 			});
 
+			it('should have the property "action" equals to "impressions"', () => {
+				expect(getLastElementOnDataLayer()['action']).toBe('impressions');
+			});
+
 			it('should have the property "label" equals to "product impressions"', () => {
 				expect(getLastElementOnDataLayer()['label']).toBe(
 					'product impressions',
@@ -76,15 +81,44 @@ describe('GtmUaEcommerceEventsService', () => {
 			it('should have the property "nonInteraction" equals to "false"', () => {
 				expect(getLastElementOnDataLayer()['nonInteraction']).toBe(false);
 			});
-
-			it('should have the property "action" equals to "impressions"', () => {
-				expect(getLastElementOnDataLayer()['action']).toBe('impressions');
-			});
 		});
 
 		describe('"products" argument', () => {
+			let spyOnSendProductImpressionsEvent: jest.SpyInstance<
+				void,
+				[products: UaEcommerceProduct[], currencyCode?: CurrencyCode]
+			>;
+
+			let invalidProductsArg: UaEcommerceProduct[];
+
+			beforeEach(() => {
+				spyOnSendProductImpressionsEvent = jest.spyOn(
+					service,
+					'sendProductImpressionsEvent',
+				);
+
+				invalidProductsArg = [...productsArg];
+
+				service.sendProductImpressionsEvent(invalidProductsArg);
+			});
+
 			it('should be an Array', () => {
 				expect(Array.isArray(productsArg)).toBe(true);
+			});
+
+			it('should throw an error when passing a product with an id equals to an empty string.', () => {
+				invalidProductsArg[0].id = '';
+				expect(spyOnSendProductImpressionsEvent).toThrowError();
+			});
+
+			it('should throw an error when passing a product with a name equals to an empty string.', () => {
+				invalidProductsArg[0].name = '';
+				expect(spyOnSendProductImpressionsEvent).toThrowError();
+			});
+
+			it('should throw an error when passing a product with a position equals to a number less than 1.', () => {
+				invalidProductsArg[0].position = 0;
+				expect(spyOnSendProductImpressionsEvent).toThrowError();
 			});
 		});
 
