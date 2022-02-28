@@ -2,26 +2,25 @@ import { TestBed } from '@angular/core/testing';
 
 import {
 	CurrencyCode,
-	GtmEvent,
 	listOfCurrencyCodeSupportedByUA,
 	UaEcommerceProduct,
 } from '../models';
 
 import { GtmUaEcommerceEventsService } from './gtm-ua-ecommerce-events.service';
 
-import { uaEcommerceProductsMockUp } from '../utilities';
+import { uaEcommerceProductsMockUp, DataLayer } from '../utilities';
 
 describe('GtmUaEcommerceEventsService', () => {
 	let service: GtmUaEcommerceEventsService;
 
-	const getDataLayer = (): GtmEvent[] => {
-		return window.dataLayer;
-	};
+	let spyOnSendProductImpressionsEvent: jest.SpyInstance<
+		void,
+		[products: UaEcommerceProduct[], currencyCode?: CurrencyCode]
+	>;
 
-	const getLastElementOnDataLayer = (): GtmEvent => {
-		const dataLayer = getDataLayer();
-		return dataLayer[dataLayer.length - 1];
-	};
+	let invalidProductsArg: UaEcommerceProduct[];
+	const productsArg = uaEcommerceProductsMockUp;
+	const currencyCodeArg: CurrencyCode = 'EUR';
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -40,57 +39,45 @@ describe('GtmUaEcommerceEventsService', () => {
 	});
 
 	describe('#sendProductImpressionsEvent', () => {
-		const productsArg = uaEcommerceProductsMockUp;
-		const currencyCodeArg: CurrencyCode = 'EUR';
-
 		describe('pushed object to dataLayer', () => {
 			beforeEach(() => {
 				service.sendProductImpressionsEvent(productsArg, currencyCodeArg);
 			});
 
 			it('should have the property "event" equal to "angularEcommerce"', () => {
-				expect(getLastElementOnDataLayer().event).toBe('angularEcommerce');
+				expect(DataLayer.getLastElement().event).toBe('angularEcommerce');
 			});
 
 			it('should have the property "currencyCode" equal to "EUR"', () => {
-				const currencyCode =
-					getLastElementOnDataLayer()['ecommerce']['currencyCode'];
-				expect(currencyCode).toBe('EUR');
+				const currencyCodeValue =
+					DataLayer.getLastElement()['ecommerce']['currencyCode'];
+				expect(currencyCodeValue).toBe('EUR');
 			});
 
 			it('should have the property "impressions" pointing to an Array with 2 elements', () => {
-				const arrayOfProducts =
-					getLastElementOnDataLayer()['ecommerce']['impressions'];
-				expect(arrayOfProducts.length).toBe(2);
+				const productsImpression =
+					DataLayer.getLastElement()['ecommerce']['impressions'];
+				expect(productsImpression.length).toBe(2);
 			});
 
 			it('should have the property "category" equals to "ecommerce"', () => {
-				expect(getLastElementOnDataLayer()['category']).toBe('ecommerce');
+				expect(DataLayer.getLastElement()['category']).toBe('ecommerce');
 			});
 
 			it('should have the property "action" equals to "impressions"', () => {
-				expect(getLastElementOnDataLayer()['action']).toBe('impressions');
+				expect(DataLayer.getLastElement()['action']).toBe('impressions');
 			});
 
 			it('should have the property "label" equals to "product impressions"', () => {
-				expect(getLastElementOnDataLayer()['label']).toBe(
-					'product impressions',
-				);
+				expect(DataLayer.getLastElement()['label']).toBe('product impressions');
 			});
 
 			it('should have the property "nonInteraction" equals to "false"', () => {
-				expect(getLastElementOnDataLayer()['nonInteraction']).toBe(false);
+				expect(DataLayer.getLastElement()['nonInteraction']).toBe(false);
 			});
 		});
 
 		describe('"products" argument', () => {
-			let spyOnSendProductImpressionsEvent: jest.SpyInstance<
-				void,
-				[products: UaEcommerceProduct[], currencyCode?: CurrencyCode]
-			>;
-
-			let invalidProductsArg: UaEcommerceProduct[];
-
 			beforeEach(() => {
 				spyOnSendProductImpressionsEvent = jest.spyOn(
 					service,
@@ -132,16 +119,16 @@ describe('GtmUaEcommerceEventsService', () => {
 			});
 
 			it('should be optional with a default value of "USD"', () => {
-				const currencyCode =
-					getLastElementOnDataLayer()['ecommerce']['currencyCode'];
-				expect(currencyCode).toBe('USD');
+				const currencyCodeValue =
+					DataLayer.getLastElement()['ecommerce']['currencyCode'];
+				expect(currencyCodeValue).toBe('USD');
 			});
 
 			it('should be one of the option on type CurrencyCode', () => {
-				const isOnValueArray: boolean =
+				const isValidCurrencyCodeValue: boolean =
 					listOfCurrencyCodeSupportedByUA.includes(currencyCodeArg);
 
-				expect(isOnValueArray).toBe(true);
+				expect(isValidCurrencyCodeValue).toBe(true);
 			});
 		});
 	});

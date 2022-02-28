@@ -4,19 +4,15 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { GtmUaVirtualPageViewsService } from './gtm-ua-virtual-page-views.service';
-import { GtmService } from './gtm.service';
 
 import { Observable } from 'rxjs';
 
-import { GtmEvent } from '../models/gtm-event.interface';
-
-import { routesMockUp } from '../utilities/routes-mock-up.utility';
+import { DataLayer, routesMockUp } from '../utilities';
 
 describe('GtmUaVirtualPageViewsService', () => {
 	type SpyInstance = jest.SpyInstance<any, unknown[]>;
 
 	let service: GtmUaVirtualPageViewsService;
-	let gtmService: GtmService;
 	let router: Router;
 	let title: Title;
 
@@ -32,11 +28,6 @@ describe('GtmUaVirtualPageViewsService', () => {
 		return jest.spyOn(service as any, method);
 	};
 
-	const getLastElementOnDataLayer = (): GtmEvent => {
-		const dataLayer = gtmService.getDataLayer();
-		return dataLayer[dataLayer.length - 1];
-	};
-
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			providers: [
@@ -48,7 +39,6 @@ describe('GtmUaVirtualPageViewsService', () => {
 			imports: [RouterTestingModule.withRoutes(routesMockUp)],
 		});
 
-		gtmService = TestBed.inject(GtmService);
 		service = TestBed.inject(GtmUaVirtualPageViewsService);
 		router = TestBed.inject(Router);
 		title = TestBed.inject(Title);
@@ -123,16 +113,16 @@ describe('GtmUaVirtualPageViewsService', () => {
 		});
 
 		it('should push a "virtualPageView" event to the dataLayer', () => {
-			expect(getLastElementOnDataLayer().event).toBe('virtualPageView');
+			expect(DataLayer.getLastElement().event).toBe('virtualPageView');
 		});
 
 		it('should passed the page title on the property title', () => {
-			expect(getLastElementOnDataLayer()['title']).toBe(title.getTitle());
+			expect(DataLayer.getLastElement()['title']).toBe(title.getTitle());
 		});
 
 		describe('argument "url"', () => {
 			it('should be on the object pushed to the data layer under the property "url"', () => {
-				expect(getLastElementOnDataLayer()['url']).toBe(url);
+				expect(DataLayer.getLastElement()['url']).toBe(url);
 			});
 		});
 	});

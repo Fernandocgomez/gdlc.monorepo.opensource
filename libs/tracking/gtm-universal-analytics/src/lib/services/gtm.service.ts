@@ -66,7 +66,7 @@ export class GtmService {
 	}
 
 	public pushToDataLayer(obj: GtmEvent): void {
-		window.dataLayer.push(obj);
+		window?.dataLayer.push(obj);
 	}
 
 	public clearEcommerceObject(): void {
@@ -76,13 +76,5 @@ export class GtmService {
 		};
 
 		this.pushToDataLayer(ecommerceNull);
-	}
-
-	public resetDataLayer(): void {
-		window.dataLayer = [];
-	}
-
-	public getDataLayer(): GtmEvent[] {
-		return window?.dataLayer;
 	}
 }
