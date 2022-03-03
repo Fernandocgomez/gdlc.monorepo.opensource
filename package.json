@@ -11,7 +11,8 @@
 		"lint": "nx affected:lint",
 		"format": "npx prettier --write .",
 		"pre-commit": "pretty-quick --staged",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"test:gtm-analytics": "nx test tracking-gtm-universal-analytics --watch --color --verbose"
 	},
 	"private": true,
 	"dependencies": {

@@ -21,3 +21,12 @@ export interface UaEcommerceProductImpressions extends GtmUaCustomEvent {
 		impressions: UaEcommerceProduct[];
 	};
 }
+
+export interface UaEcommerceProductClick extends GtmUaCustomEvent {
+	ecommerce: {
+		click: {
+			actionField?: { list?: string };
+			products: UaEcommerceProduct[];
+		};
+	};
+}

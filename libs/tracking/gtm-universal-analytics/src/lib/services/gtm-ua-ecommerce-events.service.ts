@@ -4,22 +4,27 @@ import { GtmService } from './gtm.service';
 
 import { UaEcommerceProduct, CurrencyCode } from '../models';
 
-import { UaEcommerceProductImpressionsEvent } from '../classes';
-
-import { UaEcommerceProducts, Validate } from '../decorators';
+import {
+	UaEcommerceProductClickEvent,
+	UaEcommerceProductImpressionsEvent,
+	UaEcommerceProductValidator,
+} from '../classes';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class GtmUaEcommerceEventsService {
-	constructor(private gtmService: GtmService) {}
+	private readonly uaEcommerceProductValidator: UaEcommerceProductValidator =
+		new UaEcommerceProductValidator();
 
-	@Validate
-	public sendProductImpressionsEvent(
-		@UaEcommerceProducts
+	constructor(private readonly gtmService: GtmService) {}
+
+	sendProductImpressionsEvent(
 		products: UaEcommerceProduct[],
 		currencyCode: CurrencyCode = 'USD',
 	): void {
+		this.uaEcommerceProductValidator.validate(products);
+
 		const productImpressionEventInstance =
 			new UaEcommerceProductImpressionsEvent(
 				products,
@@ -28,5 +33,20 @@ export class GtmUaEcommerceEventsService {
 			);
 
 		productImpressionEventInstance.sendEventToTheDataLayer();
+	}
+
+	sendProductClickEvent(
+		products: UaEcommerceProduct[],
+		searchList?: string,
+	): void {
+		this.uaEcommerceProductValidator.validate(products);
+
+		const productClickEventInstance = new UaEcommerceProductClickEvent(
+			products,
+			this.gtmService,
+			searchList,
+		);
+
+		productClickEventInstance.sendEventToTheDataLayer();
 	}
 }
