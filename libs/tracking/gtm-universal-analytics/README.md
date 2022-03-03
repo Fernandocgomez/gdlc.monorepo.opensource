@@ -181,6 +181,62 @@ this.gtmUaEcommerceEventsService.sendProductImpressionsEvent(
 );
 ```
 
+<h3>sendProductClickEvent(products: UaEcommerceProduct[], searchList?: string);</h3>
+<p>Send an "angularEcommerce" event to Universal Analytics via the dataLayer.</p>
+<p>The object pushed to the dataLayer contains ecommerce meta data for Measuring Product clicks</p>
+<p>The products object should be available at the moment this method is called.</p>
+<p>Arguments: </p>
+<ul>
+	<li>products: <UaEcommerceProduct[]></li>
+	<li>searchList: <string></li>
+</ul>
+<p>The searchList argument is optional.</p>
+
+```javascript
+interface UaEcommerceProduct {
+	name: string;
+	id: string;
+	price?: string;
+	brand?: string;
+	category?: string;
+	variant?: string;
+	list?: string;
+	position?: number;
+	quantity?: number;
+	coupon?: string;
+}
+
+const ecommerceProducts: UaEcommerceProduct = [
+	{
+		name: 'Triblend Android T-Shirt',
+		id: '12345',
+		price: '15.25',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Gray',
+		list: 'Search Results',
+		position: 1,
+	},
+	{
+		name: 'Donut Friday Scented T-Shirt',
+		id: '67890',
+		price: '33.75',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Black',
+		list: 'Search Results',
+		position: 2,
+	},
+];
+
+const searchList = 'T-shirts clearance';
+
+this.gtmUaEcommerceEventsService.sendProductClickEvent(
+	ecommerceProducts,
+	searchList,
+);
+```
+
 <h1 id="development">Development:</h1>
 
 <h2>Running unit tests:</h2>
