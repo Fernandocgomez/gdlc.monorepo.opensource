@@ -10,7 +10,19 @@ import { GtmUniversalAnalyticsModule } from '@gdlc/gtm-universal-analytics';
 	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
-		RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
+		RouterModule.forRoot(
+			[
+				{
+					path: '',
+					component: AppComponent,
+				},
+				{
+					path: 'tets',
+					component: AppComponent,
+				},
+			],
+			{ initialNavigation: 'enabledBlocking' },
+		),
 		GtmUniversalAnalyticsModule.forRoot({
 			id: 'GTM-TH4Z92G',
 		}),
