@@ -31,7 +31,8 @@ describe('GtmUaEcommerceEventsService', () => {
 
 	type GtmUaEcommerceEventsServiceMethods =
 		| 'sendProductImpressionsEvent'
-		| 'sendProductClickEvent';
+		| 'sendProductClickEvent'
+		| 'sendViewProductDetailsEvent';
 
 	const assertProductsArgument = (
 		method: GtmUaEcommerceEventsServiceMethods,
@@ -268,6 +269,92 @@ describe('GtmUaEcommerceEventsService', () => {
 				it('should not have the "actionField" property', () => {
 					expect(
 						DataLayer.getLastElement()['ecommerce']['click']['actionField'],
+					).toBe(undefined);
+				});
+			});
+		});
+	});
+
+	describe('#sendViewProductDetailsEvent', () => {
+		describe('pushed object to dataLayer', () => {
+			beforeEach(() => {
+				service.sendViewProductDetailsEvent(productsArg, searchListArg);
+			});
+
+			assertEventProperty();
+
+			it('should have the property "ecommerce" equal to "ecommerceObject"', () => {
+				const ecommerceObject = {
+					detail: {
+						actionField: { list: searchListArg },
+						products: productsArg,
+					},
+				};
+
+				expect(DataLayer.getLastElement()['ecommerce']).toStrictEqual(
+					ecommerceObject,
+				);
+			});
+
+			it('should have the property "detail" equal to "detailObject"', () => {
+				const detailObject = {
+					actionField: { list: searchListArg },
+					products: productsArg,
+				};
+
+				expect(DataLayer.getLastElement()['ecommerce']['detail']).toStrictEqual(
+					detailObject,
+				);
+			});
+
+			it('should have the property "actionField" equal to "actionFieldObject"', () => {
+				const actionFieldObject = {
+					list: searchListArg,
+				};
+
+				expect(
+					DataLayer.getLastElement()['ecommerce']['detail']['actionField'],
+				).toStrictEqual(actionFieldObject);
+			});
+
+			it('should have the property "list" equal to "searchListArg"', () => {
+				expect(
+					DataLayer.getLastElement()['ecommerce']['detail']['actionField'][
+						'list'
+					],
+				).toStrictEqual(searchListArg);
+			});
+
+			it('should have the property "products" equal to "productsArg"', () => {
+				expect(
+					DataLayer.getLastElement()['ecommerce']['detail']['products'],
+				).toStrictEqual(productsArg);
+			});
+
+			assertCategoryProperty();
+
+			assertActionProperty('view');
+
+			assertLabelProperty('view product details');
+
+			assertNonInteractionProperty(false);
+		});
+
+		assertProductsArgument('sendViewProductDetailsEvent');
+
+		describe('"searchList" argument', () => {
+			beforeEach(() => {
+				service.sendViewProductDetailsEvent(productsArg);
+			});
+
+			it('should be of type string', () => {
+				expect(typeof searchListArg).toBe('string');
+			});
+
+			describe('when not passing "searchList" argument', () => {
+				it('should not have the "actionField" property', () => {
+					expect(
+						DataLayer.getLastElement()['ecommerce']['detail']['actionField'],
 					).toBe(undefined);
 				});
 			});

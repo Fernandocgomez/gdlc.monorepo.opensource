@@ -30,3 +30,12 @@ export interface UaEcommerceProductClick extends GtmUaCustomEvent {
 		};
 	};
 }
+
+export interface UaEcommerceViewProductDetails extends GtmUaCustomEvent {
+	ecommerce: {
+		detail: {
+			actionField?: { list?: string };
+			products: UaEcommerceProduct[];
+		};
+	};
+}

@@ -1,8 +1,10 @@
 import {
 	UaEcommerceProductImpressions,
 	UaEcommerceProductClick,
+	UaEcommerceViewProductDetails,
 } from './gtm-ua-ecommerce-events.interface';
 
-export type UaEcommerceEvent =
+export type UaEcommerceEvents =
 	| UaEcommerceProductImpressions
-	| UaEcommerceProductClick;
+	| UaEcommerceProductClick
+	| UaEcommerceViewProductDetails;

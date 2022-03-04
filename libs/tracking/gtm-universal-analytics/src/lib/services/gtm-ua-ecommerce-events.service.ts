@@ -8,6 +8,7 @@ import {
 	UaEcommerceProductClickEvent,
 	UaEcommerceProductImpressionsEvent,
 	UaEcommerceProductValidator,
+	UaEcommerceViewProductDetailsEvent,
 } from '../classes';
 
 @Injectable({
@@ -48,5 +49,20 @@ export class GtmUaEcommerceEventsService {
 		);
 
 		productClickEventInstance.sendEventToTheDataLayer();
+	}
+
+	sendViewProductDetailsEvent(
+		products: UaEcommerceProduct[],
+		searchList?: string,
+	): void {
+		this.uaEcommerceProductValidator.validate(products);
+
+		const viewProductDetailsInstance = new UaEcommerceViewProductDetailsEvent(
+			products,
+			this.gtmService,
+			searchList,
+		);
+
+		viewProductDetailsInstance.sendEventToTheDataLayer();
 	}
 }
