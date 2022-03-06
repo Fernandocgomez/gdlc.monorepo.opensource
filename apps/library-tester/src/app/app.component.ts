@@ -35,6 +35,8 @@ export class AppComponent {
 		},
 	];
 
+	private searchList = 'T-Shirts List';
+
 	constructor(
 		private gtmUaVirtualPageViewsService: GtmUaVirtualPageViewsService,
 		private gtmUaCustomEventsService: GtmUaCustomEventsService,
@@ -65,20 +67,25 @@ export class AppComponent {
 	}
 
 	testSendProductClickEvent(): void {
-		const searchList = 'T-Shirts List';
-
 		this.gtmUaEcommerceEventsService.sendProductClickEvent(
 			this.ecommerceProducts,
-			searchList,
+			this.searchList,
 		);
 	}
 
 	testSendViewProductDetailsEvent(): void {
-		const searchList = 'T-Shirts List';
-
 		this.gtmUaEcommerceEventsService.sendViewProductDetailsEvent(
 			this.ecommerceProducts,
-			searchList,
+			this.searchList,
+		);
+	}
+
+	testSendAddToCartEvent(): void {
+		const currencyCode = 'EUR';
+
+		this.gtmUaEcommerceEventsService.sendAddToCartEvent(
+			[this.ecommerceProducts[0]],
+			currencyCode,
 		);
 	}
 }
