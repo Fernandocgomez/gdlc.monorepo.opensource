@@ -293,6 +293,52 @@ this.gtmUaEcommerceEventsService.sendViewProductDetailsEvent(
 );
 ```
 
+<h3>sendAddToCartEvent(products: UaEcommerceProduct[], currencyCode: CurrencyCode = 'USD');</h3>
+<p>Send an "angularEcommerce" event to Universal Analytics via the dataLayer.</p>
+<p>The object pushed to the dataLayer contains ecommerce meta data for measuring product add to cart</p>
+<p>The products object should be available at the moment this method is called.</p>
+<p>Arguments: </p>
+<ul>
+	<li>products: <UaEcommerceProduct[]></li>
+	<li>currencyCode: <CurrencyCode> = 'USD'</li>
+</ul>
+<p>The currencyCode argument has a default value of USD.</p>
+
+```javascript
+interface UaEcommerceProduct {
+	name: string;
+	id: string;
+	price?: string;
+	brand?: string;
+	category?: string;
+	variant?: string;
+	list?: string;
+	position?: number;
+	quantity?: number;
+	coupon?: string;
+}
+
+const ecommerceProduct: UaEcommerceProduct = [
+	{
+		name: 'Triblend Android T-Shirt',
+		id: '12345',
+		price: '15.25',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Gray',
+		list: 'Search Results',
+		position: 4,
+	},
+];
+
+const currencyCode = 'EUR';
+
+this.gtmUaEcommerceEventsService.sendAddToCartEvent(
+	ecommerceProducts,
+	currencyCode,
+);
+```
+
 <h1 id="development">Development:</h1>
 
 <h2>Running unit tests:</h2>

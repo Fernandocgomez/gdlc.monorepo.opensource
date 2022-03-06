@@ -5,6 +5,7 @@ import { GtmService } from './gtm.service';
 import { UaEcommerceProduct, CurrencyCode } from '../models';
 
 import {
+	UaEcommerceAddToCartEvent,
 	UaEcommerceProductClickEvent,
 	UaEcommerceProductImpressionsEvent,
 	UaEcommerceProductValidator,
@@ -64,5 +65,20 @@ export class GtmUaEcommerceEventsService {
 		);
 
 		viewProductDetailsInstance.sendEventToTheDataLayer();
+	}
+
+	sendAddToCartEvent(
+		products: UaEcommerceProduct[],
+		currencyCode: CurrencyCode = 'USD',
+	): void {
+		this.uaEcommerceProductValidator.validate(products);
+
+		const addToCartInstance = new UaEcommerceAddToCartEvent(
+			products,
+			this.gtmService,
+			currencyCode,
+		);
+
+		addToCartInstance.sendEventToTheDataLayer();
 	}
 }

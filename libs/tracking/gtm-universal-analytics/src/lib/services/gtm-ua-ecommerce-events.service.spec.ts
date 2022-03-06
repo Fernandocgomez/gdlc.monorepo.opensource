@@ -32,7 +32,18 @@ describe('GtmUaEcommerceEventsService', () => {
 	type GtmUaEcommerceEventsServiceMethods =
 		| 'sendProductImpressionsEvent'
 		| 'sendProductClickEvent'
-		| 'sendViewProductDetailsEvent';
+		| 'sendViewProductDetailsEvent'
+		| 'sendAddToCartEvent';
+
+	const makeADeepCopyOfTheFirstElementOnArray = (
+		array: UaEcommerceProduct[],
+	): UaEcommerceProduct[] => {
+		if (array.length > 0) {
+			return [...[{ ...array[0] }]];
+		}
+
+		return [] as UaEcommerceProduct[];
+	};
 
 	const assertProductsArgument = (
 		method: GtmUaEcommerceEventsServiceMethods,
@@ -89,9 +100,52 @@ describe('GtmUaEcommerceEventsService', () => {
 		});
 	};
 
+	const assertCurrencyCodeArgument = (
+		method: GtmUaEcommerceEventsServiceMethods,
+	) => {
+		describe('"currencyCode" argument', () => {
+			beforeEach(() => {
+				service[method](productsArg);
+			});
+
+			it('should be of type string', () => {
+				expect(typeof currencyCodeArg).toBe('string');
+			});
+
+			it('should be optional with a default value of "USD"', () => {
+				const currencyCodeValue =
+					DataLayer.getLastElement()['ecommerce']['currencyCode'];
+				expect(currencyCodeValue).toBe('USD');
+			});
+
+			it('should be one of the option on type CurrencyCode', () => {
+				const isValidCurrencyCodeValue: boolean =
+					listOfCurrencyCodeSupportedByUA.includes(currencyCodeArg);
+
+				expect(isValidCurrencyCodeValue).toBe(true);
+			});
+		});
+	};
+
 	const assertEventProperty = () => {
 		it('should have the property "event" equal to "angularEcommerce"', () => {
 			expect(DataLayer.getLastElement().event).toBe('angularEcommerce');
+		});
+	};
+
+	const assertCurrencyCodeProperty = () => {
+		it('should have the property "currencyCode" equal to "EUR"', () => {
+			const currencyCodeValue =
+				DataLayer.getLastElement()['ecommerce']['currencyCode'];
+			expect(currencyCodeValue).toBe('EUR');
+		});
+	};
+
+	const assertEcommerceProperty = (ecommerceObject: object) => {
+		it('should have the property "ecommerce" equal to "ecommerceObject"', () => {
+			expect(DataLayer.getLastElement()['ecommerce']).toStrictEqual(
+				ecommerceObject,
+			);
 		});
 	};
 
@@ -131,22 +185,12 @@ describe('GtmUaEcommerceEventsService', () => {
 
 			assertEventProperty();
 
-			it('should have the property "ecommerce" equal to "ecommerceObject"', () => {
-				const ecommerceObject = {
-					currencyCode: currencyCodeArg,
-					impressions: productsArg,
-				};
-
-				expect(DataLayer.getLastElement()['ecommerce']).toStrictEqual(
-					ecommerceObject,
-				);
+			assertEcommerceProperty({
+				currencyCode: currencyCodeArg,
+				impressions: productsArg,
 			});
 
-			it('should have the property "currencyCode" equal to "EUR"', () => {
-				const currencyCodeValue =
-					DataLayer.getLastElement()['ecommerce']['currencyCode'];
-				expect(currencyCodeValue).toBe('EUR');
-			});
+			assertCurrencyCodeProperty();
 
 			it('should have the property "impressions" pointing to an Array with 2 elements', () => {
 				const productsImpression =
@@ -165,28 +209,7 @@ describe('GtmUaEcommerceEventsService', () => {
 
 		assertProductsArgument('sendProductImpressionsEvent');
 
-		describe('"currencyCode" argument', () => {
-			beforeEach(() => {
-				service.sendProductImpressionsEvent(productsArg);
-			});
-
-			it('should be of type string', () => {
-				expect(typeof currencyCodeArg).toBe('string');
-			});
-
-			it('should be optional with a default value of "USD"', () => {
-				const currencyCodeValue =
-					DataLayer.getLastElement()['ecommerce']['currencyCode'];
-				expect(currencyCodeValue).toBe('USD');
-			});
-
-			it('should be one of the option on type CurrencyCode', () => {
-				const isValidCurrencyCodeValue: boolean =
-					listOfCurrencyCodeSupportedByUA.includes(currencyCodeArg);
-
-				expect(isValidCurrencyCodeValue).toBe(true);
-			});
-		});
+		assertCurrencyCodeArgument('sendProductImpressionsEvent');
 	});
 
 	describe('#sendProductClickEvent', () => {
@@ -197,17 +220,11 @@ describe('GtmUaEcommerceEventsService', () => {
 
 			assertEventProperty();
 
-			it('should have the property "ecommerce" equal to "ecommerceObject"', () => {
-				const ecommerceObject = {
-					click: {
-						actionField: { list: searchListArg },
-						products: productsArg,
-					},
-				};
-
-				expect(DataLayer.getLastElement()['ecommerce']).toStrictEqual(
-					ecommerceObject,
-				);
+			assertEcommerceProperty({
+				click: {
+					actionField: { list: searchListArg },
+					products: productsArg,
+				},
 			});
 
 			it('should have the property "click" equal to "clickObject"', () => {
@@ -283,17 +300,11 @@ describe('GtmUaEcommerceEventsService', () => {
 
 			assertEventProperty();
 
-			it('should have the property "ecommerce" equal to "ecommerceObject"', () => {
-				const ecommerceObject = {
-					detail: {
-						actionField: { list: searchListArg },
-						products: productsArg,
-					},
-				};
-
-				expect(DataLayer.getLastElement()['ecommerce']).toStrictEqual(
-					ecommerceObject,
-				);
+			assertEcommerceProperty({
+				detail: {
+					actionField: { list: searchListArg },
+					products: productsArg,
+				},
 			});
 
 			it('should have the property "detail" equal to "detailObject"', () => {
@@ -359,5 +370,46 @@ describe('GtmUaEcommerceEventsService', () => {
 				});
 			});
 		});
+	});
+
+	describe('sendAddToCartEvent#', () => {
+		describe('pushed object to dataLayer', () => {
+			const addToCartProductArg =
+				makeADeepCopyOfTheFirstElementOnArray(productsArg);
+
+			beforeEach(() => {
+				service.sendAddToCartEvent(addToCartProductArg, currencyCodeArg);
+			});
+
+			assertEventProperty();
+
+			assertEcommerceProperty({
+				currencyCode: currencyCodeArg,
+				add: {
+					products: addToCartProductArg,
+				},
+			});
+
+			assertCurrencyCodeProperty();
+
+			it('should have the property "add" pointing "products" object', () => {
+				const addObject = DataLayer.getLastElement()['ecommerce']['add'];
+				expect(addObject).toStrictEqual({
+					products: addToCartProductArg,
+				});
+			});
+
+			assertCategoryProperty();
+
+			assertActionProperty('add to cart');
+
+			assertLabelProperty(`${addToCartProductArg[0].name} - added to cart`);
+
+			assertNonInteractionProperty(true);
+		});
+
+		assertProductsArgument('sendAddToCartEvent');
+
+		assertCurrencyCodeArgument('sendAddToCartEvent');
 	});
 });

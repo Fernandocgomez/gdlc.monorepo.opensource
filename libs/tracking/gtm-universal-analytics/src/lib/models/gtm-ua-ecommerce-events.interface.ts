@@ -39,3 +39,12 @@ export interface UaEcommerceViewProductDetails extends GtmUaCustomEvent {
 		};
 	};
 }
+
+export interface UaEcommerceAddToCart extends GtmUaCustomEvent {
+	ecommerce: {
+		currencyCode: CurrencyCode;
+		add: {
+			products: UaEcommerceProduct[];
+		};
+	};
+}
