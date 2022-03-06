@@ -12,7 +12,28 @@ import {
 	styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-	title = 'library-tester';
+	private ecommerceProducts = [
+		{
+			name: 'Triblend Android T-Shirt',
+			id: '12345',
+			price: '15.25',
+			brand: 'Google',
+			category: 'Apparel',
+			variant: 'Gray',
+			list: 'Search Results',
+			position: 1,
+		},
+		{
+			name: 'Donut Friday Scented T-Shirt',
+			id: '67890',
+			price: '33.75',
+			brand: 'Google',
+			category: 'Apparel',
+			variant: 'Black',
+			list: 'Search Results',
+			position: 2,
+		},
+	];
 
 	constructor(
 		private gtmUaVirtualPageViewsService: GtmUaVirtualPageViewsService,
@@ -22,7 +43,7 @@ export class AppComponent {
 		this.gtmUaVirtualPageViewsService.sendVirtualPageViews();
 	}
 
-	public redirectToFacebookPage(): void {
+	testSendCustomEvent(): void {
 		const gtmCustomEvent = {
 			category: 'social media',
 			action: 'click',
@@ -32,39 +53,32 @@ export class AppComponent {
 		};
 
 		this.gtmUaCustomEventsService.sendCustomEvent(gtmCustomEvent);
-
-		location.href = '#';
 	}
 
-	public triggerProductImpressions(): void {
-		const ecommerceProducts = [
-			{
-				name: 'Triblend Android T-Shirt',
-				id: '12345',
-				price: '15.25',
-				brand: 'Google',
-				category: 'Apparel',
-				variant: 'Gray',
-				list: 'Search Results',
-				position: 1,
-			},
-			{
-				name: 'Donut Friday Scented T-Shirt',
-				id: '67890',
-				price: '33.75',
-				brand: 'Google',
-				category: 'Apparel',
-				variant: 'Black',
-				list: 'Search Results',
-				position: 2,
-			},
-		];
-
+	testProductImpressionsEvent(): void {
 		const currencyCode = 'EUR';
 
 		this.gtmUaEcommerceEventsService.sendProductImpressionsEvent(
-			ecommerceProducts,
+			this.ecommerceProducts,
 			currencyCode,
+		);
+	}
+
+	testSendProductClickEvent(): void {
+		const searchList = 'T-Shirts List';
+
+		this.gtmUaEcommerceEventsService.sendProductClickEvent(
+			this.ecommerceProducts,
+			searchList,
+		);
+	}
+
+	testSendViewProductDetailsEvent(): void {
+		const searchList = 'T-Shirts List';
+
+		this.gtmUaEcommerceEventsService.sendViewProductDetailsEvent(
+			this.ecommerceProducts,
+			searchList,
 		);
 	}
 }

@@ -1,8 +1,28 @@
-<router-outlet></router-outlet>
-<button (click)="redirectToFacebookPage()">Facebook</button>
-<button (click)="triggerProductImpressions()">Product Impression</button>
+<h3>Test Send Custom Event</h3>
+<button (click)="testSendCustomEvent()">sendCustomEvent();</button>
+<br />
+
+<h3>Test the page views</h3>
+<a routerLink="/one" routerLinkActive="active">navigate to route one</a>
+<br />
+<a routerLink="/two" routerLinkActive="active">navigate to route two</a>
+<br />
+
+<h3>Test Send Product Impressions Event</h3>
+<button (click)="testProductImpressionsEvent()">
+	sendProductImpressionsEvent();
+</button>
+<br />
+
+<h3>Test Send Product Click Event</h3>
+<button (click)="testSendProductClickEvent()">sendProductClickEvent();</button>
+<br />
+
+<h3>Test Send View Product Details Event</h3>
+<button (click)="testSendViewProductDetailsEvent()">
+	sendViewProductDetailsEvent();
+</button>
+<br />
 
 <br />
-<a routerLink="/tets" routerLinkActive="active">test</a>
-<br />
-<a routerLink="/" routerLinkActive="active">root</a>
+<router-outlet></router-outlet>
