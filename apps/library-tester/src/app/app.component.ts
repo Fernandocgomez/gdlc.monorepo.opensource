@@ -88,4 +88,10 @@ export class AppComponent {
 			currencyCode,
 		);
 	}
+
+	testSendRemoveProductFromCartEvent(): void {
+		this.gtmUaEcommerceEventsService.sendRemoveProductFromCartEvent([
+			this.ecommerceProducts[0],
+		]);
+	}
 }

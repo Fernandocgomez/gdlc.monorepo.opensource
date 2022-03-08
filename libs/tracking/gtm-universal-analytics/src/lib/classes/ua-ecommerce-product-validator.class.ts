@@ -9,6 +9,12 @@ export class UaEcommerceProductValidator {
 		});
 	}
 
+	validateAgainstEmptyProductArray(products: UaEcommerceProduct[]) {
+		if (products.length < 1) {
+			throw new Error(`UaEcommerceProduct can not be an empty Array.`);
+		}
+	}
+
 	private validateProductPosition(
 		product: UaEcommerceProduct,
 		index: number,

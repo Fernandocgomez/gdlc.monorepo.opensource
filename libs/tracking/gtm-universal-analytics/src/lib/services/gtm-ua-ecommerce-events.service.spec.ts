@@ -33,7 +33,8 @@ describe('GtmUaEcommerceEventsService', () => {
 		| 'sendProductImpressionsEvent'
 		| 'sendProductClickEvent'
 		| 'sendViewProductDetailsEvent'
-		| 'sendAddToCartEvent';
+		| 'sendAddToCartEvent'
+		| 'sendRemoveProductFromCartEvent';
 
 	const makeADeepCopyOfTheFirstElementOnArray = (
 		array: UaEcommerceProduct[],
@@ -47,6 +48,7 @@ describe('GtmUaEcommerceEventsService', () => {
 
 	const assertProductsArgument = (
 		method: GtmUaEcommerceEventsServiceMethods,
+		...moreProductTests: (() => void)[]
 	) => {
 		let invalidProductsArg: UaEcommerceProduct[];
 
@@ -98,6 +100,12 @@ describe('GtmUaEcommerceEventsService', () => {
 				}
 			});
 		});
+
+		if (moreProductTests.length > 0) {
+			for (const productTests of moreProductTests) {
+				productTests();
+			}
+		}
 	};
 
 	const assertCurrencyCodeArgument = (
@@ -170,6 +178,23 @@ describe('GtmUaEcommerceEventsService', () => {
 	const assertNonInteractionProperty = (expectValue: boolean) => {
 		it(`should have the property "nonInteraction" equal to "${expectValue}"`, () => {
 			expect(DataLayer.getLastElement()['nonInteraction']).toBe(expectValue);
+		});
+	};
+
+	const assertProductsArrayForEmptyValues = (
+		method: GtmUaEcommerceEventsServiceMethods,
+	) => {
+		describe('"products" argument', () => {
+			it('should throw an Error when passing an empty Array', () => {
+				try {
+					service[method]([]);
+					expect(service[method]([])).toThrow(Error);
+				} catch (error: any) {
+					expect(error.message).toBe(
+						'UaEcommerceProduct can not be an empty Array.',
+					);
+				}
+			});
 		});
 	};
 
@@ -372,7 +397,7 @@ describe('GtmUaEcommerceEventsService', () => {
 		});
 	});
 
-	describe('sendAddToCartEvent#', () => {
+	describe('#sendAddToCartEvent', () => {
 		describe('pushed object to dataLayer', () => {
 			const addToCartProductArg =
 				makeADeepCopyOfTheFirstElementOnArray(productsArg);
@@ -392,7 +417,7 @@ describe('GtmUaEcommerceEventsService', () => {
 
 			assertCurrencyCodeProperty();
 
-			it('should have the property "add" pointing "products" object', () => {
+			it('should have the property "add" pointing to a "products" object', () => {
 				const addObject = DataLayer.getLastElement()['ecommerce']['add'];
 				expect(addObject).toStrictEqual({
 					products: addToCartProductArg,
@@ -408,8 +433,50 @@ describe('GtmUaEcommerceEventsService', () => {
 			assertNonInteractionProperty(true);
 		});
 
-		assertProductsArgument('sendAddToCartEvent');
+		assertProductsArgument('sendAddToCartEvent', () => {
+			assertProductsArrayForEmptyValues('sendAddToCartEvent');
+		});
 
 		assertCurrencyCodeArgument('sendAddToCartEvent');
+	});
+
+	describe('#sendRemoveProductFromCartEvent', () => {
+		describe('pushed object to dataLayer', () => {
+			const removeFromCartProductArg =
+				makeADeepCopyOfTheFirstElementOnArray(productsArg);
+
+			beforeEach(() => {
+				service.sendRemoveProductFromCartEvent(removeFromCartProductArg);
+			});
+
+			assertEventProperty();
+
+			assertEcommerceProperty({
+				remove: {
+					products: removeFromCartProductArg,
+				},
+			});
+
+			it('should have the property "remove" pointing to a "products" object', () => {
+				const addObject = DataLayer.getLastElement()['ecommerce']['remove'];
+				expect(addObject).toStrictEqual({
+					products: removeFromCartProductArg,
+				});
+			});
+
+			assertCategoryProperty();
+
+			assertActionProperty('remove product from cart');
+
+			assertLabelProperty(
+				`${removeFromCartProductArg[0].name} - removed from cart`,
+			);
+
+			assertNonInteractionProperty(true);
+		});
+
+		assertProductsArgument('sendRemoveProductFromCartEvent', () => {
+			assertProductsArrayForEmptyValues('sendRemoveProductFromCartEvent');
+		});
 	});
 });

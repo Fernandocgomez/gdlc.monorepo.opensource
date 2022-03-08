@@ -48,3 +48,11 @@ export interface UaEcommerceAddToCart extends GtmUaCustomEvent {
 		};
 	};
 }
+
+export interface UaEcommerceRemoveProductFromCart extends GtmUaCustomEvent {
+	ecommerce: {
+		remove: {
+			products: UaEcommerceProduct[];
+		};
+	};
+}

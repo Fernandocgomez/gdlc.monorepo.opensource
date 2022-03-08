@@ -65,6 +65,10 @@ imports: [
 <p>Click on Variables on the left side hand, and look for "Universal Analytics || Tracking Id". Here you will need to type your own Universal Analytics Id.</p>
 <p>And done!</p>
 
+<h1 id="ua-ecommerce-config">Universal Analytics Ecommerce Configurations:</h1>
+<p>To enable th Ecommerce, click on "Admin" on the left bottom left corner of your Universal Analytics dashboard.</p>
+<p>On the the "View" column, click on "Ecommerce Settings" ans set Enable Ecommerce to ON.</p>
+
 <h2 id="virtual-page-views">GtmUaVirtualPageViewsService:</h2>
 <p>Note: This service has to be called on the app.component.ts</p>
 
@@ -84,11 +88,11 @@ constructor(
 ```
 
 <h2 id="custom-event">GtmUaCustomEventsService:</h2>
+<p>Before start sending events from your Angular app, read the <a href="#gtm-config">GTM Configuration section</a></p>
 
 <h3>sendCustomEvent(customEvent: GtmUaCustomEvent);</h3>
 <p>Send custom events to Universal Analytics via the GTM dataLayer.</p>
 <p>If you're unfamiliar with events in Google Analytics you should first read the article <a href="https://support.google.com/analytics/answer/1033068">About Events</a></p>
-<p>Before start sending events from your Angular app, read the <a href="#gtm-config">GTM Configuration section</a></p>
 
 <h4>Example:</h4>
 
@@ -124,6 +128,11 @@ public redirectToFacebookPage(): void {
 ```
 
 <h2 id="ecommerce-events">GtmUaEcommerceEventsService:</h2>
+<p>Before start sending ecommerce events from your Angular app, read: </p>
+<ul>
+	<li><a href="#gtm-config">GTM Configuration section</a></li>
+	<li><a href="#ua-ecommerce-config">Universal Analytics Ecommerce Configurations section</a></li>
+</ul>
 
 <h3>sendProductImpressionsEvent(products: UaEcommerceProduct[], currencyCode: CurrencyCode = 'USD');</h3>
 <p>Send an "angularEcommerce" event to Universal Analytics via the dataLayer.</p>
@@ -303,6 +312,7 @@ this.gtmUaEcommerceEventsService.sendViewProductDetailsEvent(
 	<li>currencyCode: <CurrencyCode> = 'USD'</li>
 </ul>
 <p>The currencyCode argument has a default value of USD.</p>
+<p>Note: Make sure the products argument passed is not an empty Array.</p>
 
 ```javascript
 interface UaEcommerceProduct {
@@ -336,6 +346,48 @@ const currencyCode = 'EUR';
 this.gtmUaEcommerceEventsService.sendAddToCartEvent(
 	ecommerceProducts,
 	currencyCode,
+);
+```
+
+<h3>sendRemoveProductFromCartEvent(products: UaEcommerceProduct[]);</h3>
+<p>Send an "angularEcommerce" event to Universal Analytics via the dataLayer.</p>
+<p>The object pushed to the dataLayer contains ecommerce meta data for measuring product removable from the shopping cart.</p>
+<p>The products object should be available at the moment this method is called.</p>
+<p>Arguments: </p>
+<ul>
+	<li>products: <UaEcommerceProduct[]></li>
+</ul>
+<p>Note: Make sure the products argument passed is not an empty Array.</p>
+
+```javascript
+interface UaEcommerceProduct {
+	name: string;
+	id: string;
+	price?: string;
+	brand?: string;
+	category?: string;
+	variant?: string;
+	list?: string;
+	position?: number;
+	quantity?: number;
+	coupon?: string;
+}
+
+const ecommerceProduct: UaEcommerceProduct = [
+	{
+		name: 'Triblend Android T-Shirt',
+		id: '12345',
+		price: '15.25',
+		brand: 'Google',
+		category: 'Apparel',
+		variant: 'Gray',
+		list: 'Search Results',
+		position: 4,
+	},
+];
+
+this.gtmUaEcommerceEventsService.sendRemoveProductFromCartEvent(
+	ecommerceProducts,
 );
 ```
 

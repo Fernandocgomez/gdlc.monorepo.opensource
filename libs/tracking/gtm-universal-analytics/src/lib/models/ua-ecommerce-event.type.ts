@@ -3,10 +3,12 @@ import {
 	UaEcommerceProductClick,
 	UaEcommerceViewProductDetails,
 	UaEcommerceAddToCart,
+	UaEcommerceRemoveProductFromCart,
 } from './gtm-ua-ecommerce-events.interface';
 
 export type UaEcommerceEvents =
 	| UaEcommerceProductImpressions
 	| UaEcommerceProductClick
 	| UaEcommerceViewProductDetails
-	| UaEcommerceAddToCart;
+	| UaEcommerceAddToCart
+	| UaEcommerceRemoveProductFromCart;

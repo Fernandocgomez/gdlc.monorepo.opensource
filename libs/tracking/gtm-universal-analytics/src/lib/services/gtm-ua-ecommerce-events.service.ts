@@ -9,6 +9,7 @@ import {
 	UaEcommerceProductClickEvent,
 	UaEcommerceProductImpressionsEvent,
 	UaEcommerceProductValidator,
+	UaEcommerceRemoveFromCartEvent,
 	UaEcommerceViewProductDetailsEvent,
 } from '../classes';
 
@@ -71,6 +72,7 @@ export class GtmUaEcommerceEventsService {
 		products: UaEcommerceProduct[],
 		currencyCode: CurrencyCode = 'USD',
 	): void {
+		this.uaEcommerceProductValidator.validateAgainstEmptyProductArray(products);
 		this.uaEcommerceProductValidator.validate(products);
 
 		const addToCartInstance = new UaEcommerceAddToCartEvent(
@@ -80,5 +82,17 @@ export class GtmUaEcommerceEventsService {
 		);
 
 		addToCartInstance.sendEventToTheDataLayer();
+	}
+
+	sendRemoveProductFromCartEvent(products: UaEcommerceProduct[]): void {
+		this.uaEcommerceProductValidator.validateAgainstEmptyProductArray(products);
+		this.uaEcommerceProductValidator.validate(products);
+
+		const removeProductFromCartInstance = new UaEcommerceRemoveFromCartEvent(
+			products,
+			this.gtmService,
+		);
+
+		removeProductFromCartInstance.sendEventToTheDataLayer();
 	}
 }
