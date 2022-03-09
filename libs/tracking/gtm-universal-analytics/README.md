@@ -391,6 +391,44 @@ this.gtmUaEcommerceEventsService.sendRemoveProductFromCartEvent(
 );
 ```
 
+<h3>sendPromotionImpressionsEvent(promotions: UaEcommercePromotion[]);</h3>
+<p>Send an "angularEcommerce" event to Universal Analytics via the dataLayer.</p>
+<p>The object pushed to the dataLayer contains ecommerce meta data for measuring promotion impressions.</p>
+<p>The promotion object should be available at the moment this method is called.</p>
+<p>Arguments: </p>
+<ul>
+	<li>promotions: <UaEcommercePromotion[]></li>
+</ul>
+<p>Note: Make sure the promotions argument passed is not an empty Array.</p>
+
+```javascript
+interface UaEcommercePromotion {
+	id: string;
+	name: string;
+	creative?: string;
+	position?: string;
+}
+
+const ecommercePromotions = [
+	{
+		id: 'JUNE_PROMO13',
+		name: 'June Sale',
+		creative: 'banner1',
+		position: 'slot1',
+	},
+	{
+		id: 'FREE_SHIP13',
+		name: 'Free Shipping Promo',
+		creative: 'skyscraper1',
+		position: 'slot2',
+	},
+];
+
+this.gtmUaEcommerceEventsService.sendPromotionImpressionsEvent(
+	ecommercePromotions,
+);
+```
+
 <h1 id="development">Development:</h1>
 
 <h2>Running unit tests:</h2>

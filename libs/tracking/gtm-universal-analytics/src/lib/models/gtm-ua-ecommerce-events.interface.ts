@@ -15,6 +15,13 @@ export interface UaEcommerceProduct {
 	coupon?: string;
 }
 
+export interface UaEcommercePromotion {
+	id: string;
+	name: string;
+	creative?: string;
+	position?: string;
+}
+
 export interface UaEcommerceProductImpressions extends GtmUaCustomEvent {
 	ecommerce: {
 		currencyCode?: CurrencyCode;
@@ -53,6 +60,14 @@ export interface UaEcommerceRemoveProductFromCart extends GtmUaCustomEvent {
 	ecommerce: {
 		remove: {
 			products: UaEcommerceProduct[];
+		};
+	};
+}
+
+export interface UaEcommercePromotionImpressions extends GtmUaCustomEvent {
+	ecommerce: {
+		promoView: {
+			promotions: UaEcommercePromotion[];
 		};
 	};
 }

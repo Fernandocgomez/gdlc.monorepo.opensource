@@ -2,13 +2,19 @@ import { Injectable } from '@angular/core';
 
 import { GtmService } from './gtm.service';
 
-import { UaEcommerceProduct, CurrencyCode } from '../models';
+import {
+	UaEcommerceProduct,
+	CurrencyCode,
+	UaEcommercePromotion,
+} from '../models';
 
 import {
 	UaEcommerceAddToCartEvent,
 	UaEcommerceProductClickEvent,
 	UaEcommerceProductImpressionsEvent,
 	UaEcommerceProductValidator,
+	UaEcommercePromotionImpressionsEvent,
+	UaEcommercePromotionValidator,
 	UaEcommerceRemoveFromCartEvent,
 	UaEcommerceViewProductDetailsEvent,
 } from '../classes';
@@ -19,6 +25,9 @@ import {
 export class GtmUaEcommerceEventsService {
 	private readonly uaEcommerceProductValidator: UaEcommerceProductValidator =
 		new UaEcommerceProductValidator();
+
+	private readonly uaEcommercePromotionValidator: UaEcommercePromotionValidator =
+		new UaEcommercePromotionValidator();
 
 	constructor(private readonly gtmService: GtmService) {}
 
@@ -94,5 +103,14 @@ export class GtmUaEcommerceEventsService {
 		);
 
 		removeProductFromCartInstance.sendEventToTheDataLayer();
+	}
+
+	sendPromotionImpressionsEvent(promotions: UaEcommercePromotion[]): void {
+		this.uaEcommercePromotionValidator.validate(promotions);
+
+		const promotionImpressionsInstance =
+			new UaEcommercePromotionImpressionsEvent(promotions, this.gtmService);
+
+		promotionImpressionsInstance.sendEventToTheDataLayer();
 	}
 }

@@ -4,6 +4,7 @@ import {
 	UaEcommerceViewProductDetails,
 	UaEcommerceAddToCart,
 	UaEcommerceRemoveProductFromCart,
+	UaEcommercePromotionImpressions,
 } from './gtm-ua-ecommerce-events.interface';
 
 export type UaEcommerceEvents =
@@ -11,4 +12,5 @@ export type UaEcommerceEvents =
 	| UaEcommerceProductClick
 	| UaEcommerceViewProductDetails
 	| UaEcommerceAddToCart
-	| UaEcommerceRemoveProductFromCart;
+	| UaEcommerceRemoveProductFromCart
+	| UaEcommercePromotionImpressions;

@@ -4,11 +4,16 @@ import {
 	CurrencyCode,
 	listOfCurrencyCodeSupportedByUA,
 	UaEcommerceProduct,
+	UaEcommercePromotion,
 } from '../models';
 
 import { GtmUaEcommerceEventsService } from './gtm-ua-ecommerce-events.service';
 
-import { uaEcommerceProductsMockUp, DataLayer } from '../utilities';
+import {
+	uaEcommerceProductsMockUp,
+	DataLayer,
+	uaEcommercePromotionsMockUp,
+} from '../utilities';
 
 describe('GtmUaEcommerceEventsService', () => {
 	let service: GtmUaEcommerceEventsService;
@@ -16,6 +21,7 @@ describe('GtmUaEcommerceEventsService', () => {
 	const productsArg = uaEcommerceProductsMockUp;
 	const currencyCodeArg: CurrencyCode = 'EUR';
 	const searchListArg = 'Search List';
+	const promotionsArg = uaEcommercePromotionsMockUp;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
@@ -29,12 +35,15 @@ describe('GtmUaEcommerceEventsService', () => {
 		service = TestBed.inject(GtmUaEcommerceEventsService);
 	});
 
-	type GtmUaEcommerceEventsServiceMethods =
+	type GtmUaEcommerceEventServiceProductMethod =
 		| 'sendProductImpressionsEvent'
 		| 'sendProductClickEvent'
 		| 'sendViewProductDetailsEvent'
 		| 'sendAddToCartEvent'
 		| 'sendRemoveProductFromCartEvent';
+
+	type GtmUaEcommerceEventServicePromotionMethod =
+		| 'sendPromotionImpressionsEvent';
 
 	const makeADeepCopyOfTheFirstElementOnArray = (
 		array: UaEcommerceProduct[],
@@ -47,7 +56,7 @@ describe('GtmUaEcommerceEventsService', () => {
 	};
 
 	const assertProductsArgument = (
-		method: GtmUaEcommerceEventsServiceMethods,
+		method: GtmUaEcommerceEventServiceProductMethod,
 		...moreProductTests: (() => void)[]
 	) => {
 		let invalidProductsArg: UaEcommerceProduct[];
@@ -102,14 +111,76 @@ describe('GtmUaEcommerceEventsService', () => {
 		});
 
 		if (moreProductTests.length > 0) {
-			for (const productTests of moreProductTests) {
-				productTests();
+			for (const productTest of moreProductTests) {
+				productTest();
+			}
+		}
+	};
+
+	const assertPromotionsArgument = (
+		method: GtmUaEcommerceEventServicePromotionMethod,
+		...moreProductTests: (() => void)[]
+	) => {
+		let invalidPromotionsArg: UaEcommercePromotion[];
+
+		describe('"promotions" argument', () => {
+			beforeEach(() => {
+				invalidPromotionsArg = promotionsArg.map((object) => ({ ...object }));
+			});
+
+			it('should be an Array', () => {
+				expect(Array.isArray(productsArg)).toBe(true);
+			});
+
+			it('should throw an error when passing a product with an "id" equals to an empty string.', () => {
+				invalidPromotionsArg[0].id = '';
+
+				try {
+					service[method](invalidPromotionsArg);
+					expect(service[method](invalidPromotionsArg)).toThrow(Error);
+				} catch (error: any) {
+					expect(error.message).toBe(
+						'UaEcommercePromotion at index: 0 has an invalid value. Id can not be an empty string.',
+					);
+				}
+			});
+
+			it('should throw an error when passing a product with a "name" equals to an empty string.', () => {
+				invalidPromotionsArg[0].name = '';
+
+				try {
+					service[method](invalidPromotionsArg);
+					expect(service[method](invalidPromotionsArg)).toThrow(Error);
+				} catch (error: any) {
+					expect(error.message).toBe(
+						'UaEcommercePromotion at index: 0 has an invalid value. Name can not be an empty string.',
+					);
+				}
+			});
+		});
+
+		describe('when passing an empty Array', () => {
+			it('should throw an Error', () => {
+				try {
+					service[method]([]);
+					expect(service[method]([])).toThrow(Error);
+				} catch (error: any) {
+					expect(error.message).toBe(
+						'UaEcommercePromotion can not be an empty Array.',
+					);
+				}
+			});
+		});
+
+		if (moreProductTests.length > 0) {
+			for (const productTest of moreProductTests) {
+				productTest();
 			}
 		}
 	};
 
 	const assertCurrencyCodeArgument = (
-		method: GtmUaEcommerceEventsServiceMethods,
+		method: GtmUaEcommerceEventServiceProductMethod,
 	) => {
 		describe('"currencyCode" argument', () => {
 			beforeEach(() => {
@@ -182,7 +253,7 @@ describe('GtmUaEcommerceEventsService', () => {
 	};
 
 	const assertProductsArrayForEmptyValues = (
-		method: GtmUaEcommerceEventsServiceMethods,
+		method: GtmUaEcommerceEventServiceProductMethod,
 	) => {
 		describe('"products" argument', () => {
 			it('should throw an Error when passing an empty Array', () => {
@@ -478,5 +549,40 @@ describe('GtmUaEcommerceEventsService', () => {
 		assertProductsArgument('sendRemoveProductFromCartEvent', () => {
 			assertProductsArrayForEmptyValues('sendRemoveProductFromCartEvent');
 		});
+	});
+
+	describe('#sendPromotionImpressionsEvent', () => {
+		describe('pushed object to dataLayer', () => {
+			beforeEach(() => {
+				service.sendPromotionImpressionsEvent(promotionsArg);
+			});
+
+			assertEventProperty();
+
+			assertEcommerceProperty({
+				promoView: {
+					promotions: promotionsArg,
+				},
+			});
+
+			it('should have the property "promoView" pointing to a "promotions" object', () => {
+				const promoViewObject =
+					DataLayer.getLastElement()['ecommerce']['promoView'];
+
+				expect(promoViewObject).toStrictEqual({
+					promotions: promotionsArg,
+				});
+			});
+
+			assertCategoryProperty();
+
+			assertActionProperty('impression');
+
+			assertLabelProperty(`promotion impression`);
+
+			assertNonInteractionProperty(false);
+		});
+
+		assertPromotionsArgument('sendPromotionImpressionsEvent');
 	});
 });
