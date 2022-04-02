@@ -57,7 +57,7 @@ describe('UniversalAnalyticsCustomEventsService', () => {
 			expect(customEvent?.event).toEqual('customEvent');
 		});
 
-		describe('argument gtmObj<GtmUniversalAnalyticsCustomEvent>', () => {
+		describe('argument "gtmObj"', () => {
 			it('should have label property as optional', () => {
 				dataLayer = [];
 

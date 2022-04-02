@@ -3,7 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import { GtmUaCustomEventsService } from './gtm-ua-custom-events.service';
 import { GtmService } from './gtm.service';
 
-import { GtmEvent, GtmUaCustomEvent } from '../models';
+import { GtmUaCustomEvent } from '../models';
+import { DataLayer } from '../utilities';
 
 describe('GtmUaCustomEventsService', () => {
 	type SpyInstance = jest.SpyInstance<any, unknown[]>;
@@ -17,15 +18,6 @@ describe('GtmUaCustomEventsService', () => {
 	const customEvent: GtmUaCustomEvent = {
 		category: 'social media',
 		action: 'click',
-	};
-
-	const getDataLayer = (): GtmEvent[] => {
-		return window.dataLayer;
-	};
-
-	const getLastElementOnDataLayer = (): GtmEvent => {
-		const dataLayer = getDataLayer();
-		return dataLayer[dataLayer.length - 1];
 	};
 
 	beforeEach(() => {
@@ -59,7 +51,7 @@ describe('GtmUaCustomEventsService', () => {
 		});
 
 		it('should push an object with the property event equal to "angularCustomEvent"', () => {
-			expect(getLastElementOnDataLayer().event).toBe('angularCustomEvent');
+			expect(DataLayer.getLastElement().event).toBe('angularCustomEvent');
 		});
 
 		it('should invoke #transformToGtmEvent once', () => {

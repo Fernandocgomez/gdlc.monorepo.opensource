@@ -4,6 +4,8 @@ import { GtmService } from './gtm.service';
 
 import { GtmEvent } from '../models';
 
+import { DataLayer, uaEcommerceProductsMockUp } from '../utilities';
+
 describe('GtmService', () => {
 	let service: GtmService;
 	let spyOnThrowErrorWhenPassingInvalidGtmId: SpyInstance;
@@ -22,17 +24,7 @@ describe('GtmService', () => {
 		event: 'removeFromCart',
 		ecommerce: {
 			remove: {
-				products: [
-					{
-						name: 'Triblend Android T-Shirt',
-						id: '12345',
-						price: '15.25',
-						brand: 'Google',
-						category: 'Apparel',
-						variant: 'Gray',
-						quantity: 1,
-					},
-				],
+				products: uaEcommerceProductsMockUp,
 			},
 		},
 	};
@@ -43,19 +35,6 @@ describe('GtmService', () => {
 
 	const assignInvalidGtmId = () => {
 		service['config'].id = '';
-	};
-
-	const destroyDataLayer = () => {
-		(window.dataLayer as any) = undefined;
-	};
-
-	const getLastElementOnDataLayer = (): GtmEvent => {
-		const dataLayer = service.getDataLayer();
-		return dataLayer[dataLayer.length - 1];
-	};
-
-	const isDataLayerEmpty = () => {
-		return service.getDataLayer().length <= 0;
 	};
 
 	const getGtmScriptTagFromDom = (): HTMLElement | null => {
@@ -136,22 +115,22 @@ describe('GtmService', () => {
 
 	describe('#createDataLayer', () => {
 		it('should create the dataLayer', () => {
-			destroyDataLayer();
+			DataLayer.setToUndefined();
 
-			expect(service.getDataLayer()).toBe(undefined);
+			expect(DataLayer.getDataLayer()).toBe(undefined);
 
 			service['createDataLayer']();
 
-			expect(service.getDataLayer()).toStrictEqual(new Array<GtmEvent>());
+			expect(DataLayer.getDataLayer()).toStrictEqual(new Array<GtmEvent>());
 		});
 	});
 
 	describe('#pushStartEventToDataLayer', () => {
 		it('should push an object with the property event equal to "gtm.js"', () => {
-			service.resetDataLayer();
+			DataLayer.setToEmptyArray();
 			service['pushStartEventToDataLayer']();
 
-			expect(getLastElementOnDataLayer().event).toBe('gtm.js');
+			expect(DataLayer.getLastElement().event).toBe('gtm.js');
 		});
 	});
 
@@ -204,33 +183,17 @@ describe('GtmService', () => {
 		it('should push object to dataLayer', () => {
 			service.pushToDataLayer(gtmEventMockUp);
 
-			expect(getLastElementOnDataLayer().event).toBe(gtmEventMockUp.event);
+			expect(DataLayer.getLastElement().event).toBe(gtmEventMockUp.event);
 		});
 	});
 
 	describe('#clearEcommerceObject', () => {
 		it('should clear the ecommerce object on the last dataLayer element', () => {
-			service.resetDataLayer();
+			DataLayer.setToEmptyArray();
 			service.pushToDataLayer(gtmEcommerceEvent);
 			service.clearEcommerceObject();
 
-			expect(getLastElementOnDataLayer()['ecommerce']).toBe(null);
-		});
-	});
-
-	describe('#resetDataLayer', () => {
-		it('should reset the dataLayer', () => {
-			expect(isDataLayerEmpty()).toBe(false);
-
-			service.resetDataLayer();
-
-			expect(isDataLayerEmpty()).toBe(true);
-		});
-	});
-
-	describe('#getDataLayer', () => {
-		it('should return a reference of the dataLayer', () => {
-			expect(service.getDataLayer()).toBe(window.dataLayer);
+			expect(DataLayer.getLastElement()['ecommerce']).toBe(null);
 		});
 	});
 });

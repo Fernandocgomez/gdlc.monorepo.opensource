@@ -1,9 +1,9 @@
-import { GtmEvent, UaEcommerceEvent } from '../models';
+import { GtmEvent, UaEcommerceEvents } from '../models';
 
 import { GtmService } from '../services/gtm.service';
 
 export abstract class UaEcommerceEventAbstraction {
-	protected ecommerceEvent?: UaEcommerceEvent;
+	protected ecommerceEvent?: UaEcommerceEvents;
 	protected eventCategory = 'ecommerce';
 
 	constructor(protected gtmService: GtmService) {}
